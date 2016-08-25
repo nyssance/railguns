@@ -18,13 +18,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from nyssance.rest_framework.throttles import UploadPerMinAnnoThrottle, \
-    UploadPerMinUserThrottle
-
 from ..utils.cloud_func import oss_download_url
 from .permissions import IsWhiteIpOrIsAuthenticated
 from .response import ResponseBadRequest
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
+from .throttles import UploadPerMinAnnoThrottle, UploadPerMinUserThrottle
 
 
 def create_filename(filename):

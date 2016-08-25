@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
 import sys
 
 from pip._vendor.distlib.compat import raw_input
@@ -12,21 +13,10 @@ from fabric.state import env
 from fabric.utils import puts
 
 
-"""手动配置"""
-
-env.organization = 'cmcaifu'
-env.git_host = 'git.cmcaifu.com'
-env.pgyer_user_key = 'ed8775a2cdb22fd27ad1fa285bf98b2c'
-env.pgyer_api_key = '74000a9013d6894c84edef033b9ad67d'
-
 # ===========
 # = GLOBALS =
 # ===========
 env.project_name = os.path.basename(os.path.dirname(__file__))
-# 其他:
-env.repositories = {
-    'ios': 'git@{0.git_host}:{0.organization}/{0.project_name}-iOS.git'.format(env)
-}
 env.colorize_errors = True
 
 
@@ -40,10 +30,7 @@ def hello():
     puts(green('  查看所有命令: fab -l'))
     puts(green('  查看命令: fab -d 命令'))
     puts(yellow('  带参数命令请输入: fab 命令:参数'))
-    puts(magenta('  手动配置env.(organization, .git_host, pgyer_user_key, pgyer_api_key)'))
-    puts(blue('  部署正式环境: fab prod deplay'))
     puts('  Project Name: {.project_name}'.format(env))  # 这种写法直观.
-    puts('  Repositoreis: {}'.format(env.repositories))  # 这种写法可以方便链接查看.
     puts('*' * 50)
 
 
@@ -127,11 +114,18 @@ def update_to_develop():
 @task
 def upload_to_pypi():
     """自动打包上传到pypi"""
+    safe_local_delete('dist')
+    local('python setup.py sdist')
     local('twine upload dist/*')
 
 
 # ============
 # = 工具方法  =
-# ===========
+# ============
+def safe_local_delete(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+
+
 def get_function_name():
     return sys._getframe(1).f_code.co_name  # _getframe()则是自己的名字
