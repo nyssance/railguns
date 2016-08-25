@@ -1,0 +1,34 @@
+package {{ package }}.models;
+
+import com.google.api.client.util.Key;
+{% set field_mapping = {
+            'BooleanField': 'boolean',
+            'SmallIntegerField': 'int',
+            'PositiveSmallIntegerField': 'int',
+            'IntegerField': 'int',
+            'PositiveIntegerField': 'int',
+            'BigIntegerField': 'long',
+            'DecimalField': 'double',
+            'DateTimeField': 'String',
+            'DateField': 'String',
+            'TimeField': 'String',
+            'CharField': 'String',
+            'EmailField': 'String',
+            'URLField': 'String',
+            'SlugField': 'String',
+            'FileField': 'String',
+            'ImageField': 'String',
+            'SerializerMethodField': 'String',
+            'int': 'int',
+            'str': 'String'
+        } %}
+public final class {{ class_name }} {
+{% for key, value in fields.items() %}	@Key("{{ key }}")
+	public {% if key|is_model %}{{ key|title }}{% elif key == 'images' %}ListModel<Image>{% elif key|is_list_model %}ListModel<>{% elif '_str' in key %}String{% elif type_name(value) == 'ChoiceField' %}{{ field_mapping[choice_value(value)] }}{% else %}{{ field_mapping[type_name(value)] }}{% endif %} {{ key|underscore_to_camelcase }};
+{% endfor %}
+	@Override
+	public String toString() {
+		return {{ fields[0] }} "todo";
+	}
+}
+

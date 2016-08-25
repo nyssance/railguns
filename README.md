@@ -1,2 +1,2 @@
-# railgun
+# Railgun S
 Only My Railgun
