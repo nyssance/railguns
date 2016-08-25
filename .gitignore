@@ -79,6 +79,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
+.venv/
 venv/
 ENV/
 
@@ -87,3 +88,18 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# OS X
+.DS_Store
+
+# Eclipse
+/.project
+/.pydevproject
+/.settings/
+
+# Development
+**/migrations/**
+!**/migrations/__init__.py
+/static/
+/tmp/
+dump.rdb

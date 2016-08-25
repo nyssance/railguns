@@ -1,0 +1,35 @@
+//
+//  Copyright © 2016 cmcaifu.com. All rights reserved.
+//
+{% set field_mapping = {
+            'BooleanField': ' = false',
+            'SmallIntegerField': ' = 0',
+            'PositiveSmallIntegerField': ' = 0',
+            'IntegerField': ' = 0',
+            'PositiveIntegerField': ' = 0',
+            'BigIntegerField': ': NSNumber = 0',
+            'DecimalField': ': NSNumber = 0',
+            'DateTimeField': ' = NSDate(timeIntervalSince1970: 0)',
+            'DateField': 'NSDate(timeIntervalSince1970: 0)',
+            'TimeField': 'NSDate(timeIntervalSince1970: 0)',
+            'CharField': ' = ""',
+            'EmailField': ' = ""',
+            'URLField': ' = ""',
+            'SlugField': ' = ""',
+            'FileField': ' = ""',
+            'ImageField': ' = ""',
+            'SerializerMethodField': ' = ""',
+            'int': ' = 0',
+            'str': ' = ""'
+        } %}
+import ObjectMapper
+import Taylor
+
+class {{ class_name }}: ModelObject {
+{% for field in fields.items() %}    var {{ field|name_transform }} = {{ field|field_type }}{% if field|is_model %}(){% endif %}
+{% endfor %}    
+    override func mapping(map: Map) {
+{% for field in fields.items() %}        {{ field|name_transform }} <- {{ field|swift_map }}
+{% endfor %}    }
+}
+
