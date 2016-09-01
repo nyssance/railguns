@@ -120,27 +120,5 @@ class UploadParamsView(generics.RetrieveAPIView):
         params = get_params(kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
         return Response(params)
 
-
-class PaymentServiceCFCCallBackQuery(APIView):
-    permission_classes = (AllowAny,)  # FIXME: 需要限定中金.
-
-    def post(self, request, *args, **kwargs):
-        headers = {'Content-Type': 'application/json'}
-        url = '{}/notice'.format(settings.JAVA_API)
-        result = requests.post(url, data=json.dumps(self.trans_params(request)), headers=headers).text
-        try:
-            data = json.loads(result)
-            return HttpResponse(data['content'])  # 去除双引号.
-        except:
-            return HttpResponseBadRequest(result)
-
-    def trans_params(self, request):
-        temp_dic = {}
-        for k, v in request.data.items():
-            if k:
-                temp_dic[k] = v
-        return temp_dic
-
 download_url = DownloadUrlView.as_view()
 upload_params = UploadParamsView.as_view()
-payment_service_callback = PaymentServiceCFCCallBackQuery.as_view()
