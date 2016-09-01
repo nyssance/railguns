@@ -11,18 +11,13 @@ import uuid
 
 from boto.s3.key import Key as S3Key
 from django.conf import settings
-from django.http.response import HttpResponse, HttpResponseBadRequest
-import requests
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from ..utils.cloud_func import oss_download_url
 from .permissions import IsWhiteIpOrIsAuthenticated
 from .response import ResponseBadRequest
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
-from .throttles import UploadPerMinAnnoThrottle, UploadPerMinUserThrottle
 
 
 def create_filename(filename):
@@ -80,7 +75,7 @@ class DownloadUrlView(generics.RetrieveAPIView):
     """获取下载地址
     """
     serializer_class = DownloadUrlSerializer
-    permission_classes = (IsWhiteIpOrIsAuthenticated,)
+    permission_classes = [IsWhiteIpOrIsAuthenticated]
 
     def retrieve(self, request, *args, **kwargs):
         try:
@@ -101,8 +96,8 @@ class UploadParamsView(generics.RetrieveAPIView):
     cache_control -- (可选)默认没有
     """
     serializer_class = UploadParamsSerializer  # 加了只是为Swagger用, 不影响输出结果.
-    permission_classes = (IsWhiteIpOrIsAuthenticated,)
-    throttle_classes = (UploadPerMinAnnoThrottle, UploadPerMinUserThrottle)
+    permission_classes = [IsWhiteIpOrIsAuthenticated]
+    throttle_classes = []
 
     def retrieve(self, request, *args, **kwargs):
         filename = request.GET.get('filename', '')
