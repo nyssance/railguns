@@ -61,9 +61,3 @@ class IsWhiteIpOrIsAuthenticated(permissions.BasePermission):
                 return True
         else:
             return request.user and request.user.is_authenticated()
-
-
-class IsCompanyUser(permissions.IsAuthenticated):
-
-    def has_permission(self, request, view):
-        return request.user.type == 2
