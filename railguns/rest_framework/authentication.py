@@ -16,7 +16,7 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
         if not user or not user.is_active:
             return None
 
-        if not request.csrf_exempt:
+        if not getattr(request._request, 'csrf_exempt', None):
             self.enforce_csrf(request)
 
         # CSRF passed with authenticated user
