@@ -1,5 +1,3 @@
-{% load staticfiles %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +7,7 @@
 <meta name="renderer" content="webkit">
 <link rel="icon" href="{% static 'favicon.ico' %}">
 
-{% block analytics %}{% endblock %}
+{% include 'includes/analytics.html' %}
 
 {% block css %}{% endblock %}
 
@@ -17,6 +15,7 @@
 
 {% block js %}{% endblock %}
 
+{% load static %}
 <script src="{% static 'libs/js-cookie/2.1.2/js.cookie.min.js' %}"></script>
 <script src="{% static 'railguns/js/django.js' %}"></script>
 </body>
