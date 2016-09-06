@@ -39,5 +39,5 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-    ],
+    ]
 )
