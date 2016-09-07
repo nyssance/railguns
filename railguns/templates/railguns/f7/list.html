@@ -1,10 +1,6 @@
 {% extends './base.html' %}
-{% load i18n %}
 
-{% block web %}
-<title>{% trans title %}</title>
-<script id="entry-template" type="text/x-handlebars-template">
-{% block list_view %}
+{% block template %}
 {% verbatim %}
 
 <div class="content-block-title">results</div>
@@ -50,10 +46,8 @@
 
 {% endverbatim %}
 {% endblock %}
-</script>
 
-</head>
-<body>
+{% block body %}
 	<div class="views">
 		<div class="view view-main">
 			<div class="pages toolbar-through">
@@ -64,3 +58,4 @@
 		</div>
 	</div>
 {% endblock %}
+
