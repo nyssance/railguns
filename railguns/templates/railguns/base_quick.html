@@ -1,7 +1,12 @@
 {% extends './base.html' %}
 
+{% load i18n %}
+
 {% block web %}
+{% block title %}
 <title>{% trans title %}</title>
+{% endblock %}
+
 <script id="entry-template" type="text/x-handlebars-template">
 {% block template %}
 {% endblock %}
