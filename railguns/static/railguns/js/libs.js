@@ -2,7 +2,7 @@
 
 $(function() {
 	// Handlebars
-	var $content = $('#datacontent');
+	var $content = $('.page-content');
 	var endpoint = $content.data('endpoint');
 	$.ajax(endpoint).done(function(data) {
 		var source = $('#entry-template').html();
@@ -14,6 +14,7 @@ $(function() {
 		alert('获取数据失败，请刷新页面重试！');
 	}).always(function() {
 	});
+
 	// jQuery Lazy
 	$('.lazy').Lazy({
 		effect : 'fadeIn',

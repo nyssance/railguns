@@ -1,0 +1,25 @@
+{% extends 'railguns/f7/base.html' %}
+{% load i18n %}
+
+{% block web %}
+<title>{% trans title %}</title>
+<script id="entry-template" type="text/x-handlebars-template">
+{% block detail_view %}
+{% verbatim %}
+<li>id: {{id}}</li>
+{% endverbatim %}
+{% endblock %}
+</script>
+
+</head>
+<body>
+	<div class="views">
+		<div class="view view-main">
+			<div class="pages toolbar-through">
+				<div class="page" data-page="{{ name }}">
+					<div class="page-content" data-endpoint="{{ endpoint }}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
