@@ -5,7 +5,50 @@
 <title>{% trans title %}</title>
 <script id="entry-template" type="text/x-handlebars-template">
 {% block list_view %}
-{% include items.mobile %}
+{% verbatim %}
+
+<div class="content-block-title">results</div>
+<div class="list-block">
+	<ul>
+		{{#results}}
+		<li>
+			<a href="#" class="item-link item-content">
+				<div class="item-media"><i class="icon icon-f7"></i></div>
+				<div class="item-inner">
+					<div class="item-title">{{id}}</div>
+				</div>
+			</a>
+		</li>
+		{{/results}}
+	</ul>
+	<div class="list-block-label">列表中显示的是id</div>
+</div>
+
+<div class="content-block-title">others</div>
+<div class="list-block">
+	<ul>
+		<li class="item-content">
+			<div class="item-inner">
+				<div class="item-title">count</div>
+				<div class="item-after"><span class="badge bg-yellow">{{count}}</span></div>
+			</div>
+		</li>
+		<li class="item-content">
+			<div class="item-inner">
+				<div class="item-title">previous</div>
+				<div class="item-after">{{previous}}</div>
+			</div>
+		</li>
+		<li class="item-content">
+			<div class="item-inner">
+				<div class="item-title">next</div>
+				<div class="item-after">{{next}}</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+{% endverbatim %}
 {% endblock %}
 </script>
 
@@ -15,12 +58,7 @@
 		<div class="view view-main">
 			<div class="pages toolbar-through">
 				<div class="page" data-page="{{ name }}">
-					<div class="page-content">
-						<div class="content-block-title">Songs</div>
-						<div class="list-block media-list">
-							<ul data-endpoint="{{ endpoint }}" id="datacontent"></ul>
-						</div>
-					</div>
+					<div class="page-content" data-endpoint="{{ endpoint }}" id="datacontent"></div>
 				</div>
 			</div>
 		</div>
