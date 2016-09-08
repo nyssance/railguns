@@ -15,7 +15,7 @@
 			<div class="pages">
 				<div class="page" data-page="{{ name }}">
 					<div class="page-content" data-endpoint="{{ endpoint }}">
-						{% empty block %}没有内容{% endblock %}
+						{% block empty %}没有内容{% endblock %}
 					</div>
 					<!-- 固定的 Toolbar -->
 					{% block toolbar %}{% endblock %}
