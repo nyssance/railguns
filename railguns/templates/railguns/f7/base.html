@@ -7,6 +7,26 @@
 <link rel="stylesheet" href="{% static 'libs/framework7/1.4.2/css/framework7.ios.colors.min.css' %}">
 {% endblock %}
 
+{% block body %}
+	<div class="views">
+		<div class="view view-main">
+			<!-- 只支持 iOS Theme 的穿透 Navbar-->
+      		{% block navbar %}{% endblock %}
+			<div class="pages">
+				<div class="page" data-page="{{ name }}">
+					<div class="page-content" data-endpoint="{{ endpoint }}">
+						{% empty block %}没有内容{% endblock %}
+					</div>
+					<!-- 固定的 Toolbar -->
+					{% block toolbar %}{% endblock %}
+				</div>
+			</div>
+			<!-- 只支持 iOS Theme 的穿透 Tabbar -->
+			{% block tabbar %}{% endblock %}
+		</div>
+	</div>
+{% endblock %}
+
 {% block js %}
 {{ block.super }}
 <script src="{% static 'libs/framework7/1.4.2/js/framework7.min.js' %}"></script>
