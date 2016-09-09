@@ -1,6 +1,9 @@
 {% extends '../base_quick.html' %}
-<!--     f7/base.html -->
+
 {% load static %}
+
+{% block structure %}{{ block.super }}<!--     f71/base.html -->
+{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'libs/framework7/1.4.2/css/framework7.ios.min.css' %}">

@@ -1,7 +1,9 @@
 {% extends './base.html' %}
-<!--   base_quick.html -->
+<!-- 加载 -->
 {% load i18n static %}
-
+<!-- 结构 -->
+{% block structure %}{{ block.super }}<!--   base_quick.html -->
+{% endblock %}
 {% block web %}
 
 {% block title %}<title>{% trans title %}</title>{% endblock %}
