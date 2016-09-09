@@ -4,14 +4,16 @@ $(function() {
 	// Handlebars
 	var content = $('.page-content');
 	var endpoint = content.data('endpoint');
-	$.getJSON(endpoint).done(function(data) {
-		var source = $('#entry-template').html();
-		var template = Handlebars.compile(source);
-		content.html(template(data));
-	}).fail(function() {
-		alert('获取数据失败，请刷新页面重试！');
-	}).always(function() {
-	});
+	if ((typeof endpoint) == 'string' && endpoint != '') {
+		$.getJSON(endpoint).done(function(data) {
+			var source = $('#entry-template').html();
+			var template = Handlebars.compile(source);
+			content.html(template(data));
+		}).fail(function() {
+			alert('获取数据失败，请刷新页面重试！');
+		}).always(function() {
+		});
+	}
 
 	// jQuery Lazy
 	$('.lazy').Lazy({

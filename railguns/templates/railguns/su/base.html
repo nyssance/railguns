@@ -1,6 +1,9 @@
 {% extends '../base_quick.html' %}
-<!--     su/base.html -->
+
 {% load static %}
+
+{% block structure %}{{ block.super }}<!--     su/base.html -->
+{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'libs/semantic-ui/2.2.4/semantic.min.css' %}">
