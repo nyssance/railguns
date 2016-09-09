@@ -1,4 +1,6 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!-- base.html -->
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -6,14 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="renderer" content="webkit">
 <link rel="icon" href="{% static 'favicon.ico' %}">
-
+<!-- analytics -->
 {% include 'includes/analytics.html' %}
 <!-- css -->
 {% block css %}{% endblock %}
-
+<!-- web -->
 {% block web %}{% endblock %}
 <!-- js -->
-
 {% block js %}{% endblock %}
 <script src="{% static 'libs/js-cookie/2.1.2/js.cookie.min.js' %}"></script>
 <script src="{% static 'railguns/js/django.js' %}"></script>

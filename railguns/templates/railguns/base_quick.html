@@ -1,17 +1,13 @@
 {% extends './base.html' %}
-
-{% load i18n %}
-{% load static %}
+<!--   base_quick.html -->
+{% load i18n static %}
 
 {% block web %}
 
-{% block title %}
-<title>{% trans title %}</title>
-{% endblock %}
+{% block title %}<title>{% trans title %}</title>{% endblock %}
 
 <script id="entry-template" type="text/x-handlebars-template">
-{% block template %}
-{% endblock %}
+{% block template %}{% endblock %}
 </script>
 
 </head>
