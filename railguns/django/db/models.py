@@ -14,7 +14,7 @@ class DateTimeModelMixin(models.Model):
 
 class OwnerModel(DateTimeModelMixin):
     user_id = models.IntegerField(default=0, editable=False)
-    username = models.CharField(max_length=30, editable=False)
+    username = models.CharField(max_length=150, editable=False)
     user_image_urls = models.CharField(_('image_urls'), max_length=2000, blank=True, editable=False)
     is_active = models.BooleanField(_('active'), default=True)
 

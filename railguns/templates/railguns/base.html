@@ -1,21 +1,18 @@
-{% load static %}{% block structure %}<!-- base.html -->
+{% load static %}{% block structure %}<!-- base -->
 {% endblock %}<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
 <meta name="renderer" content="webkit">
 <link rel="icon" href="{% static 'favicon.ico' %}">
 <!-- analytics -->
 {% include 'includes/analytics.html' %}
-<!-- css -->
-{% block css %}{% endblock %}
-<!-- web -->
+<!-- css 开始 -->{% block css %}{% endblock %}<!-- css 结束 -->
+
+<!-- web 开始 -->
 {% block web %}{% endblock %}
-<!-- js -->
-{% block js %}{% endblock %}
-<script src="{% static 'libs/js-cookie/2.1.2/js.cookie.min.js' %}"></script>
-<script src="{% static 'railguns/js/django.js' %}"></script>
+<!-- web 结束 -->
 </body>
 </html>

@@ -2,12 +2,16 @@
 
 {% load static %}
 
-{% block structure %}{{ block.super }}<!--     f7/base.html -->
+{% block structure %}{{ block.super }}<!--     f7/base -->
 {% endblock %}
 
+{% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">{% endblock %}
+
 {% block css %}
+<!-- f7/base -->
 <link rel="stylesheet" href="{% static 'libs/framework7/1.4.2/css/framework7.ios.min.css' %}">
 <link rel="stylesheet" href="{% static 'libs/framework7/1.4.2/css/framework7.ios.colors.min.css' %}">
+<!-- 自定义 -->
 {% endblock %}
 
 {% block body %}
@@ -29,8 +33,8 @@
 	</div>
 {% endblock %}
 
-{% block js %}
-{{ block.super }}
-<script src="{% static 'libs/framework7/1.4.2/js/framework7.min.js' %}"></script>
-<script src="{% static 'railguns/js/f7.js' %}"></script>
+{% block js %}{{ block.super }}<!-- f7/base -->
+	<script src="{% static 'libs/framework7/1.4.2/js/framework7.min.js' %}"></script>
+	<script src="{% static 'railguns/js/f7.js' %}"></script>
+	<!-- 自定义 -->
 {% endblock %}
