@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block web %}
-{% block title %}<title>{% trans title %}</title>{% endblock %}
+	<!-- 🍺 css 开始 -->{% block css %}{% endblock %}	<!-- 🍻 css 结束 -->
 
-<script id="entry-template" type="text/x-handlebars-template">
-{% block template %}{% endblock %}
-</script>
+	<!-- 🍺 js模版 开始 -->
+	<script id="entry-template" type="text/x-handlebars-template">{% block template %}{% endblock %}	</script>
+	<!-- 🍻 js模版 结束 -->
 </head>
 <body>
-{% block body %}{% endblock %}
+	<!-- 🍺 内容 开始 -->{% block body %}{% endblock %}	<!-- 🍻 内容 结束 -->
 
 	<!-- 🍺 js 开始 -->{% block js %}
 	<!-- base_quick -->
@@ -25,5 +25,5 @@
 	<script src="{% static 'libs/jquery.lazy/1.7.3/jquery.lazy.min.js' %}"></script>
 	<script src="{% static 'libs/handlebars/4.0.5/handlebars.min.js' %}"></script>
 	<script src="{% static 'railguns/js/libs.js' %}"></script>
-	{% endblock %}
-	<!-- 🍻 js 结束 -->{% endblock %}
+	{% endblock %}	<!-- 🍻 js 结束 -->
+{% endblock %}

@@ -1,17 +1,16 @@
-{% load static %}{% block structure %}<!-- base -->
+{% load static i18n %}{% block structure %}<!-- base -->
 {% endblock %}
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-{% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
-<meta name="renderer" content="webkit">
-<link rel="icon" href="{% static 'favicon.ico' %}">
-<!-- analytics -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	{% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
+	<meta name="renderer" content="webkit">
+	<link rel="icon" href="{% static 'favicon.ico' %}">
+	<!-- analytics -->
 {% include 'includes/analytics.html' %}
-<!-- 🍺 css 开始 -->{% block css %}{% endblock %}<!-- 🍻 css 结束 -->
-
+	{% block title %}<title>{% trans title %}</title>{% endblock %}
 <!-- 🍺 web 开始 -->
 {% block web %}{% endblock %}
 <!-- 🍻 web 结束 -->
