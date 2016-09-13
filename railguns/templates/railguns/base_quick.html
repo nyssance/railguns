@@ -4,18 +4,16 @@
 <!-- 结构 -->
 {% block structure %}{{ block.super }}<!--   base_quick -->
 {% endblock %}
-{% block web %}
 
+{% block web %}
 {% block title %}<title>{% trans title %}</title>{% endblock %}
 
 <script id="entry-template" type="text/x-handlebars-template">
 {% block template %}{% endblock %}
 </script>
-
 </head>
 <body>
-{% block body %}
-{% endblock %}
+{% block body %}{% endblock %}
 
 	<!-- 🍺 js 开始 -->{% block js %}
 	<!-- base_quick -->
