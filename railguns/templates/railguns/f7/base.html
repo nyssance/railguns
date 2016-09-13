@@ -17,18 +17,15 @@
 {% block body %}
 	<div class="views">
 		<div class="view view-main">
-			<!-- 只支持 iOS Theme 的穿透 Navbar-->
-			{% block navbar %}{% endblock %}
+			<!-- 只支持 iOS Theme 的穿透 Navbar-->{% block navbar %}{% endblock %}
 			<div class="pages">
 				<div class="page" data-page="{{ name }}">
 					<div class="page-content" data-endpoint="{{ endpoint }}">
 					</div>
-					<!-- 固定的 Toolbar -->
-					{% block toolbar %}{% endblock %}
+					<!-- 固定的 Toolbar -->{% block toolbar %}{% endblock %}
 				</div>
 			</div>
-			<!-- 只支持 iOS Theme 的穿透 Tabbar -->
-			{% block tabbar %}{% endblock %}
+			<!-- 只支持 iOS Theme 的穿透 Tabbar -->{% block tabbar %}{% endblock %}
 		</div>
 	</div>
 {% endblock %}
