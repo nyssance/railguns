@@ -13,6 +13,7 @@ Handlebar显示html 用`{{{ }}}`
 - [Django Filter](https://django-filter.readthedocs.io/en/latest/)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [Django REST Swagger]( http://marcgibbons.github.io/django-rest-swagger/)
+- [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 - [pylibmc](https://github.com/lericson/pylibmc)
 - [redis-py](https://github.com/andymccurdy/redis-py)
 可选库
