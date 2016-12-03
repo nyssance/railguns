@@ -2,24 +2,19 @@
 
 $(function() {
 	// Handlebars
-	var $content = $('#datacontent');
-	var endpoint = $content.data('endpoint');
+	var content = $('.page-content');
+	var endpoint = content.data('endpoint');
 	if ((typeof endpoint) == 'string' && endpoint != '') {
-		$.ajax({
-			url : endpoint,
-			dataType : 'json', // 兼容IE
-			success : function(data) {
-				var source = $('#entry-template').html();
-				var template = Handlebars.compile(source);
-				var $newItems = $(template(data));
-				$content.html($newItems);
-				return false;
-			},
-			error : function(e) {
-				alert('获取数据失败，请刷新页面重试！');
-			}
+		$.getJSON(endpoint).done(function(data) {
+			var source = $('#entry-template').html();
+			var template = Handlebars.compile(source);
+			content.html(template(data));
+		}).fail(function() {
+			alert('获取数据失败，请刷新页面重试！');
+		}).always(function() {
 		});
 	}
+
 	// jQuery Lazy
 	$('.lazy').Lazy({
 		effect : 'fadeIn',

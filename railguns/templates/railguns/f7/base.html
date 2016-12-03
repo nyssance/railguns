@@ -1,17 +1,38 @@
-{% extends 'railguns/base.html' %}
+{% extends '../base_quick.html' %}
 
 {% load static %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'libs/framework7/1.5.0/css/framework7.ios.min.css' %}">
-<link rel="stylesheet" href="{% static 'libs/framework7/1.5.0/css/framework7.ios.colors.min.css' %}">
+{% block structure %}{{ block.super }}<!--     f7/base -->
 {% endblock %}
 
-{% block js %}
-<script src="{% static 'libs/jquery/3.1.0/jquery.min.js' %}"></script>
-<script src="{% static 'libs/jquery.lazy/1.7.3/jquery.lazy.min.js' %}"></script>
-<script src="{% static 'libs/handlebars/4.0.5/handlebars.min.js' %}"></script>
-<script src="{% static 'railguns/js/libs.js' %}"></script>
-<script src="{% static 'libs/framework7/1.5.0/js/framework7.min.js' %}"></script>
-<script src="{% static 'railguns/js/f7.js' %}"></script>
+	{% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">{% endblock %}
+
+{% block css %}
+	<!-- f7/base -->
+	<link rel="stylesheet" href="//static-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/libs/framework7/1.5.0/css/framework7.ios.min.css">
+	<link rel="stylesheet" href="//static-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/libs/framework7/1.5.0/css/framework7.ios.colors.min.css">
+	<!-- 💛 自定义css -->
+{% endblock %}
+
+{% block body %}
+	<div class="views">
+		<div class="view view-main">
+			<!-- 只支持 iOS Theme 的穿透 Navbar-->{% block navbar %}<!-- 无导航栏 -->{% endblock %}
+			<!-- f7 pages 区域 -->
+			<div class="pages">
+				<div class="page" data-page="{{ name }}">
+					<div class="page-content" data-endpoint="{{ endpoint }}">
+					</div>
+					<!-- 固定的 Toolbar -->{% block toolbar %}<!-- 无工具栏 -->{% endblock %}
+				</div>
+			</div>
+			<!-- 只支持 iOS Theme 的穿透 Tabbar -->{% block tabbar %}<!-- 无Tabbar -->{% endblock %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}{{ block.super }}<!-- f7/base -->
+	<script src="//static-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/libs/framework7/1.5.0/js/framework7.min.js"></script>
+	<script src="{% static 'railguns/js/f7.js' %}"></script>
+	<!-- 💛 自定义js -->
 {% endblock %}

@@ -1,39 +1,52 @@
-{% extends 'railguns/f7/base.html' %}
+{% extends './base.html' %}
+{% block structure %}{{ block.super }}<!--       f7/list -->
+{% endblock %}
 
-{% block web %}
-<title>列表</title>
-</head>
-<body class="theme-pink" data-endpoint="{{ endpoint }}">
-	<div class="views">
-		<div class="view view-main">
-			<div class="pages toolbar-through">
-				<div class="page" data-page="index">
-					<div class="page-content">
+{% block template %}{% verbatim %}
+<!-- 示例模版 开始 -->
+<div class="content-block-title">results</div>
+<div class="list-block">
+	<ul>
+		{{#results}}
+		<li>
+			<a href="#" class="item-link item-content">
+				<div class="item-media">
+					<i class="icon icon-f7"></i>
+				</div>
+				<div class="item-inner">
+					<div class="item-title">{{id}}</div>
+				</div>
+			</a>
+		</li>
+		{{/results}}
+	</ul>
+	<div class="list-block-label">列表中显示的是id</div>
+</div>
 
-						<div class="content-block-title">Songs</div>
-						<div class="list-block media-list">
-							<ul>
-								{% for project in project_list %}
-								<li><a href="/projects/{{ project.id }}/" class="item-link item-content">
-										<div class="item-media">
-											<img src="{{ project.image_urls }}" width="80">
-										</div>
-										<div class="item-inner">
-											<div class="item-title-row">
-												<div class="item-title">{{ project.name }}</div>
-												<div class="item-after">$15</div>
-											</div>
-											<div class="item-subtitle">{{ project.type }}</div>
-											<div class="item-text">Lorem ipsum dolor sit amet...</div>
-										</div>
-								</a></li>
-								{% endfor %}
-							</ul>
-						</div>
-					</div>
+<div class="content-block-title">others</div>
+<div class="list-block">
+	<ul>
+		<li class="item-content">
+			<div class="item-inner">
+				<div class="item-title">count</div>
+				<div class="item-after">
+					<span class="badge bg-yellow">{{count}}</span>
 				</div>
 			</div>
-			{% include 'includes/h5_tabbar.html' %}
-		</div>
-	</div>
-{% endblock %}
+		</li>
+		<li class="item-content">
+			<div class="item-inner">
+				<div class="item-title">previous</div>
+				<div class="item-after">{{previous}}</div>
+			</div>
+		</li>
+		<li class="item-content">
+			<div class="item-inner">
+				<div class="item-title">next</div>
+				<div class="item-after">{{next}}</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<!-- 示例模版 结束 -->
+{% endverbatim %}{% endblock %}

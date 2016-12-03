@@ -1,6 +1,7 @@
 import locale
 
 from django.contrib import admin
+from django.core import serializers
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ExportMixin
@@ -38,3 +39,7 @@ class SuperAdmin(ImageUrlsMixin, ExportMixin, admin.ModelAdmin):
             return '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, symbol=False, grouping=True))
         else:
             return formatted
+
+    def log_change(self, request, obj, message):
+        new_message = '{}'.format(serializers.serialize('json', [obj]))
+        super(SuperAdmin, self).log_change(request, obj, new_message)

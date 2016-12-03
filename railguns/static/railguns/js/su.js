@@ -1,7 +1,6 @@
 'use strict';
 
 $(function() {
-	// Semantic UI
 	$('.dropdown').dropdown({ // 下拉菜单
 		on : 'hover'
 	});
