@@ -7,12 +7,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	{% block viewport %}<meta name="viewport" content="width=device-width, initial-scale=1">{% endblock %}
 	<meta name="renderer" content="webkit">
-	<link rel="icon" href="{% static 'favicon.ico' %}">
 	<!-- analytics -->
 {% include 'includes/analytics.html' %}
 	{% block title %}<title>{{ title }}</title>{% endblock %}
-<!-- 🍺 web 开始 -->
+	<link rel="icon" href="{% static 'favicon.ico' %}">
+	<!-- 🌐 web 开始 -->
 {% block web %}{% endblock %}
-<!-- 🍻 web 结束 -->
+	<!-- 🌐 web 结束 -->
 </body>
 </html>
