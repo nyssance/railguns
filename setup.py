@@ -21,6 +21,7 @@ setup(
         'django-filter',
         'django-htmlmin',
         'django-rest-swagger==0.3.10',
+        'itunes-iap',
         'mysqlclient',
         'pylibmc',
         'redis',

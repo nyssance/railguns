@@ -9,6 +9,7 @@ $(function() {
 			var source = $('#entry-template').html();
 			var template = Handlebars.compile(source);
 			content.html(template(data));
+			componentHandler.upgradeDom()
 		}).fail(function() {
 			alert('获取数据失败，请刷新页面重试！');
 		}).always(function() {
