@@ -1,0 +1,31 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdl/table_list -->
+{% endblock %}
+
+{% block template %}{% verbatim %}
+<!-- 示例模版 开始 -->
+{{#results}}
+<li class="mdl-list__item">
+	<span class="mdl-list__item-primary-content">
+		<i class="material-icons mdl-list__item-avatar">person</i>
+		<span>{{id}}</span>
+	</span>
+	<a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
+</li>
+{{/results}}
+<li class="mdl-list__item mdl-list__item--two-line">
+	<span class="mdl-list__item-primary-content">
+		<i class="material-icons mdl-list__item-avatar">person</i>
+		<span>总数</span>
+		<span class="mdl-list__item-sub-title">{{count}} {{previous}} {{next}}</span>
+	</span>
+	<span class="mdl-list__item-secondary-action">
+		<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-1">
+			<input type="checkbox" id="list-switch-1" class="mdl-switch__input" checked />
+		</label>
+	</span>
+</li>
+<!-- 示例模版 结束 -->
+{% endverbatim %}{% endblock %}
+
+{% block list %}	<ul class="mdl-list" data-endpoint="{{ endpoint }}" id="list"></ul>{% endblock %}

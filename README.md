@@ -19,3 +19,12 @@ Handlebar显示html 用`{{{ }}}`
 - [redis-py](https://github.com/andymccurdy/redis-py)
 可选库
 - [Django REST Framework JSON CamelCase](https://github.com/vbabiy/djangorestframework-camel-case)
+
+前端库
+- [jQuery](https://jquery.com)
+- [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
+- [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
+- [Handlebars](http://handlebarsjs.com)
+- [Material Design Lite](https://getmdl.io)
+- [Semantic UI](http://semantic-ui.com)
+- [Framework7](https://framework7.io)

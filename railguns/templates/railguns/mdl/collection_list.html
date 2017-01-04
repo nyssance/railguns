@@ -1,0 +1,26 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdl/collection_list -->
+{% endblock %}
+
+{% block template %}{% verbatim %}
+<!-- 示例模版 开始 -->
+{{#results}}
+<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+	<div class="mdl-card__media">
+		<img class="article-image" src="//test-static-plus-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/demo/pic_{{id}}.jpg" border="0" alt="">
+	</div>
+	<div class="mdl-card__title">
+		<h2 class="mdl-card__title-text">标题</h2>
+	</div>
+	<div class="mdl-card__supporting-text">
+		内容, 会自动换行
+	</div>
+	<div class="mdl-card__actions mdl-card--border">
+		<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent">Read more</a>
+	</div>
+</div>
+{{/results}}
+<!-- 示例模版 结束 -->
+{% endverbatim %}{% endblock %}
+
+{% block list %}	<div class="mdl-grid" data-endpoint="{{ endpoint }}" id="list"></div>{% endblock %}
