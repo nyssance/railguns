@@ -26,5 +26,3 @@ Handlebar显示html 用`{{{ }}}`
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
 - [Handlebars](http://handlebarsjs.com)
 - [Material Design Lite](https://getmdl.io)
-- [Semantic UI](http://semantic-ui.com)
-- [Framework7](https://framework7.io)
