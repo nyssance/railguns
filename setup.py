@@ -10,9 +10,9 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='railguns',
-    version='0.1.8',
+    version='0.1.9',
     install_requires=[
-        'Django',
+        'Django==1.10.7',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
@@ -20,7 +20,7 @@ setup(
         'django-ckeditor',
         'django-filter',
         'django-htmlmin',
-        'django-rest-swagger==0.3.10',
+        'django-rest-swagger',
         'itunes-iap',
         'mysqlclient',
         'pylibmc',
@@ -46,6 +46,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ]
