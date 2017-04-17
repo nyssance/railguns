@@ -1,12 +1,14 @@
+from django.apps.registry import apps
 from django.conf import settings
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.decorators.cache import cache_page
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.i18n import javascript_catalog
-from railguns.rest_framework.views import download_url, upload_params
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
+from .rest_framework.views import download_url, upload_params
 from .views import SwaggerSchemaView
 
 
@@ -23,9 +25,7 @@ urlpatterns += [
     url(r'^api-token-refresh/', refresh_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
     url(r'^developer/documentation/', SwaggerSchemaView.as_view()),
-    # url(r'^search/', include('haystack.urls')),
-    url(r'^s3direct/', include('s3direct.urls')),
-    url(r'^captcha/', include('captcha.urls'))
+    # url(r'^search/', include('haystack.urls'))
 ]
 # RailgunS:
 urlpatterns += [
@@ -34,3 +34,8 @@ urlpatterns += [
     url(r'^favicon\.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True)),
     url(r'^robots\.txt', cache_page(60 * 60)(TemplateView.as_view(template_name='{}'.format('robots_test.txt' if settings.TEST_ENV else 'robots.txt'), content_type='text/plain')))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if apps.is_installed('rosetta'):
+    urlpatterns += [url(r'^rosetta/', include('rosetta.urls'))]
