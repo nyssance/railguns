@@ -83,7 +83,7 @@ class DownloadUrlView(generics.RetrieveAPIView):
             if not url:
                 return ResponseBadRequest('url不能为空')
             params = oss_download_url(url)
-        except:
+        except Exception:
             traceback.print_exc(5)
         return Response(params)
 
