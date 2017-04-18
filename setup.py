@@ -12,15 +12,15 @@ setup(
     name='railguns',
     version='0.1.9',
     install_requires=[
-        'Django==1.10.7',
+        'Django',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
+        'django-rest-swagger',
         #
         'django-ckeditor',
         'django-filter',
         'django-htmlmin',
-        'django-rest-swagger',
         'itunes-iap',
         'mysqlclient',
         'pylibmc',

@@ -115,5 +115,6 @@ class UploadParamsView(generics.RetrieveAPIView):
         params = get_params(kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
         return Response(params)
 
+
 download_url = DownloadUrlView.as_view()
 upload_params = UploadParamsView.as_view()
