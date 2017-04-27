@@ -12,6 +12,7 @@ Handlebar显示html 用`{{{ }}}`
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
+- [Django Extensions](https://django-extensions.readthedocs.io/en/latest/)
 - [Django Filter](https://django-filter.readthedocs.io/en/latest/)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
