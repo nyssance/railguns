@@ -3,8 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.decorators.cache import cache_page
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView
 from django.views.i18n import javascript_catalog
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
@@ -31,8 +30,7 @@ urlpatterns += [
 urlpatterns += [
     url(r'^download_url/(?P<pk>\w+)/$', download_url, name='download_url'),
     url(r'^upload_params/(?P<pk>\w+)/$', upload_params, name='upload_params'),
-    url(r'^favicon\.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True)),
-    url(r'^robots\.txt', cache_page(60 * 60)(TemplateView.as_view(template_name='{}'.format('robots_test.txt' if settings.TEST_ENV else 'robots.txt'), content_type='text/plain')))
+    url(r'^favicon\.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
