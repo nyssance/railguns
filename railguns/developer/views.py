@@ -136,7 +136,7 @@ def models_zip(request):
         with open(os.path.join(top, 'swift', '{}.swift'.format(class_name)), 'w') as fp:
             fp.write(template_swift.render(fields=fields))
         fp.close()
-    # 打包.
+    # 打包
     buffer = io.BytesIO()
     zip = zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED)
     for dirpath, dirnames, filenames in os.walk(top):

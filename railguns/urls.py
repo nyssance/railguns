@@ -11,13 +11,13 @@ from .rest_framework.views import download_url, upload_params
 from .views import SwaggerSchemaView
 
 
-# 系统自带:
+# 系统自带
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/(?P<packages>\S+?)/$', javascript_catalog)
 ]
-# 第三方:
+# 第三方
 urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', obtain_jwt_token),
@@ -26,7 +26,7 @@ urlpatterns += [
     url(r'^developer/documentation/', SwaggerSchemaView.as_view()),
     # url(r'^search/', include('haystack.urls'))
 ]
-# RailgunS:
+# RailgunS
 urlpatterns += [
     url(r'^download_url/(?P<pk>\w+)/$', download_url, name='download_url'),
     url(r'^upload_params/(?P<pk>\w+)/$', upload_params, name='upload_params'),

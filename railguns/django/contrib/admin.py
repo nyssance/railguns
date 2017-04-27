@@ -22,7 +22,7 @@ class ImageUrlsMixin(object):
 class SuperAdmin(ImageUrlsMixin, ExportMixin, admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
-        if not obj.id:  # 如果obj.id不存在, 为新创建.
+        if not obj.id:  # 如果obj.id不存在, 为新创建
             if 'user_id' in [f.name for f in obj._meta.get_fields()]:
                 if not obj.user_id:
                     obj.user_id = request.user.id

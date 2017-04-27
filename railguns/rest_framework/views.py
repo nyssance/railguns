@@ -27,7 +27,7 @@ def create_filename(filename):
 
 def get_params(cloud, bucket, filename, rename, expiration, content_encoding, cache_control):
     content_type = mimetypes.guess_type(filename)[0] or S3Key.DefaultContentType
-    path = 'upload/{}'.format(create_filename(filename)) if rename else filename  # 是否重命名.
+    path = 'upload/{}'.format(create_filename(filename)) if rename else filename  # 是否重命名
     # 计算policy
     policy_object = {
         'expiration': (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
@@ -42,7 +42,7 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     if content_encoding == 'gzip':
         policy_object['conditions'].append(['starts-with', '$Content-Encoding', content_encoding])
     policy = b64encode(json.dumps(policy_object).replace('\n', '').replace('\r', '').encode())
-    if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET.
+    if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET
         signature = b64encode(hmac.new(settings.CLOUD_SECRET_ACCESS_KEY.encode(), policy, hashlib.sha1).digest())
     else:
         signature_alg = os.path.join(settings.BASE_DIR, settings.CLOUD_SIGNATURE_FILE)
@@ -90,12 +90,12 @@ class DownloadUrlView(generics.RetrieveAPIView):
 
 class UploadParamsView(generics.RetrieveAPIView):
     """获取上传参数
-    filename -- 文件名, 可含有路径.
+    filename -- 文件名, 可含有路径
     expiration -- (可选)过期时间, 默认50年
     content_encoding -- (可选)默认不压缩
     cache_control -- (可选)默认没有
     """
-    serializer_class = UploadParamsSerializer  # 加了只是为Swagger用, 不影响输出结果.
+    serializer_class = UploadParamsSerializer  # 加了只是为Swagger用, 不影响输出结果
     permission_classes = [IsWhiteIpOrIsAuthenticated]
     throttle_classes = []
 
@@ -109,7 +109,7 @@ class UploadParamsView(generics.RetrieveAPIView):
         rename = False
         if bucket == settings.BUCKET_MEDIA:
             rename = True
-        expiration = int(request.GET.get('expiration', 24 * 365 * 50))  # 过期时间.
+        expiration = int(request.GET.get('expiration', 24 * 365 * 50))  # 过期时间
         content_encoding = request.GET.get('content_encoding', '')
         cache_control = request.GET.get('cache_control')
         params = get_params(kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
