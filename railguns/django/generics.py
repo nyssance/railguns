@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from django.conf import settings
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
@@ -8,6 +10,17 @@ from django.views.generic.base import TemplateView
 # print(headers)
 def get_headers(request, keys=[]):
     return dict((key, value) for (key, value) in request.META.items() if key in keys)
+
+
+def generate_uri(urlstring, request):
+    if urlstring == '' or urlparse(urlstring).scheme:  # 如果为空或有scheme
+        return urlstring
+    else:
+        app_scheme = get_headers(request, ['HTTP_APP_SCHEME']).get('HTTP_APP_SCHEME')
+        if app_scheme:
+            return '{}:/{}'.format(app_scheme, urlstring)
+        else:
+            return '{}{}/'.format(settings.BASE_URL, urlstring)
 
 
 class BaseView(TemplateView):
