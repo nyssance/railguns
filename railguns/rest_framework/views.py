@@ -4,8 +4,6 @@ import hashlib
 import hmac
 import json
 import mimetypes
-import os
-import subprocess
 import traceback
 import uuid
 
@@ -44,9 +42,6 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     policy = b64encode(json.dumps(policy_object).replace('\n', '').replace('\r', '').encode())
     if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET
         signature = b64encode(hmac.new(settings.CLOUD_SECRET_ACCESS_KEY.encode(), policy, hashlib.sha1).digest())
-    else:
-        signature_alg = os.path.join(settings.BASE_DIR, settings.CLOUD_SIGNATURE_FILE)
-        signature = subprocess.check_output('{} --policy {}'.format(signature_alg, policy.decode()), shell=True).strip()
     # 返回params
     params = {'key': path,
               'Content-Type': content_type,
