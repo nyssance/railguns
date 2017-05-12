@@ -1,0 +1,51 @@
+{% extends '../base_quick.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block structure %}{{ block.super }}<!--     mdc/base -->
+{% endblock %}
+
+{% block css %}
+	<!-- mdc/base -->
+	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- 💛 自定义css -->
+{% endblock %}
+
+{% block body %}
+	<div class="mdc-toolbar mdc-toolbar--fixed">
+		<div class="mdc-toolbar__row">
+			<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+				<button class="demo-menu material-icons">menu</button>
+				<span class="mdc-toolbar__title catalog-title">{% trans '基金云' %}</span>
+			</section>
+		</div>
+	</div>
+	{% block navbar %}<!-- 无导航栏 -->{% endblock %}
+	<!-- mdc main 区域 -->
+	<main class="mdc-toolbar-fixed-adjust">
+	{% block content %}{% endblock %}
+	</main>
+{% endblock %}
+
+{% block js %}{{ block.super }}<!-- mdc/base -->
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	<script src="{% static 'railguns/js/mdc.js' %}"></script>
+	<!-- 💛 自定义js -->
+	<script>
+		var drawerEl = document.querySelector('.mdc-temporary-drawer');
+		var MDCTemporaryDrawer = mdc.drawer.MDCTemporaryDrawer;
+		var drawer = new MDCTemporaryDrawer(drawerEl);
+		document.querySelector('.demo-menu').addEventListener('click', function() {
+			drawer.open = true;
+		});
+		drawerEl.addEventListener('MDCTemporaryDrawer:open', function() {
+			console.log('Received MDCTemporaryDrawer:open');
+		});
+		drawerEl.addEventListener('MDCTemporaryDrawer:close', function() {
+			console.log('Received MDCTemporaryDrawer:close');
+		});
+	</script>
+{% endblock %}

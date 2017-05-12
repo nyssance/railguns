@@ -1,0 +1,19 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/table_list -->
+{% endblock %}
+
+{% block template %}{% verbatim %}
+<!-- 示例模版 开始 -->
+{{#results}}
+<li class="mdc-list-item">
+	<i class="mdc-list-item__start-detail material-icons" aria-hidden="true">network_wifi</i>
+	{{id}}
+	<a class="mdc-list-item__end-detail material-icons" href="#"
+		aria-label="Add to favorites" title="Add to favorites"
+		onclick="event.preventDefault();">favorite_border</a>
+</li>
+{{/results}}
+<!-- 示例模版 结束 -->
+{% endverbatim %}{% endblock %}
+
+{% block list %}	<ul class="mdc-list" data-endpoint="{{ endpoint }}" id="list"></ul>{% endblock %}
