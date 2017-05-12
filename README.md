@@ -29,4 +29,4 @@ Handlebar显示html 用`{{{ }}}`
 - [jQuery](https://jquery.com)
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
 - [Handlebars](http://handlebarsjs.com)
-- [Material Design Lite](https://getmdl.io)
+- [Material Components for the Web](https://material.io/components/web/)

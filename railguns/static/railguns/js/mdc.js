@@ -2,27 +2,16 @@
 
 $(function() {
 	// Drawer
-	var drawerEl = document.querySelector('.mdc-temporary-drawer');
-	var MDCTemporaryDrawer = mdc.drawer.MDCTemporaryDrawer;
-	var drawer = new MDCTemporaryDrawer(drawerEl);
-	document.querySelector('.demo-menu').addEventListener('click', function() {
-		drawer.open = true;
-	});
-	drawerEl.addEventListener('MDCTemporaryDrawer:open', function() {
-		console.log('Received MDCTemporaryDrawer:open');
-	});
-	drawerEl.addEventListener('MDCTemporaryDrawer:close', function() {
-		console.log('Received MDCTemporaryDrawer:close');
-	});
+	let drawer = new mdc.drawer.MDCTemporaryDrawer(document.querySelector('.mdc-temporary-drawer'));
+	document.querySelector('.menu').addEventListener('click', () => drawer.open = true);
 	// Handlebars
-	var content = $('#list');
-	var endpoint = content.data('endpoint');
+	let content = $('#list');
+	let endpoint = content.data('endpoint');
 	if ((typeof endpoint) == 'string' && endpoint != '') {
 		$.getJSON(endpoint).done(function(data) {
-			var source = $('#entry-template').html();
-			var template = Handlebars.compile(source);
+			let source = $('#entry-template').html();
+			let template = Handlebars.compile(source);
 			content.html(template(data));
-			// componentHandler.upgradeDom() // https://github.com/google/material-design-lite/issues/4916
 		}).fail(function() {
 			alert('获取数据失败，请刷新页面重试！');
 		}).always(function() {
