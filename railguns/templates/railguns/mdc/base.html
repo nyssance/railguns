@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block css %}
-	<!-- mdc/base -->
+	<!-- 💙 mdc/base -->
 	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block body %}
+	<!-- header 区域 -->
 	<header class="mdc-toolbar mdc-toolbar--fixed">
 		<div class="mdc-toolbar__row">
 			<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
@@ -24,14 +25,15 @@
 			</section>
 		</div>
 	</header>
+	<!-- drawer 区域 -->
 	{% block navbar %}<!-- 无侧导航栏 -->{% endblock %}
-	<!-- mdc main 区域 -->
+	<!-- main 区域 -->
 	<main class="mdc-toolbar-fixed-adjust">
 	{% block content %}{% endblock %}
 	</main>
 {% endblock %}
 
-{% block js %}{{ block.super }}<!-- mdc/base -->
+{% block js %}{{ block.super }}<!-- 💙 mdc/base -->
 	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 	<script src="{% static 'railguns/js/mdc.js' %}"></script>
 	<!-- 💛 自定义js -->

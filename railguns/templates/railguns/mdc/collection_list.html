@@ -5,20 +5,25 @@
 {% block template %}{% verbatim %}
 <!-- 示例模版 开始 -->
 {{#results}}
-<div class="mdc-card">
-	<section class="mdc-card__media demo-card__16-9-media" style="background-image: url(//test-static-plus-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/demo/pic_{{id}}.jpg)">
-	</section>
-	<section class="mdc-card__primary">
-		<h1 class="mdc-card__title mdc-card__title--large">标题</h1>
-		<h2 class="mdc-card__subtitle">副标题</h2>
-	</section>
-	<section class="mdc-card__actions">
-		<a class="mdc-button mdc-button--compact mdc-card__action"
-			href="/m/projects/{{id}}/">Read more</a>
-	</section>
-</div>
+<li class="mdc-grid-tile">
+	<div class="mdc-card">
+		<section class="mdc-card__media demo-card__16-9-media" style="background-image: url(//test-static-plus-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/demo/pic_{{id}}.jpg)">
+		</section>
+		<section class="mdc-card__primary">
+			<h1 class="mdc-card__title mdc-card__title--large">标题</h1>
+			<h2 class="mdc-card__subtitle">副标题</h2>
+		</section>
+		<section class="mdc-card__actions">
+			<a class="mdc-button mdc-button--compact mdc-card__action"
+				href="/m/projects/{{id}}/">Read more</a>
+		</section>
+	</div>
+</li>
 {{/results}}
 <!-- 示例模版 结束 -->
 {% endverbatim %}{% endblock %}
 
-{% block list %}	<div class="mdc-grid-list" data-endpoint="{{ endpoint }}" id="list"></div>{% endblock %}
+{% block list %}	<div class="mdc-grid-list">
+		<ul class="mdc-grid-list__tiles" data-endpoint="{{ endpoint }}" id="list">
+		</ul>
+	</div>{% endblock %}
