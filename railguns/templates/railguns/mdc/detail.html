@@ -4,12 +4,8 @@
 
 {% block template %}{% verbatim %}
 <!-- 示例模版 开始 -->
-<div class="content-block">
-	<div class="content-block-inner">id: {{id}}</div>
-</div>
+<div>id: {{id}}</div>
 <!-- 示例模版 结束 -->
 {% endverbatim %}{% endblock %}
 
-{% block content %}
-<div class="page-content" data-endpoint="{{ endpoint }}"></div>
-{% endblock %}
+{% block content %}<div data-endpoint="{{ endpoint }}" id="detail"></div>{% endblock %}

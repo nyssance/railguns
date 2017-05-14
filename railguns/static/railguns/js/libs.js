@@ -2,7 +2,7 @@
 
 $(function() {
 	// Handlebars
-	var content = $('.page-content');
+	var content = $('#detail');
 	var endpoint = content.data('endpoint');
 	if ((typeof endpoint) == 'string' && endpoint != '') {
 		$.getJSON(endpoint).done(function(data) {
