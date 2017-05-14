@@ -1,0 +1,22 @@
+{% extends './detail.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/table_detail -->
+{% endblock %}
+
+{% block template %}{% verbatim %}
+<!-- 示例模版 开始 -->
+<h3 class="mdc-list-group__subheader">List 1</h3>
+<ul class="mdc-list">
+	<li class="mdc-list-item">id: {{id}}</li>
+</ul>
+<hr class="mdc-list-divider">
+<h3 class="mdc-list-group__subheader">List 2</h3>
+<ul class="mdc-list">
+	<li class="mdc-list-item">Single-line item</li>
+	<li class="mdc-list-item">Single-line item</li>
+</ul>
+<!-- 示例模版 结束 -->
+{% endverbatim %}{% endblock %}
+
+{% block content %}
+<div class="mdc-list-group" data-endpoint="{{ endpoint }}"></div>
+{% endblock %}
