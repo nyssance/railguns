@@ -7,7 +7,7 @@
 {{#results}}
 <li class="mdc-grid-tile">
 	<div class="mdc-card">
-		<section class="mdc-card__media demo-card__16-9-media" style="background-image: url(//test-static-plus-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/demo/pic_{{id}}.jpg)">
+		<section class="mdc-card__media" style="background-image: url(//test-static-plus-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/demo/pic_{{id}}.jpg)">
 		</section>
 		<section class="mdc-card__primary">
 			<h1 class="mdc-card__title mdc-card__title--large">标题</h1>
@@ -24,5 +24,5 @@
 {% endverbatim %}{% endblock %}
 
 {% block list %}<div class="mdc-grid-list">
-		<ul class="mdc-grid-list__tiles" data-endpoint="{{ endpoint }}" id="list"></ul>
-	</div>{% endblock %}
+			<ul class="mdc-grid-list__tiles" data-endpoint="{{ endpoint }}" id="list"></ul>
+		</div>{% endblock %}
