@@ -10,6 +10,7 @@ class DateTimeModelMixin(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['-pk']
 
 
 class OwnerModel(DateTimeModelMixin):
@@ -20,7 +21,6 @@ class OwnerModel(DateTimeModelMixin):
 
     class Meta:
         abstract = True
-        ordering = ['-pk']
 
 
 class PostModel(OwnerModel):

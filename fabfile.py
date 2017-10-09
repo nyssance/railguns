@@ -36,7 +36,7 @@ def hello():
 
 @task()
 def update_project():
-    local('curl -fsSL https://raw.githubusercontent.com/nypisces/Free/master/gitignore/Swift.gitignore > .gitignore')
+    local('curl -fsSL https://raw.githubusercontent.com/nypisces/Free/master/gitignore/Python.gitignore > .gitignore')
     local_proxy('pod update')
 
 

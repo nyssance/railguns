@@ -23,16 +23,6 @@ class ImageUrisMixin(serializers.Serializer):
         return OrderedDict([('count', len(data)), ('next', None), ('previous', None), ('results', data)])
 
 
-class ImageUrlsMixin(serializers.Serializer):
-    images = serializers.SerializerMethodField()
-
-    def get_images(self, obj):
-        data = []
-        if obj.image_urls.strip() != '':
-            data = [{'url': item.strip(), 'uri': item.strip()} for item in obj.image_urls.split('\n')]
-        return OrderedDict([('count', len(data)), ('next', None), ('previous', None), ('results', data)])
-
-
 class TagsMixin(serializers.Serializer):
     tags = serializers.SerializerMethodField()
 

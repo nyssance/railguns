@@ -1,7 +1,7 @@
 'use strict';
 
 $(function() {
-	// Drawer
+	// Drawer https://material.io/components/web/catalog/drawers/
 	let drawer = new mdc.drawer.MDCTemporaryDrawer(document.querySelector('.mdc-temporary-drawer'));
 	document.querySelector('.menu').addEventListener('click', () => drawer.open = true);
 
