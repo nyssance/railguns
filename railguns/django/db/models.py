@@ -16,7 +16,7 @@ class DateTimeModelMixin(models.Model):
 class OwnerModel(DateTimeModelMixin):
     user_id = models.IntegerField(default=0, editable=False)
     username = models.CharField(max_length=150, editable=False)
-    user_image_urls = models.CharField(_('image_urls'), max_length=2000, blank=True, editable=False)
+    user_image_uris = models.CharField(_('image_uris'), max_length=2000, blank=True, editable=False)
     is_active = models.BooleanField(_('active'), default=True)
 
     class Meta:
@@ -27,7 +27,7 @@ class PostModel(OwnerModel):
     """内容发布类模型"""
     title = models.CharField(_('title'), max_length=30)
     summary = models.CharField(_('summary'), max_length=200, blank=True)
-    image_urls = models.CharField(_('image_urls'), max_length=2000, blank=True)
+    image_uris = models.CharField(_('image_uris'), max_length=2000, blank=True)
     tags = models.CharField(_('tags'), max_length=200, blank=True)
 
     class Meta(OwnerModel.Meta):
