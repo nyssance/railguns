@@ -9,7 +9,7 @@ from import_export.admin import ExportMixin
 from ..db.models import OwnerModel
 
 
-class ImageUrlsMixin(object):
+class ImagesMixin(object):
     image_width = 200
     image_height = 100
 
@@ -19,7 +19,7 @@ class ImageUrlsMixin(object):
     get_preview.short_description = _('preview')
 
 
-class SuperAdmin(ImageUrlsMixin, ExportMixin, admin.ModelAdmin):
+class SuperAdmin(ImagesMixin, ExportMixin, admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.id:  # 如果obj.id不存在, 为新创建

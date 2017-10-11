@@ -10,16 +10,22 @@ class DateTimeModelMixin(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['-pk']
 
 
-class OwnerModel(DateTimeModelMixin):
+class BaseModel(DateTimeModelMixin):
+     is_active = models.BooleanField(_('active'), default=True)
+     
+     class Meta:
+         abstract = True
+         ordering = ['-pk']
+
+
+class OwnerModel(BaseModel):
     user_id = models.IntegerField(default=0, editable=False)
     username = models.CharField(max_length=150, editable=False)
     user_image_uris = models.CharField(_('image_uris'), max_length=2000, blank=True, editable=False)
-    is_active = models.BooleanField(_('active'), default=True)
 
-    class Meta:
+    class Meta(BaseModel.Meta):
         abstract = True
 
 
