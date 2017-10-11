@@ -31,7 +31,7 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
         'expiration': (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
         'conditions': [
             {'bucket': bucket},
-            ['starts-with', '$key', path.split('/')[0]],  # http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
+            ['starts-with', '$key', path.split('/')[0]],  # https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
             ['starts-with', '$Content-Type', content_type]]}
     if cloud in ['aws', 's3']:
         policy_object['conditions'].append({'acl': 'public-read'})

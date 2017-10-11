@@ -188,3 +188,5 @@ local.properties
 /static/
 /tmp/
 dump.rdb
+
+.project
