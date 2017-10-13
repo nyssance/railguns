@@ -4,7 +4,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
-from django.views.i18n import javascript_catalog
+from django.views.i18n import JavaScriptCatalog
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from .rest_framework.views import download_url, upload_params
@@ -15,7 +15,8 @@ from .views import SwaggerSchemaView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^jsi18n/(?P<packages>\S+?)/$', javascript_catalog)
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+#     url(r'^jsi18n/(?P<packages>\S+?)/$', javascript_catalog)
 ]
 # 第三方
 urlpatterns += [
