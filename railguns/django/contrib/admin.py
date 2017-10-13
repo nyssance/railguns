@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.core import serializers
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
-from import_export.admin import ExportMixin
+# from import_export.admin import ExportMixin
 
 from ..db.models import OwnerModel
 
@@ -19,7 +19,8 @@ class ImagesMixin(object):
     get_preview.short_description = _('preview')
 
 
-class SuperAdmin(ImagesMixin, ExportMixin, admin.ModelAdmin):
+# class SuperAdmin(ImagesMixin, ExportMixin, admin.ModelAdmin):
+class SuperAdmin(ImagesMixin, admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.id:  # 如果obj.id不存在, 为新创建
