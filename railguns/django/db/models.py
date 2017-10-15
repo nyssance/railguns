@@ -13,9 +13,10 @@ class DateTimeModelMixin(models.Model):
 
 
 class BaseModel(DateTimeModelMixin):
-     is_active = models.BooleanField(_('active'), default=True)
-     
-     class Meta:
+    is_active = models.BooleanField(_('active'), default=True)
+    objects = models.Manager()  # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
+
+    class Meta:
          abstract = True
          ordering = ['-pk']
 
