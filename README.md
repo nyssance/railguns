@@ -4,8 +4,8 @@ Only My Railgun
 框架用到的库
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](http://www.django-rest-framework.org)
-- [REST framework JWT Auth](http://getblimp.github.io/django-rest-framework-jwt/)
-- [REST Framework XML](http://jpadilla.github.io/django-rest-framework-xml/)
+- [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
+- [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/)
 - [Django REST Swagger](https://marcgibbons.github.io/django-rest-swagger/)
 
 常用库
