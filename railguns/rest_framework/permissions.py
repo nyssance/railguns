@@ -56,8 +56,8 @@ class IsWhiteIpOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
         ip_addr = get_ip(request, right_most_proxy=True)
         white_ips = settings.WHITE_IPS
-        if not request.user.is_authenticated():  # 如果没有登录
+        if not request.user.is_authenticated:  # 如果没有登录
             if ip_addr in white_ips:
                 return True
         else:
-            return request.user and request.user.is_authenticated()
+            return request.user and request.user.is_authenticated
