@@ -17,8 +17,8 @@ class BaseModel(DateTimeModelMixin):
     objects = models.Manager()  # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
 
     class Meta:
-         abstract = True
-         ordering = ['-pk']
+        abstract = True
+        ordering = ['-pk']
 
 
 class OwnerModel(BaseModel):
