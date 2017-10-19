@@ -3,13 +3,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
-from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from .rest_framework.views import download_url, upload_params
+from .views import SwaggerSchemaView
 
 
 # 系统自带
@@ -24,7 +23,7 @@ urlpatterns += [
     path('api-token-auth/', obtain_jwt_token),
     path('api-token-refresh/', refresh_jwt_token),
     path('api-token-verify/', verify_jwt_token),
-    path('developer/documentation/', include_docs_urls(title='{} API'.format(_('app_name')), public=False)),
+    path('developer/documentation/', SwaggerSchemaView.as_view()),
     # path('search/', include('haystack.urls'))
 ]
 # RailgunS

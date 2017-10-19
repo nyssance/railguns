@@ -10,13 +10,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='railguns',
-    version='0.7.0',
+    version='0.6.1',
     install_requires=[
         'Django==2.0a1',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
-        'drf_openapi',
+        'django-rest-swagger',
         #
         'django-ckeditor',
         'django-extensions',
