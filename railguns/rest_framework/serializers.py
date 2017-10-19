@@ -1,29 +1,35 @@
 from django.contrib.auth import get_user_model
-from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from rest_framework.fields import CharField, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
 
-class DownloadUrlSerializer(serializers.Serializer):
-    url = serializers.CharField()
+class BaseModelSerializer(ModelSerializer):
+    class Meta:
+        exclude = ['updated_time', 'is_active']
 
 
-class UploadParamsSerializer(serializers.Serializer):
-    key = serializers.CharField()
-    AWSAccessKeyId = serializers.CharField()
-    OSSAccessKeyId = serializers.CharField()
-    acl = serializers.CharField()
-    success_action_status = serializers.CharField()
-    ContentType = serializers.CharField()
-    policy = serializers.CharField()
-    signature = serializers.CharField()
-    ContentEncoding = serializers.CharField()
-    domain = serializers.CharField()
+class DownloadUrlSerializer(Serializer):
+    url = CharField()
 
 
-class UserCreatedSerializer(serializers.ModelSerializer):
-    token = serializers.SerializerMethodField()
-    type = serializers.SerializerMethodField()
+class UploadParamsSerializer(Serializer):
+    key = CharField()
+    AWSAccessKeyId = CharField()
+    OSSAccessKeyId = CharField()
+    acl = CharField()
+    success_action_status = CharField()
+    ContentType = CharField()
+    policy = CharField()
+    signature = CharField()
+    ContentEncoding = CharField()
+    domain = CharField()
+
+
+class UserCreatedSerializer(ModelSerializer):
+    token = SerializerMethodField()
+    type = SerializerMethodField()
 
     class Meta:
         model = get_user_model()
@@ -41,7 +47,7 @@ class UserCreatedSerializer(serializers.ModelSerializer):
             return {'code': 0, 'message': ''}
 
 
-class UserPasswordSerializer(serializers.ModelSerializer):
+class UserPasswordSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['password']
