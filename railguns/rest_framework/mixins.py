@@ -1,9 +1,10 @@
-from collections import OrderedDict
 import datetime
 
 from django.utils.timezone import localtime
 from rest_framework import serializers
 from rest_framework.response import Response
+
+from .utils import get_list
 
 
 class IdStrMixin(serializers.Serializer):
@@ -20,7 +21,7 @@ class ImagesMixin(serializers.Serializer):
         data = []
         if obj.image_uris.strip() != '':
             data = [{'uri': item.strip()} for item in obj.image_uris.split('\n')]
-        return OrderedDict([('count', len(data)), ('next', None), ('previous', None), ('results', data)])
+        return get_list(data)
 
 
 class TagsMixin(serializers.Serializer):
@@ -31,7 +32,7 @@ class TagsMixin(serializers.Serializer):
         for item in obj.tags.strip().split('#'):
             if item.strip() != '':
                 data.append({'name': item.strip()})
-        return OrderedDict([('count', len(data)), ('next', None), ('previous', None), ('results', data)])
+        return get_list(data)
 
 
 class OwnerMixin(object):

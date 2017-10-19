@@ -27,7 +27,9 @@ class BaseView(TemplateView):
     name = None
 
 
-class WebView(BaseView):
+class WebView(TemplateView):
+    name = None
+
     def get(self, request, *args, **kwargs):
         title = kwargs.get('title', '{} - {}'.format(_(self.name), _('app_name')))
         # title = kwargs.get('title', _(self.name)) TODO: 移动版用这个title
