@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from .utils import generate_shard_id, get_user_id, db_master
 
 
-class DateTimeModelModel(models.Model):
+class DateTimeModelMixin(models.Model):
     created_time = models.DateTimeField(_('created_time'), auto_now_add=True)
     updated_time = models.DateTimeField(_('updated_time'), auto_now=True)
 
@@ -12,7 +12,7 @@ class DateTimeModelModel(models.Model):
         abstract = True
 
 
-class BaseModel(DateTimeModelModel):
+class BaseModel(DateTimeModelMixin):
     is_active = models.BooleanField(_('active'), default=True)
     objects = models.Manager()  # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
 

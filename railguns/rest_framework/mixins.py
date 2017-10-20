@@ -1,21 +1,21 @@
 import datetime
 
 from django.utils.timezone import localtime
+from rest_framework import serializers
 from rest_framework.response import Response
-from rest_framework.serializers import SerializerMethodField
 
 from .utils import get_list
 
 
-class IdStrMixin(object):
-    id_str = SerializerMethodField()
+class IdStrMixin(serializers.Serializer):
+    id_str = serializers.SerializerMethodField()
 
     def get_id_str(self, obj):
         return str(obj.id)
 
 
-class ImagesMixin(object):
-    images = SerializerMethodField()
+class ImagesMixin(serializers.Serializer):
+    images = serializers.SerializerMethodField()
 
     def get_images(self, obj):
         data = []
@@ -24,8 +24,8 @@ class ImagesMixin(object):
         return get_list(data)
 
 
-class TagsMixin(object):
-    tags = SerializerMethodField()
+class TagsMixin(serializers.Serializer):
+    tags = serializers.SerializerMethodField()
 
     def get_tags(self, obj):
         data = []
@@ -55,15 +55,15 @@ class PutToPatchApiViewMixin(object):
         return self.patch(request, *args, **kwargs)
 
 
-class StartDateMixin(object):
-    start_date = SerializerMethodField()
+class StartDateMixin(serializers.Serializer):
+    start_date = serializers.SerializerMethodField()
 
     def get_start_date(self, obj):
         return localtime(obj.start_time).strftime('%Y-%m-%d')
 
 
-class EndDateMixin(object):
-    end_date = SerializerMethodField()
+class EndDateMixin(serializers.Serializer):
+    end_date = serializers.SerializerMethodField()
 
     def get_end_date(self, obj):
         if obj.period <= 0:
