@@ -31,8 +31,9 @@ class WebView(TemplateView):
     name = None
 
     def get(self, request, *args, **kwargs):
-        title = kwargs.get('title', '{} - {}'.format(_(self.name), _('app_name')))
-        # title = kwargs.get('title', _(self.name)) TODO: 移动版用这个title
+        verbose_name = _(self.name.replace('_list', 's').replace('_detail', ''))
+        title = kwargs.get('title', verbose_name)
+        # title = kwargs.get('title', '{} - {}'.format(verbose_name, _('app_name'))) // TODO: PC版用这个
         endpoint = kwargs.get('endpoint', '/{}{}'.format(settings.API_VERSION, request.get_full_path()))
         template_name = self.template_name if self.template_name else '{}.html'.format(self.name)
         return render(request, template_name, locals())
