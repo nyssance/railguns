@@ -21,16 +21,9 @@ def get_object_or_none(model, using='default', **kwargs):
         return None
 
 
-def get_pk_int(view):
-    """
-    必须转为int否则不等于request.user.id, int必须有值安全起见设默认值0
-    """
-    return int(view.kwargs.get('pk', 0))
-
-
 def get_user_id(pk):
     """
-    需要保证传入的pk都是int, 所以在views中需要和和get_pk_int配合使用
+    需要保证传入的pk都是int
     """
     return pk & 0xFFFFFFFF
 
