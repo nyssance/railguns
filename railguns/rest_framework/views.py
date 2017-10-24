@@ -10,11 +10,10 @@ import uuid
 from boto.s3.key import Key as S3Key
 from django.conf import settings
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ..utils.cloud_func import oss_download_url
-from .permissions import WhitelistPermission
+from .permissions import IsAuthenticatedOrWhitelist
 from .response import ResponseBadRequest
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
@@ -71,7 +70,7 @@ class DownloadUrlView(generics.RetrieveAPIView):
     """获取下载地址
     """
     serializer_class = DownloadUrlSerializer
-    permission_classes = [WhitelistPermission, IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrWhitelist]
 
     def retrieve(self, request, *args, **kwargs):
         try:
@@ -92,7 +91,7 @@ class UploadParamsView(generics.RetrieveAPIView):
     cache_control -- (可选)默认没有
     """
     serializer_class = UploadParamsSerializer  # 加了只是为Swagger用, 不影响输出结果
-    permission_classes = [WhitelistPermission, IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrWhitelist]
     throttle_classes = []
 
     def retrieve(self, request, *args, **kwargs):

@@ -66,3 +66,14 @@ class WhitelistPermission(permissions.BasePermission):
         ip_addr = get_ip(request, right_most_proxy=True)
         whitelisted = ip_addr in settings.WHITELIST
         return whitelisted
+
+
+class IsAuthenticatedOrWhitelist(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated:
+            return True
+        else:
+            ip_addr = get_ip(request, right_most_proxy=True)
+            whitelisted = ip_addr in settings.WHITELIST
+            return whitelisted

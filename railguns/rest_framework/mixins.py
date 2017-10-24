@@ -8,6 +8,12 @@ from rest_framework.serializers import Serializer
 from .utils import get_list
 
 
+class ModelMixin(object):
+
+    def get_model(self):
+        return self.serializer_class.Meta.model
+
+
 class IdStrMixin(Serializer):
     id_str = SerializerMethodField()
 
