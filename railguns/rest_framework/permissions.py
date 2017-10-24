@@ -51,13 +51,18 @@ class IsRelationOrReadOnly(permissions.BasePermission):
         return obj.from_id == request.user.id or obj.to_id == request.user.id
 
 
-class IsWhiteIpOrIsAuthenticated(permissions.BasePermission):
+# http://www.django-rest-framework.org/api-guide/permissions/#examples
+class BlacklistPermission(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        ip_addr = request.META['REMOTE_ADDR']
+        blacklisted = Blacklist.objects.filter(ip_addr=ip_addr).exists()
+        return not blacklisted
+
+
+class WhitelistPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         ip_addr = get_ip(request, right_most_proxy=True)
-        white_ips = settings.WHITE_IPS
-        if not request.user.is_authenticated:  # 如果没有登录
-            if ip_addr in white_ips:
-                return True
-        else:
-            return request.user and request.user.is_authenticated
+        whitelisted = ip_addr in settings.WHITELIST
+        return whitelisted
