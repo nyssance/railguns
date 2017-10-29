@@ -26,7 +26,7 @@ urlpatterns += [
     path('developer/documentation/', SwaggerSchemaView.as_view()),
     # path('search/', include('haystack.urls'))
 ]
-# RailgunS
+# Railgun S
 urlpatterns += [
     re_path(r'download_url/(?P<pk>\w+)/$', download_url, name='download_url'),
     re_path(r'upload_params/(?P<pk>\w+)/$', upload_params, name='upload_params'),

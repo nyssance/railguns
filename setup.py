@@ -9,8 +9,8 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='railguns',
-    version='0.6.2',
+    name='RailgunS',
+    version='0.6.5',
     install_requires=[
         'Django==2.0b1',
         'djangorestframework',

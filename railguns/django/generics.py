@@ -11,7 +11,7 @@ def get_headers(request, keys=[]):
 
 
 def generate_uri(urlstring, request):
-    if urlstring == '' or urlparse(urlstring).scheme:  # 如果为空或有scheme
+    if not urlstring or urlparse(urlstring).scheme:  # 如果为空或有scheme
         return urlstring
     else:
         # headers = get_headers(request, ['HTTP_APP_SCHEME', 'HTTP_USER_AGENT', 'HTTP_HOST'])

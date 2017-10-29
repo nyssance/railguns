@@ -33,8 +33,8 @@ class UserCreatedSerializer(serializers.ModelSerializer):
         return jwt_encode_handler(jwt_payload_handler(obj))
 
     def get_type(self, obj):
-        USER_TYPE_CHOICES = [(0, '普通帐户'), (1, '企业帐户'), (2, '企业员工')]
-        type_list = [i[1] for i in USER_TYPE_CHOICES if i[0] == obj.type]
+        USER_TYPES = [(0, '普通帐户'), (1, '企业帐户'), (2, '企业员工')]
+        type_list = [i[1] for i in USER_TYPES if i[0] == obj.type]
         if len(type_list) != 0:
             return {'code': obj.type, 'message': type_list[0]}
         else:

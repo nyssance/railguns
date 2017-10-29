@@ -99,7 +99,7 @@ class UploadParamsView(generics.RetrieveAPIView):
         bucket = request.GET.get('bucket', settings.BUCKET_MEDIA)
         if bucket == settings.BUCKET_MEDIA:  # 传到static下的不修改大小写
             filename = filename.lower()
-        if filename == '':
+        if not filename:
             return ResponseBadRequest('filename不能为空')
         rename = False
         if bucket == settings.BUCKET_MEDIA:
