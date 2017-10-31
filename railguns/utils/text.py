@@ -14,7 +14,7 @@ def camelcase_to_underscore(name):
 
 
 def underscore_to_camelcase(name, lower_first=True):
-    result = ''.join(char.capitalize() for char in name.split('_'))
+    result = name.title().replace('_', '')
     if lower_first:
         return result[0].lower() + result[1:]
     else:
