@@ -28,8 +28,8 @@ urlpatterns += [
 ]
 # Railgun S
 urlpatterns += [
-    re_path(r'download_url/(?P<pk>\w+)/$', download_url, name='download_url'),
-    re_path(r'upload_params/(?P<pk>\w+)/$', upload_params, name='upload_params'),
+    re_path(r'download_url/(?P<pk>\w+)/$', download_url, name='download-url'),
+    re_path(r'upload_params/(?P<pk>\w+)/$', upload_params, name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]
 
