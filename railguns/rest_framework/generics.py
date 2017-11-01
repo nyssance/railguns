@@ -33,13 +33,13 @@ class ListCreateAPI(mixins.ModelMixin, ListCreateAPIView):
                         user_image_uris=self.request.user.image_uris)
 
 
-class DetailAPI(mixins.ModelMixin, RetrieveAPIView):
+class RetrieveAPI(mixins.ModelMixin, RetrieveAPIView):
     """详情 API"""
     def get_queryset(self):
         return self.get_model().objects.filter(is_active=True)
 
 
-class DetailUpdateAPI(mixins.ModelMixin, mixins.PutToPatchMixin, RetrieveUpdateAPIView):
+class RetrieveUpdateAPI(mixins.ModelMixin, mixins.PutToPatchMixin, RetrieveUpdateAPIView):
     """详情 & 更新 API"""
     def get_queryset(self):
         if self.request.method == 'GET':
