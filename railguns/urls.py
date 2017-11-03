@@ -8,7 +8,6 @@ from django.views.i18n import JavaScriptCatalog
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from .rest_framework.views import download_url, upload_params
-from .views import SwaggerSchemaView
 
 
 # 系统自带
@@ -23,13 +22,13 @@ urlpatterns += [
     path('api-token-auth/', obtain_jwt_token),
     path('api-token-refresh/', refresh_jwt_token),
     path('api-token-verify/', verify_jwt_token),
-    path('developer/documentation/', SwaggerSchemaView.as_view()),
+    re_path(r'api/(?P<version>(v1))/', include('drf_openapi.urls'))
     # path('search/', include('haystack.urls'))
 ]
 # Railgun S
 urlpatterns += [
-    re_path(r'download_url/(?P<pk>\w+)/$', download_url, name='download-url'),
-    re_path(r'upload_params/(?P<pk>\w+)/$', upload_params, name='upload-params'),
+    re_path(r'download_url/(?P<cloud>(aliyun|oss))/$', download_url, name='download-url'),
+    re_path(r'upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', upload_params, name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]
 

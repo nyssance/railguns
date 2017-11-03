@@ -4,17 +4,16 @@ import hashlib
 import hmac
 import json
 import mimetypes
-import traceback
 import uuid
 
 from boto.s3.key import Key as S3Key
 from django.conf import settings
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 
 from ..utils.cloud_func import oss_download_url
 from .permissions import IsAuthenticatedOrWhitelist
-from .response import ResponseBadRequest
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
 
@@ -66,6 +65,12 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     return params
 
 
+class ServiceUnavailable(APIException):
+    status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+    default_detail = 'Service temporarily unavailable, try again later.'
+    default_code = 'service_unavailable'
+
+
 class DownloadUrlView(generics.RetrieveAPIView):
     """获取下载地址
     """
@@ -73,14 +78,12 @@ class DownloadUrlView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticatedOrWhitelist]
 
     def retrieve(self, request, *args, **kwargs):
-        try:
-            url = request.GET.get('url')  # http://test-documents-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/contract/001/Linux_Command3.pdf
-            if not url:
-                return ResponseBadRequest('url不能为空')
+        url = request.GET.get('url')  # http://test-documents-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/contract/001/Linux_Command3.pdf
+        if url:
             params = oss_download_url(url)
-        except Exception:
-            traceback.print_exc(5)
-        return Response(params)
+            return Response(params)
+        else:
+            raise APIException('url不能为空')
 
 
 class UploadParamsView(generics.RetrieveAPIView):
@@ -100,7 +103,7 @@ class UploadParamsView(generics.RetrieveAPIView):
         if bucket == settings.BUCKET_MEDIA:  # 传到static下的不修改大小写
             filename = filename.lower()
         if not filename:
-            return ResponseBadRequest('filename不能为空')
+            raise APIException('filename不能为空')
         rename = False
         if bucket == settings.BUCKET_MEDIA:
             rename = True

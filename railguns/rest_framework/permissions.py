@@ -20,13 +20,13 @@ class IsUserSelfOrReadOnly(permissions.BasePermission):
 class IsOwnerOnList(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return view.kwargs[view.lookup_field] == request.user.id
+        return view.lookup_field in view.kwargs and view.kwargs[view.lookup_field] == request.user.id
 
 
 class IsOwnerOnUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        return view.kwargs[view.lookup_field] == request.user.id
+        return view.lookup_field in view.kwargs and view.kwargs[view.lookup_field] == request.user.id
 
 
 class IsOwner(permissions.BasePermission):

@@ -10,13 +10,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.6.5',
+    version='0.7.0',
     install_requires=[
         'Django==2.0b1',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
-        'django-rest-swagger',
+        'drf_openapi',
         #
         'django-ckeditor',
         'django-crispy-forms',
@@ -41,7 +41,7 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.0a1',
+        'Framework :: Django :: 2.0b1',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
