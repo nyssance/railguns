@@ -26,7 +26,7 @@ class ImagesMixin(Serializer):
 
     def get_images(self, obj):
         data = []
-        if getattr(obj, 'image_uris'):
+        if getattr(obj, 'image_uris', None):
             data = [{'uri': item.strip()} for item in obj.image_uris.strip().split('\n')]
         return get_list(data)
 
@@ -36,7 +36,7 @@ class TagsMixin(Serializer):
 
     def get_tags(self, obj):
         data = []
-        if getattr(obj, 'tags'):
+        if getattr(obj, 'tags', None):
             for item in obj.tags.strip().split('#'):
                 if item.strip():
                     data.append({'name': item.strip()})
