@@ -13,10 +13,11 @@ setup(
     version='0.7.0',
     install_requires=[
         'Django==2.0b1',
+        'django[argon2]',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
-        'drf_openapi',
+        # 'drf_openapi',
         #
         'django-ckeditor',
         'django-crispy-forms',
@@ -29,6 +30,9 @@ setup(
         'redis',
         #
         'djangorestframework-camel-case'
+    ],
+    dependency_links=[
+        'https://codeload.github.com/limdauto/drf_openapi/zip/master'
     ],
     packages=find_packages(),
     include_package_data=True,

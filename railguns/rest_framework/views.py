@@ -93,7 +93,7 @@ class UploadParamsView(generics.RetrieveAPIView):
     content_encoding -- (可选)默认不压缩
     cache_control -- (可选)默认没有
     """
-    serializer_class = UploadParamsSerializer  # 加了只是为Swagger用, 不影响输出结果
+    serializer_class = UploadParamsSerializer  # 加了只是为OpenAPI用, 不影响输出结果
     permission_classes = [IsAuthenticatedOrWhitelist]
     throttle_classes = []
 
