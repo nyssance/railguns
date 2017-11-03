@@ -13,7 +13,6 @@ setup(
     version='0.7.1',
     install_requires=[
         'Django==2.0b1',
-        'django[argon2]',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
