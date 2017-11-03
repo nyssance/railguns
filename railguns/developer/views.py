@@ -89,13 +89,13 @@ def write_to_file(f, method, url, model_name, class_name, params='', params_type
     url = url.replace('<pk>', '{pk}').replace('<name>', '{name}')
     if method == 'LIST':
         f.write('@{}("{}")\n'.format('GET', url))
-        f.write('Call<ListModel<{}>> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params != '' else ''))
+        f.write('Call<ListModel<{}>> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params else ''))
     elif method == 'POST':
         f.write('@{}("{}")\n'.format(method, url))
         f.write('Call<{}> {}({});\n'.format(model_name, class_name, '@Body {} {}'.format(params, params_type)))
     else:
         f.write('@{}("{}")\n'.format(method, url))
-        f.write('Call<{}> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params != '' else ''))
+        f.write('Call<{}> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params else ''))
     f.write('\n')
 
 
