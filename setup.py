@@ -19,6 +19,7 @@ setup(
         'django-rest-swagger',
         #
         'django-ckeditor',
+        'django-crispy-forms',
         'django-extensions',
         'django-filter',
         'django-htmlmin',

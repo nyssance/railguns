@@ -10,8 +10,9 @@ Only My Railgun
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
-- [Django Extensions](https://django-extensions.readthedocs.io/en/latest/)
-- [Django Filter](https://django-filter.readthedocs.io/en/latest/)
+- [django-crispy-forms](https://django-crispy-forms.readthedocs.io)
+- [Django Extensions](https://django-extensions.readthedocs.io)
+- [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
