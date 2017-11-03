@@ -72,8 +72,10 @@ class ServiceUnavailable(APIException):
 
 
 class DownloadUrlView(generics.RetrieveAPIView):
-    """获取下载地址
     """
+    获取下载地址
+    """
+    lookup_field = 'cloud'
     serializer_class = DownloadUrlSerializer
     permission_classes = [IsAuthenticatedOrWhitelist]
 
@@ -87,12 +89,14 @@ class DownloadUrlView(generics.RetrieveAPIView):
 
 
 class UploadParamsView(generics.RetrieveAPIView):
-    """获取上传参数
+    """
+    获取上传参数
     filename -- 文件名, 可含有路径
     expiration -- (可选)过期时间, 默认50年
     content_encoding -- (可选)默认不压缩
     cache_control -- (可选)默认没有
     """
+    lookup_field = 'cloud'
     serializer_class = UploadParamsSerializer  # 加了只是为OpenAPI用, 不影响输出结果
     permission_classes = [IsAuthenticatedOrWhitelist]
     throttle_classes = []
