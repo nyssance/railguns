@@ -36,7 +36,7 @@ class CloudFileWidget(widgets.TextInput):
 
     def render(self, name, value, attrs=None):
         output = self.html.format(
-            policy_url=reverse('upload_params', args=['oss']) + '?bucket={}'.format(settings.BUCKET_MEDIA),
+            policy_url=reverse('upload-params', args=['oss']) + '?bucket={}'.format(settings.BUCKET_MEDIA),
             element_id=self.build_attrs(attrs).get('id'),
             file_name=os.path.basename(value or ''),
             file_url=value or '',
