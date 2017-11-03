@@ -17,7 +17,7 @@ setup(
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
-        'drf_openapi==0.9.9',
+        'drf_openapi==1.0.1',
         #
         'django-ckeditor',
         'django-crispy-forms',
@@ -32,7 +32,7 @@ setup(
         'djangorestframework-camel-case'
     ],
     dependency_links=[
-        'https://codeload.github.com/limdauto/drf_openapi/zip/master#egg=drf_openapi-0.9.9'
+        'https://codeload.github.com/limdauto/drf_openapi/zip/master#egg=drf_openapi-1.0.1'
     ],
     packages=find_packages(),
     include_package_data=True,
