@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
