@@ -1,10 +1,10 @@
-from django.utils.html import format_html, format_html_join
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 
 
-def format_field_join(field):
-    return format_html_join(mark_safe('<br>'), '{}', (item.__str__() for item in field.all()))
+# django 自带的 format_html_join 方法非常鸡肋
+def format_html_field_join(field, format_string='{}'):
+    return format_html('<br>'.join(format_string.format(item) for item in field.all()))
 
 
-def format_string_join(string):
-    return format_html(mark_safe('<br>').join(string.split()))
+def format_html_string_join(string):
+    return format_html('<br>'.join(string.split()))
