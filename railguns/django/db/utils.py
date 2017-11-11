@@ -10,7 +10,7 @@ def timestamp(date):
 
 
 def generate_shard_id(user_id):
-    time_offset = int(timestamp(datetime.datetime.now()) - 1425168000)  # 2015-03-01 00:00:00
+    time_offset = int(timestamp(datetime.datetime.now()) - 1510358400)  # 2017-11-11 00:00:00 中国时间
     return user_id | time_offset << 32
 
 
@@ -35,7 +35,7 @@ def db_master(user_id=None):
     if not user_id:
         return 'default'
     else:
-        if user_id < 10000:
+        if user_id < 10001:
             return 'default'
         else:
             return 'db_{}'.format(user_id % settings.SHARD_COUNT)
@@ -50,7 +50,7 @@ def redis_master(user_id=None):
     if not user_id:
         return 0
     else:
-        if user_id < 10000:
+        if user_id < 10001:
             return 0
         else:
             return int(user_id / 1000)
