@@ -1,18 +1,3 @@
-"""
-https://github.com/tomchristie/django-rest-framework/issues/944
-"""
-import re
-
-
-first_cap_re = re.compile('(.)([A-Z][a-z]+)')
-all_cap_re = re.compile('([a-z0-9])([A-Z])')
-
-
-def camelcase_to_underscore(name):
-    s1 = first_cap_re.sub(r'\1_\2', name)
-    return all_cap_re.sub(r'\1_\2', s1).lower()
-
-
 def underscore_to_camelcase(name, lower_first=True):
     result = name.title().replace('_', '')
     if lower_first:
