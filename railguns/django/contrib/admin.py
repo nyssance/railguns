@@ -13,7 +13,7 @@ class ImagesMixin(object):
     image_height = 100
 
     def get_preview(self, obj):
-        html = '<br>'.join('<a href="{0}" rel="external" target="_blank"><img src="{0}" width="{1}" height="{2}"/></a>'.format(item.strip(), self.image_width, self.image_height) for item in obj.image_uris.split('\n'))
+        html = '<br>'.join('<a href="{0}" rel="external" target="_blank"><img src="{0}" width="{1}" height="{2}"/></a>'.format(item.strip(), self.image_width, self.image_height) for item in obj.images.split('\n'))
         return format_html(html)
     get_preview.short_description = _('preview')
 
@@ -27,7 +27,7 @@ class SuperAdmin(ImagesMixin, admin.ModelAdmin):
                     obj.user_id = request.user.id
             if isinstance(obj, OwnerModel):
                 obj.username = request.user.username
-                obj.user_image_uris = request.user.image_uris
+                obj.user_images = request.user.images
         super(SuperAdmin, self).save_model(request, obj, form, change)
 
     def format_currency(self, amount, min):

@@ -11,7 +11,7 @@ class CreateAPI(mixins.ModelMixin, CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user.id,
                         username=self.request.user.username,
-                        user_image_uris=self.request.user.image_uris)
+                        user_images=self.request.user.images)
 
 
 class ListAPI(mixins.ModelMixin, ListAPIView):
@@ -30,7 +30,7 @@ class ListCreateAPI(mixins.ModelMixin, ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user.id,
                         username=self.request.user.username,
-                        user_image_uris=self.request.user.image_uris)
+                        user_images=self.request.user.images)
 
 
 class RetrieveAPI(mixins.ModelMixin, RetrieveAPIView):

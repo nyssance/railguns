@@ -26,8 +26,8 @@ class ImagesMixin(Serializer):
 
     def get_images(self, obj):
         data = []
-        if hasattr(obj, 'image_uris'):
-            data = [{'uri': item.strip()} for item in obj.image_uris.strip().split('\n')]
+        if hasattr(obj, 'images'):
+            data = [{'uri': item.strip()} for item in obj.images.strip().split('\n')]
         else:
             pass
         return get_list(data)
