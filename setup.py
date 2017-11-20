@@ -12,7 +12,7 @@ setup(
     name='RailgunS',
     version='0.7.5',
     install_requires=[
-        'Django==2.0b1',
+        'Django==2.0rc1',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
