@@ -32,8 +32,8 @@ class OwnerModel(BaseModel):
 
 class PostModel(OwnerModel):
     """内容发布类模型"""
-    title = models.CharField(_('title'), max_length=30)
-    summary = models.CharField(_('summary'), max_length=255, blank=True)
+    title = models.CharField(_('title'), max_length=255)
+    summary = models.CharField(_('summary'), max_length=2000, blank=True)
     images = models.CharField(_('images'), max_length=2000, blank=True)
     tags = models.CharField(_('tags'), max_length=255, blank=True)
 
