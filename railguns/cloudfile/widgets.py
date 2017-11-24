@@ -32,7 +32,7 @@ class CloudFileWidget(widgets.TextInput):
         }
 
     def __init__(self, *args, **kwargs):
-        super(CloudFileWidget, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
         output = self.html.format(

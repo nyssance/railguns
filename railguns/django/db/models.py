@@ -54,7 +54,7 @@ class ShardModel(OwnerModel):
         self.full_clean()
         if self.pk is None:
             self.pk = generate_shard_id(self.user_id)
-        super(ShardModel, self).save(using=db_master(self.user_id), *args, **kwargs)
+        super().save(using=db_master(self.user_id), *args, **kwargs)
 
 
 class ShardLCModel(OwnerModel):
@@ -68,8 +68,8 @@ class ShardLCModel(OwnerModel):
         self.full_clean()
         if self.pk is None:  # Create
             self.pk = generate_shard_id(self.user_id)
-        super(ShardLCModel, self).save(using=db_master(self.user_id), *args, **kwargs)  # 保存第一份
+        super().save(using=db_master(self.user_id), *args, **kwargs)  # 保存第一份
         card_user_id = get_user_id(self.card_id)
         if db_master(card_user_id) != db_master(self.user_id):  # 保存第二份
             self.is_origin = False
-            super(ShardLCModel, self).save(using=db_master(card_user_id), *args, **kwargs)
+            super().save(using=db_master(card_user_id), *args, **kwargs)

@@ -28,7 +28,7 @@ class SuperAdmin(PreviewMixin, admin.ModelAdmin):
             if isinstance(obj, OwnerModel):
                 obj.username = request.user.username
                 obj.user_images = request.user.images
-        super(SuperAdmin, self).save_model(request, obj, form, change)
+        super().save_model(request, obj, form, change)
 
     def format_currency(self, amount, min):
         price = amount / 100
@@ -41,4 +41,4 @@ class SuperAdmin(PreviewMixin, admin.ModelAdmin):
 
     def log_change(self, request, obj, message):
         new_message = '{}'.format(serializers.serialize('json', [obj]))
-        super(SuperAdmin, self).log_change(request, obj, new_message)
+        super().log_change(request, obj, new_message)
