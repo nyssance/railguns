@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from ..db.models import OwnerModel
 
 
-class ImagesMixin(object):
+class PreviewMixin(object):
     image_width = 200
     image_height = 100
 
@@ -18,7 +18,7 @@ class ImagesMixin(object):
     get_preview.short_description = _('preview')
 
 
-class SuperAdmin(ImagesMixin, admin.ModelAdmin):
+class SuperAdmin(PreviewMixin, admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # 如果obj.pk不存在, 为新创建

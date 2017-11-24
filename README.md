@@ -29,3 +29,10 @@ Only My Railgun
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
 - [Vue.js](https://vuejs.org/)
 - [Material Components for the Web](https://material.io/components/web/)
+
+前端可选库
+- [clipboard.js](https://clipboardjs.com/)
+- [GeoPattern](http://btmills.github.io/geopattern/)
+- [localForage](https://localforage.github.io/localForage/)
+- [Lodash](https://lodash.com/)
+- [Moment](http://momentjs.com/)
