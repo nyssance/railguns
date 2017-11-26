@@ -24,6 +24,7 @@ def generate_uri(urlstring, request):
 
 
 class WebView(TemplateView):
+    name = ''
 
     def get(self, request, *args, **kwargs):
         verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
