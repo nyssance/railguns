@@ -23,17 +23,12 @@ def generate_uri(urlstring, request):
             return '{}{}/'.format(settings.BASE_URL, urlstring)
 
 
-class BaseView(TemplateView):
-    name = None
-
-
 class WebView(TemplateView):
-    name = None
 
     def get(self, request, *args, **kwargs):
         verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
-        title = kwargs.get('title', verbose_name)
-        # title = kwargs.get('title', '{} - {}'.format(verbose_name, _('app_name'))) // TODO: PC版用这个
-        endpoint = kwargs.get('endpoint', '/{}{}'.format(settings.API_VERSION, request.get_full_path()))
+        title = self.title if self.title else verbose_name
+        # '{} - {}'.format(verbose_name, _('app_name')) // TODO: PC版用这个
+        endpoint = self.endpoint if self.endpoint else '/{}{}'.format(settings.API_VERSION, request.get_full_path())
         template_name = self.template_name if self.template_name else '{}.html'.format(self.name)
         return render(request, template_name, locals())
