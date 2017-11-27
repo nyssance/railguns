@@ -1,0 +1,18 @@
+{% extends './detail.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/post_detail -->
+{% endblock %}
+
+{% block css %}{{ block.super }}
+<style>
+img {
+    width:100%;
+}
+iframe {
+    width:100%;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+        <div class="paragraph" v-html="data.description"></div>
+{% endblock %}

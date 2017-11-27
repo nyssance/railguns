@@ -1,11 +1,12 @@
 {% extends './base.html' %}
+{% load static %}
 {% block structure %}{{ block.super }}<!--       mdc/detail -->
 {% endblock %}
 
-{% block template %}{% verbatim %}
-<!-- 示例模版 开始 -->
-<div>id: {{id}}</div>
-<!-- 示例模版 结束 -->
-{% endverbatim %}{% endblock %}
+{% block content %}
+        <div>id: {{ id }}</div>
+{% endblock %}
 
-{% block content %}<div data-endpoint="{{ endpoint }}" id="detail"></div>{% endblock %}
+{% block framework_js %}<!-- 💙 mdc/detail -->
+    <script src="{% static 'railguns/js/vue/detail.js' %}"></script>
+{% endblock %}

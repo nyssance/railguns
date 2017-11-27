@@ -1,0 +1,18 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block structure %}{{ block.super }}<!--           mdc/form/check_list_update -->
+{% endblock %}
+
+{% block menu %}<menu-item name="done" title="done"></menu-item>{% endblock %}
+
+{% block content %}
+<h3 class="mdc-list-group__subheader">&#xA0;</h3>
+            <hr class="mdc-list-divider">
+            <ul>
+                <list-item-default v-for="item in items" :title="item.label" :key="item.value"></list-item-default>
+            </ul>
+            <hr class="mdc-list-divider">{% endblock %}
+
+{% block framework_js %}<!-- 💙 mdc/form/check_list_update -->
+    <script src="{% static 'railguns/js/vue/update.js' %}"></script>
+{% endblock %}

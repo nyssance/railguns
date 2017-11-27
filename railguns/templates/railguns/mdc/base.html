@@ -1,39 +1,47 @@
 {% extends '../base_quick.html' %}
-
-{% load i18n %}
-{% load static %}
-
+<!-- 加载 -->
+{% load i18n static %}
+<!-- 结构 -->
 {% block structure %}{{ block.super }}<!--     mdc/base -->
 {% endblock %}
 
 {% block css %}
-	<!-- 💙 mdc/base -->
-	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<!-- 💛 自定义css -->
-{% endblock %}
+    <!-- 💙 mdc/base -->
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- 💛 自定义 css -->{% endblock %}
 
 {% block body %}
-	<!-- header 区域 -->
-	<header class="mdc-toolbar mdc-toolbar--fixed">
-		<div class="mdc-toolbar__row">
-			<section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-				{% block menu %}<button class="menu material-icons">menu</button>{% endblock %}
-				<span class="mdc-toolbar__title catalog-title">{% trans '基金云' %}</span>
-			</section>
-		</div>
-	</header>
-	<!-- drawer 区域 -->{% block navbar %}<!-- 无侧导航栏 -->{% endblock %}
-	<!-- main 区域 -->
-	<main class="mdc-toolbar-fixed-adjust">
-		{% block content %}{% endblock %}
-	</main>
+    <!-- app bar 区域 -->
+    {% block app_bar %}<header class="mdc-toolbar mdc-toolbar--fixed" id="app_bar">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                {% block left_bar_item %}<!-- http://www.w3school.com.cn/js/js_window_history.asp -->
+                <!-- https://stackoverflow.com/questions/14815838/webkit-chrome-history-back-1-onclick-vs-href -->
+                <a href="#" onclick="history.back();return false;" class="mdc-toolbar__menu-icon"><i class="material-icons">&#xE5C4;</i></a>{% endblock %}
+                <span class="mdc-toolbar__title">{{ title }}</span>
+            </section>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+                {% block menu %}<!-- <a href="#" class="material-icons mdc-toolbar__icon" aria-label="Download" alt="Download">file_download</a> -->
+                <a href="#" class="material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">more_vert</a>{% endblock %}
+            </section>
+        </div>
+    </header>{% endblock %}
+    <!-- drawer 区域 -->{% block drawer %}<!-- 无侧导航栏 -->{% endblock %}
+    <!-- main 区域 -->
+    <main class="mdc-toolbar-fixed-adjust" data-endpoint="{{ endpoint }}" id="content">
+        {% block content %}{% endblock %}
+    </main>
 {% endblock %}
 
 {% block js %}{{ block.super }}<!-- 💙 mdc/base -->
-	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-	<script src="{% static 'railguns/js/mdc.js' %}"></script>
-	<!-- 💛 自定义js -->
-{% endblock %}
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script>window.mdc.autoInit()</script>
+    <script src="{% static 'railguns/js/mdc/components.js' %}"></script>
+    <script src="{% static 'railguns/js/vue/common.js' %}"></script>
+    {% block framework_js %}{% endblock %}
+    <script src="{% static 'railguns/js/mdc/common.js' %}"></script>
+    <!-- 💛 自定义 js -->{% endblock %}
