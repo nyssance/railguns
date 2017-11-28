@@ -29,7 +29,10 @@ class WebView(TemplateView):
     endpoint = None
 
     def get(self, request, *args, **kwargs):
-        verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
+        if self.name.endswith('_create'):  # 创建页
+            verbose_name = (' ').join(_(item) for item in self.name.split('_')[::-1])
+        else:
+            verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
         # '{} - {}'.format(verbose_name, _('app_name')) // TODO: PC版用这个
         endpoint = self.endpoint if self.endpoint is not None else '/{}{}'.format(settings.API_VERSION, request.get_full_path())
