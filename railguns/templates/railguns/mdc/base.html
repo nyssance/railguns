@@ -7,9 +7,9 @@
 
 {% block css %}
     <!-- 💙 mdc/base -->
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" href="{% static 'vendor/material-components-web.min.css' %}">
+<!--     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"> -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- 💛 自定义 css -->{% endblock %}
@@ -25,8 +25,7 @@
                 <span class="mdc-toolbar__title">{{ title }}</span>
             </section>
             <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-                {% block menu %}<!-- <a href="#" class="material-icons mdc-toolbar__icon" aria-label="Download" alt="Download">file_download</a> -->
-                <a href="#" class="material-icons mdc-toolbar__icon" aria-label="Bookmark this page" alt="Bookmark this page">more_vert</a>{% endblock %}
+                {% block menu %}{% endblock %}
             </section>
         </div>
     </header>{% endblock %}
@@ -38,7 +37,7 @@
 {% endblock %}
 
 {% block js %}{{ block.super }}<!-- 💙 mdc/base -->
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	<script src="{% static 'vendor/material-components-web.min.js' %}"></script>
     <script>window.mdc.autoInit()</script>
     <script src="{% static 'railguns/js/mdc/components.js' %}"></script>
     <script src="{% static 'railguns/js/vue/common.js' %}"></script>

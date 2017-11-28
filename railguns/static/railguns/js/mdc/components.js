@@ -65,9 +65,9 @@ const list_item_value1 = `
 
 // List Item
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'uri'],
+    props: ['icon', 'title', 'accessory', 'uri', 'datavalue'],
     template: `
-        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_default}
         </a>
         <li v-else class="mdc-list-item">
@@ -87,9 +87,9 @@ Vue.component('list-item-subtitle', {
 })
 
 Vue.component('list-item-value1', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'uri'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'uri', 'datavalue'],
     template: `
-        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_value1}
         </a>
         <li v-else class="mdc-list-item">

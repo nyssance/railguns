@@ -20,15 +20,20 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/js-cookie/latest/js.cookie.min.js"></script>
     <script src="{% static 'railguns/js/django.js' %}"></script>
-    <!-- libs -->
-    <script src="https://unpkg.com/vue{% if not debug %}/dist/vue.min.js{% endif %}"></script>
-    <script src="https://unpkg.com/axios/dist/axios{% if not debug %}.min{% endif %}.js"></script>
+    <!-- Vendor -->
+    {% if debug %}
+        <script src="{% static 'vendor/vue.js' %}"></script>
+        <script src="{% static 'vendor/axios.js' %}"></script>
+    {% else %}
+        <script src="{% static 'vendor/vue.min.js' %}"></script>
+        <script src="{% static 'vendor/axios.min.js' %}"></script>
+    {% endif %}
     <!--  -->
     <script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
     <script src="https://cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery.lazy/1.7.6/jquery.lazy.min.js"></script>
     <!--  -->
-    <script src="{% static 'railguns/js/libs.js' %}"></script>
+    <script src="{% static 'railguns/js/vendor.js' %}"></script>
     {% endblock %}
     <!-- 🍻 js 结束 -->
 {% endblock %}
