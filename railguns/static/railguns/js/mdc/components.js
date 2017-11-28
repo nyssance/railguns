@@ -28,8 +28,8 @@ Vue.component('list-footer', {
 
 // 菜单
 Vue.component('menu-item', {
-    props: ['name', 'title', 'uri'],
-    template: `<a :href="uri" class="material-icons mdc-toolbar__icon" :aria-label="title" :alt="title">{{ name }}</a>`
+    props: ['icon', 'title', 'uri'],
+    template: `<a :href="uri" class="material-icons mdc-toolbar__icon" :aria-label="title" :alt="title">{{ icon }}</a>`
 })
 
 // 基本模版

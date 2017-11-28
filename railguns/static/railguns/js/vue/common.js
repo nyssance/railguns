@@ -46,13 +46,10 @@ function getEndpoint(element) {
     return endpoint
 }
 
-function queryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i")
-    var r = window.location.search.substr(1).match(reg)
-    if (r != null) {
-        return unescape(r[2])
-    }
-    return null
+function getQueryString(name) {
+    var regx = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i")
+    var r = window.location.search.substr(1).match(regx)
+    return !!r ? decodeURIComponent(r[2]) : null
 }
 
 var app_bar = new Vue({
