@@ -12,7 +12,7 @@ setup(
     name='RailgunS',
     version='0.8.0',
     install_requires=[
-        'Django==2.0rc1',
+        'Django',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
@@ -45,7 +45,7 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.0rc1',
+        'Framework :: Django :: 2.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
