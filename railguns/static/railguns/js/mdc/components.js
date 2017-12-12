@@ -53,7 +53,7 @@ const list_item_subtitle = `
     ${icon}
     <span class="mdc-list-item__text">
         {{ title }}
-        <span class="mdc-list-item__text__secondary">{{ subtitle }}</span>
+        <span class="mdc-list-item__secondary-text">{{ subtitle }}</span>
     </span>
     ${accessory}`
 
@@ -70,7 +70,7 @@ Vue.component('list-item-default', {
         <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_default}
         </a>
-        <li v-else class="mdc-list-item">
+        <li v-else class="mdc-list-item" :datavalue="datavalue">
             ${list_item_default}
         </li>`
 })
@@ -114,7 +114,7 @@ Vue.component('small-card', {
 // 表单
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
-    props: ['name', 'helptext', 'value'],
+    props: ['name', 'helper_text', 'value'],
     template: `
         <div>
             <div class="mdc-text-field mdc-text-field--fullwidth">
@@ -124,8 +124,8 @@ Vue.component('text-field', {
                 <span class="mdc-text-field__label">{{ name }}</span>
                 <div class="mdc-text-field__bottom-line"></div>
             </div>
-            <p v-if="helptext" class="mdc-text-field-helptext mdc-text-field-helptext--persistent">
-                {{ helptext }}
+            <p v-if="helper_text" class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">
+                {{ helper_text }}
             </p>
         </div>`,
     methods: {
