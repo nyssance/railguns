@@ -23,7 +23,7 @@ class BaseModel(DateTimeModelMixin):
 
 class OwnerModel(BaseModel):
     user_id = models.IntegerField(default=0, editable=False)
-    username = models.CharField(max_length=150, editable=False)
+    username = models.CharField(max_length=150, editable=False)  # 长度和Django的User保持一致
     user_images = models.CharField(_('images'), max_length=2000, blank=True, editable=False)
 
     class Meta(BaseModel.Meta):
