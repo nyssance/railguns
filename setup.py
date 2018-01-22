@@ -35,9 +35,9 @@ setup(
     license='MIT',
     description='Only My Railgun',
     long_description=README,
-    url='https://github.com/nypisces/railguns',
+    url='https://github.com/nyssance/railguns',
     author='NY',
-    author_email='nypisces@live.com',
+    author_email='nyssance@icloud.com',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
