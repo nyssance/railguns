@@ -2,7 +2,8 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 from django.shortcuts import render
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
@@ -31,7 +32,7 @@ class WebView(TemplateView):
     def get(self, request, *args, **kwargs):
         verbose = ''
         if self.name.endswith('_create'):  # 创建页
-            verbose_name = (' ').join(gettext(item) for item in self.name.split('_')[::-1])  # TIP: 用gettext_lazy会报错
+            verbose_name = (' ').join(gettext(item) for item in self.name.split('_')[::-1])  # NY: 用gettext_lazy会报错
         else:
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题

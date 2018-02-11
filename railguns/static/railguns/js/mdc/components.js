@@ -35,10 +35,12 @@ Vue.component('menu-item', {
 // 基本模版
 const icon = `<img v-if="icon" class="mdc-list-item__start-detail" :src="icon">`
 
-const icon1 = `<i v-if="icon" class="mdc-list-item__start-detail material-icons" aria-hidden="true">{{ icon }}</i>`
+// style="color: #fce4ec; background-color: #ec407a; width: 40px; height: 40px; border-radius: 50%;" 
+const icon1 = `<span v-if="icon" class="mdc-list-item__start-detail" role="presentation">
+  <i class="material-icons" aria-hidden="true">{{ icon }}</i>
+</span>`
 
-const accessory_link = `
-    <a v-if="accessory" href="#" class="mdc-list-item__end-detail material-icons"
+const accessory_link = `    <a v-if="accessory" href="#" class="mdc-list-item__end-detail material-icons"
         aria-label="Add to favorites" title="Add to favorites"
         onclick="event.preventDefault()">{{ accessory }}</a>`
 
@@ -60,8 +62,8 @@ const list_item_subtitle = `
 const list_item_value1 = `
     ${icon}
     {{ title }}
-    <span style="margin-left: auto; margin-right: 0;">{{ subtitle }}</span>
-    ${accessory}`
+    <span style="margin-left: auto; margin-right: 8px; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">{{ subtitle }}</span>
+    <i v-if="accessory" class="mdc-list-item__end-detail material-icons" style="margin-left: -8px">{{ accessory }}</i>`
 
 // List Item
 Vue.component('list-item-default', {

@@ -1,10 +1,10 @@
-from base64 import b64encode
 import datetime
 import hashlib
 import hmac
 import json
 import mimetypes
 import uuid
+from base64 import b64encode
 
 from boto.s3.key import Key as S3Key
 from django.conf import settings

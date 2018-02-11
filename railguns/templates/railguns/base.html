@@ -1,4 +1,4 @@
-{% load static %}{% block structure %}<!-- base -->
+{% load i18n static %}{% block structure %}<!-- base -->
 {% endblock %}
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
     <meta name="renderer" content="webkit">
     <!-- analytics -->
 {% include 'includes/analytics.html' %}
-    {% block title %}<title>{{ title }}</title>{% endblock %}
+    {% block title %}<title>{% trans 'app_name' %}</title>{% endblock %}
     <link rel="icon" href="{% static 'favicon.ico' %}">
     <!-- 🌐 web 开始 -->
 {% block web %}{% endblock %}

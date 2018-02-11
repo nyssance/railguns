@@ -3,7 +3,7 @@
 {% block structure %}{{ block.super }}<!--           mdc/form/check_list_update -->
 {% endblock %}
 
-{% block menu %}<menu-item icon="done" title="done"></menu-item>{% endblock %}
+{% block menu %}<!-- <menu-item icon="done" title="done"></menu-item> -->{% endblock %}
 
 {% block items %}
             <h3 class="mdc-list-group__subheader">&#xA0;</h3>
@@ -12,10 +12,12 @@
                 <list-item-default v-for="item in items" :key="item.value"
                     :title="item.label"
                     accessory="radio_button_unchecked"
-                    uri="#"
                     :datavalue="item.value"></list-item-default>
             </ul>
-            <hr class="mdc-list-divider">{% endblock %}
+            <hr class="mdc-list-divider">
+            <ul class="mdc-list">
+                <input @click="patch" type="submit" value="提交">
+            </ul>{% endblock %}
 
 {% block framework_js %}<!-- 💙 mdc/form/check_list_update -->
     <script src="{% static 'railguns/js/vue/update.js' %}"></script>

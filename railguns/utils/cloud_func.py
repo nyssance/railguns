@@ -1,8 +1,8 @@
-from base64 import b64encode
 import datetime
 import hashlib
 import hmac
-from urllib.parse import urlparse, quote_plus
+from base64 import b64encode
+from urllib.parse import quote_plus, urlparse
 
 from django.conf import settings
 

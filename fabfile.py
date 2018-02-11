@@ -40,6 +40,7 @@ def update_project():
 
 @task
 def local_format():
+    local('isort -rc --atomic .')
     local('cd railguns && find . -iname "*.py" | xargs yapf -pi')
 
 
