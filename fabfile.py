@@ -12,7 +12,6 @@ from fabric.operations import local
 from fabric.state import env
 from fabric.utils import puts
 
-
 # ===========
 # = GLOBALS =
 # ===========
