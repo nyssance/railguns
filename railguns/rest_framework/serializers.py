@@ -42,6 +42,7 @@ class UserCreatedSerializer(serializers.ModelSerializer):
 
 
 class UserPasswordSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = get_user_model()
         fields = ['password']

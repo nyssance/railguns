@@ -29,9 +29,13 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     policy_object = {
         'expiration': (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
         'conditions': [
-            {'bucket': bucket},
+            {
+                'bucket': bucket
+            },
             ['starts-with', '$key', path.split('/')[0]],  # https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
-            ['starts-with', '$Content-Type', content_type]]}
+            ['starts-with', '$Content-Type', content_type]
+        ]
+    }
     if cloud in ['aws', 's3']:
         policy_object['conditions'].append({'acl': 'public-read'})
         policy_object['conditions'].append({'success_action_status': '201'})  # 官方文档漏掉了, 这个在这里和html里一定不能少
@@ -42,10 +46,7 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET
         signature = b64encode(hmac.new(settings.CLOUD_SECRET_ACCESS_KEY.encode(), policy, hashlib.sha1).digest())
     # 返回params
-    params = {'key': path,
-              'Content-Type': content_type,
-              'policy': policy.decode(),
-              'signature': signature.decode()}
+    params = {'key': path, 'Content-Type': content_type, 'policy': policy.decode(), 'signature': signature.decode()}
     if cloud in ['aliyun', 'oss']:
         params['OSSAccessKeyId'] = settings.CLOUD_ACCESS_KEY_ID
     elif cloud in ['aws', 's3']:

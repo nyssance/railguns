@@ -4,6 +4,7 @@ from .widgets import CloudFileWidget
 
 
 class CloudFileField(Field):
+
     def __init__(self, *args, **kwargs):
         self.widget = CloudFileWidget()
         super().__init__(*args, **kwargs)

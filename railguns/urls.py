@@ -11,7 +11,6 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 
 from .rest_framework.views import download_url, upload_params
 
-
 # 系统自带
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -48,11 +48,13 @@ class TagsMixin(Serializer):
 
 
 class OwnerMixin(object):
+
     def pre_save(self, obj):
         obj.user_id = self.request.user.id
 
 
 class PutToPatchMixin(object):
+
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
@@ -63,6 +65,7 @@ class PutToPatchMixin(object):
 
 
 class PutToPatchApiViewMixin(object):
+
     def put(self, request, *args, **kwargs):
         return self.patch(request, *args, **kwargs)
 
