@@ -126,6 +126,7 @@ def models_zip(request):
     template_java = env.get_template('model_java.txt')
     template_swift = env.get_template('model_swift.txt')
     for class_name in model_list:
+        env.globals['author'] = settings.DOMAIN_NAME
         env.globals['class_name'] = class_name
         env.globals['type_name'] = type_name
         env.globals['choice_value'] = choice_value

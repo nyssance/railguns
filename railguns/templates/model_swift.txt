@@ -1,5 +1,5 @@
 //
-//  Copyright © 2016 cmcaifu.com. All rights reserved.
+//  Copyright © 2018 {{ author }}. All rights reserved.
 //
 {% set field_mapping = {
             'BooleanField': ' = false',
