@@ -38,18 +38,14 @@ def update_project():
 
 @task
 def local_format():
-    local('isort -rc --atomic .')
-    local('yapf -r -pi .')
+    local('isort -rc .')
+    local('yapf -irp . -e ./setup.py')
 
 
 @task
 def local_update_vendor():
     """更新前端库"""
-    filenames = [
-        'axios.js', 'axios.min.js',
-        'vue.js', 'vue.min.js',
-        'material-components-web.min.css', 'material-components-web.min.js'
-    ]
+    filenames = ['axios.js', 'axios.min.js', 'vue.js', 'vue.min.js', 'material-components-web.min.css', 'material-components-web.min.js']
     for filename in filenames:
         curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(filename.split('.')[0], filename, env.project_name))
 
@@ -59,7 +55,7 @@ def local_update_vendor():
 # ========
 @task
 def upload_to_pypi():
-    """自动打包上传到pypi"""
+    """自动打包上传到 PyPI"""
     safe_local_delete('dist')
     local('python setup.py sdist')
     local('twine upload dist/*')

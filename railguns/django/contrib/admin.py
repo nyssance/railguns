@@ -13,7 +13,8 @@ class PreviewMixin(object):
     image_height = 100
 
     def get_preview(self, obj):
-        html = '<br>'.join('<a href="{0}" rel="external" target="_blank"><img src="{0}" width="{1}" height="{2}"></a>'.format(item.strip(), self.image_width, self.image_height) for item in obj.images.split('\n'))
+        html = '<br>'.join(
+            '<a href="{0}" rel="external" target="_blank"><img src="{0}" width="{1}" height="{2}"></a>'.format(item.strip(), self.image_width, self.image_height) for item in obj.images.split('\n'))
         return format_html(html)
     get_preview.short_description = _('preview')
 

@@ -156,16 +156,13 @@ def choice_value(value):
 
 
 def is_list_model(field):
-    return field in ['cards', 'specials', 'featured', 'coupons', 'projects',
-                     'tags', 'branches', 'contracts',
-                     'comments', 'likes',
-                     'cities']
+    return field in ['cards', 'specials', 'featured', 'coupons', 'projects', 'tags', 'branches', 'contracts', 'comments', 'likes', 'cities']
 
 
 def is_model(field):
-    return field[0].title() in model_list or field[0] in ['cards', 'specials', 'coupons', 'projects', 'publishers', 'tags', 'contracts',
-                                                          'images', 'featured', 'comments', 'likes', 'cities', 'branches',
-                                                          'type', 'status']
+    return field[0].title() in model_list or field[0] in [
+        'cards', 'specials', 'coupons', 'projects', 'publishers', 'tags', 'contracts', 'images', 'featured', 'comments', 'likes', 'cities', 'branches', 'type', 'status'
+    ]
 
 
 def filter_field_type(field):
@@ -207,18 +204,16 @@ def type_name(value):
     return type(value).__name__
 
 
-field_names = {'images': 'ImageModel',
-               'branches': 'Branch',
-               'featured': 'Featured',
-               'cities': 'City'}
+field_names = {'images': 'ImageModel', 'branches': 'Branch', 'featured': 'Featured', 'cities': 'City'}
 
-
-field_mapping = {'BooleanField': 'false',
-                 'IntegerField': '0',
-                 'DateTimeField': 'Date(timeIntervalSince1970: 0)',
-                 'CharField': '""',
-                 'EmailField': '""',
-                 'URLField': '""',
-                 'SerializerMethodField': '""',
-                 'int': '0',
-                 'str': '""'}
+field_mapping = {
+    'BooleanField': 'false',
+    'IntegerField': '0',
+    'DateTimeField': 'Date(timeIntervalSince1970: 0)',
+    'CharField': '""',
+    'EmailField': '""',
+    'URLField': '""',
+    'SerializerMethodField': '""',
+    'int': '0',
+    'str': '""'
+}
