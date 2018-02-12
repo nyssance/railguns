@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.8.1',
+    version='0.8.2',
     install_requires=[
         'Django',
         'djangorestframework',
@@ -20,14 +20,14 @@ setup(
         'django-ckeditor',
         'django-crispy-forms',
         'django-extensions',
-        'django-filter',
+        'django-filter==2.0.0.dev1',
         'django-htmlmin',
         'itunes-iap',
         'mysqlclient',
         'pylibmc',
         'redis',
         #
-        'djangorestframework-camel-case'
+        'djangorestframework-camel-case==1.0b1'
     ],
     packages=find_packages(),
     include_package_data=True,
