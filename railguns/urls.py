@@ -6,6 +6,10 @@ from django.urls import include, path, re_path
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from .rest_framework.views import download_url, upload_params
@@ -22,8 +26,29 @@ urlpatterns += [
     path('api-token-auth/', obtain_jwt_token),
     path('api-token-refresh/', refresh_jwt_token),
     path('api-token-verify/', verify_jwt_token),
-    re_path(r'api/(?P<version>(v1))/', include('drf_openapi.urls'))
     # path('search/', include('haystack.urls'))
+]
+# Docs
+API_TITLE = '{} API'.format(_('app_name'))
+API_DESCRIPTION = '...'
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title=API_TITLE,
+        default_version='v1',
+        description=API_DESCRIPTION
+    ),
+    validators=['flex', 'ssv'],
+    permission_classes=[permissions.IsAdminUser])
+
+urlpatterns += [
+    path('docs/', include_docs_urls(
+        title=API_TITLE,
+        description=API_DESCRIPTION,
+        permission_classes=[permissions.IsAdminUser])),
+    re_path(r'swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
+    path('swagger/', schema_view.with_ui(), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')
 ]
 # Railgun S
 urlpatterns += [
@@ -36,7 +61,6 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if apps.is_installed('rosetta'):
     urlpatterns += [path('rosetta/', include('rosetta.urls'))]
-
 
 admin.site.site_header = _('app_name')
 admin.site.site_title = _('app_name')

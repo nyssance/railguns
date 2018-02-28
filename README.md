@@ -7,7 +7,7 @@ Only My Railgun
 - [Django REST framework](http://www.django-rest-framework.org)
 - [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
 - [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/)
-- [DRF OpenAPI](https://drf-openapi.readthedocs.io/en/latest/)
+- [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)

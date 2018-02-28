@@ -15,7 +15,7 @@ setup(
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
-        'drf_openapi',
+        'drf-yasg',
         #
         'django-ckeditor',
         'django-crispy-forms',
