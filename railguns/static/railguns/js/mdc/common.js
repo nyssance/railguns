@@ -1,7 +1,7 @@
 'use strict'
 
 // Drawer https://material.io/components/web/catalog/drawers/
-let element = document.querySelector('.mdc-temporary-drawer')
+let element = document.querySelector('.mdc-drawer--temporary')
 if (element != null) {
     let drawer = new mdc.drawer.MDCTemporaryDrawer(element)
     document.querySelector('.mdc-toolbar__menu-icon').addEventListener('click', () => drawer.open = true)

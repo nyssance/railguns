@@ -33,18 +33,18 @@ Vue.component('menu-item', {
 })
 
 // 基本模版
-const icon = `<img v-if="icon" class="mdc-list-item__start-detail" :src="icon">`
+const icon = `<img v-if="icon" class="mdc-list-item__graphic" :src="icon">`
 
 // style="color: #fce4ec; background-color: #ec407a; width: 40px; height: 40px; border-radius: 50%;" 
-const icon1 = `<span v-if="icon" class="mdc-list-item__start-detail" role="presentation">
+const icon1 = `<span v-if="icon" class="mdc-list-item__graphic" role="presentation">
   <i class="material-icons" aria-hidden="true">{{ icon }}</i>
 </span>`
 
-const accessory_link = `    <a v-if="accessory" href="#" class="mdc-list-item__end-detail material-icons"
+const accessory_link = `    <a v-if="accessory" href="#" class="material-icons mdc-list-item__meta"
         aria-label="Add to favorites" title="Add to favorites"
         onclick="event.preventDefault()">{{ accessory }}</a>`
 
-const accessory = `<i v-if="accessory" class="mdc-list-item__end-detail material-icons">{{ accessory }}</i>`
+const accessory = `<i v-if="accessory" class="material-icons mdc-list-item__meta">{{ accessory }}</i>`
 
 const list_item_default = `
     ${icon1}
@@ -63,7 +63,7 @@ const list_item_value1 = `
     ${icon}
     {{ title }}
     <span style="margin-left: auto; margin-right: 8px; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">{{ subtitle }}</span>
-    <i v-if="accessory" class="mdc-list-item__end-detail material-icons" style="margin-left: -8px">{{ accessory }}</i>`
+    <i v-if="accessory" class="material-icons mdc-list-item__meta" style="margin-left: -8px">{{ accessory }}</i>`
 
 // List Item
 Vue.component('list-item-default', {
