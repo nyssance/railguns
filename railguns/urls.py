@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
@@ -29,7 +30,7 @@ urlpatterns += [
     # path('search/', include('haystack.urls'))
 ]
 # Docs
-API_TITLE = '{} API'.format(_('app_name'))
+API_TITLE = '{} API'.format(gettext('app_name'))
 API_DESCRIPTION = '...'
 
 schema_view = get_schema_view(
