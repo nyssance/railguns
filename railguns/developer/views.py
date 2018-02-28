@@ -3,11 +3,11 @@ import os
 import shutil
 import zipfile
 
+import stringcase
 from django.conf import settings
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from jinja2 import Environment, PackageLoader
-import stringcase
 
 
 def index(request):
@@ -161,7 +161,8 @@ def is_list_model(field):
 
 def is_model(field):
     return field[0].title() in model_list or field[0] in [
-        'cards', 'specials', 'coupons', 'projects', 'publishers', 'tags', 'contracts', 'images', 'featured', 'comments', 'likes', 'cities', 'branches', 'type', 'status'
+        'cards', 'specials', 'coupons', 'projects', 'publishers', 'tags', 'contracts', 'images', 'featured', 'comments', 'likes', 'cities',
+        'branches', 'type', 'status'
     ]
 
 

@@ -5,6 +5,7 @@ import json
 import mimetypes
 import uuid
 from base64 import b64encode
+from urllib.parse import quote_plus, urlparse
 
 from boto.s3.key import Key as S3Key
 from django.conf import settings
@@ -12,7 +13,7 @@ from rest_framework import generics, status
 from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 
-from ..utils.cloud_func import oss_download_url
+from ..django.db.utils import timestamp
 from .permissions import IsAuthenticatedOrWhitelist
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
@@ -83,7 +84,13 @@ class DownloadUrlView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         url = request.GET.get('url')  # http://test-documents-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/contract/001/Linux_Command3.pdf
         if url:
-            params = oss_download_url(url)
+            url_components = urlparse(url)
+            bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_STORAGE_BASE_DOMAIN_NAME), '')
+            expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
+            string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
+            if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET
+                signature = b64encode(hmac.new(settings.CLOUD_SECRET_ACCESS_KEY.encode(), string_to_sign.encode(), hashlib.sha1).digest())
+            params = {'url': '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_ACCESS_KEY_ID, expires, quote_plus(signature))}
             return Response(params)
         else:
             raise APIException('url不能为空')
