@@ -16,7 +16,7 @@ setup(
         'djangorestframework-jwt',
         'djangorestframework-xml',
         'drf-yasg',
-        'stringcase'
+        'stringcase',
         #
         'django-ckeditor',
         'django-crispy-forms',
