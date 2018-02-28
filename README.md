@@ -8,6 +8,7 @@ Only My Railgun
 - [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
 - [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/)
 - [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
+- [stringcase](https://github.com/okunishinishi/python-stringcase)
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
@@ -19,9 +20,6 @@ Only My Railgun
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 - [pylibmc](https://github.com/lericson/pylibmc)
 - [redis-py](https://github.com/andymccurdy/redis-py)
-
-可选库
-- [Django REST Framework JSON CamelCase](https://github.com/vbabiy/djangorestframework-camel-case)
 
 前端库
 - [axios](https://github.com/axios/axios)

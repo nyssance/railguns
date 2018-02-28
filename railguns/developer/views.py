@@ -7,7 +7,7 @@ from django.conf import settings
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from jinja2 import Environment, PackageLoader
-from railguns.utils.text import underscore_to_camelcase
+import stringcase
 
 
 def index(request):
@@ -107,7 +107,7 @@ def get_class_name(class_name):
 
 def models_zip(request):
     env = Environment(loader=PackageLoader(settings.PROJECT_NAME))
-    env.filters['underscore_to_camelcase'] = underscore_to_camelcase
+    env.filters['underscore_to_camelcase'] = stringcase.camelcase
     env.filters['is_model'] = is_model
     env.filters['is_list_model'] = is_list_model
     env.filters['name_transform'] = filter_name_transform
@@ -189,7 +189,7 @@ def filter_name_transform(field):
     if name == 'description':
         return 'desc'
     else:
-        return underscore_to_camelcase(name)
+        return stringcase.camelcase(name)
 
 
 def filter_swift_map(field):

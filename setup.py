@@ -16,6 +16,7 @@ setup(
         'djangorestframework-jwt',
         'djangorestframework-xml',
         'drf-yasg',
+        'stringcase'
         #
         'django-ckeditor',
         'django-crispy-forms',
@@ -26,8 +27,6 @@ setup(
         'mysqlclient',
         'pylibmc',
         'redis',
-        #
-        'djangorestframework-camel-case==1.0b1'
     ],
     packages=find_packages(),
     include_package_data=True,
