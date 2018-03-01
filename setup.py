@@ -9,13 +9,15 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.8.3',
+    version='0.8.4',
     install_requires=[
         'Django',
+        'Django[argon2]',
         'djangorestframework',
         'djangorestframework-jwt',
         'djangorestframework-xml',
         'drf-yasg',
+        'drf-yasg[validation]',
         'stringcase',
         #
         'django-ckeditor',
@@ -28,6 +30,10 @@ setup(
         'pylibmc',
         'redis',
     ],
+    extras_require={
+        'dev': ['django-cors-headers', 'django-haystack-panel', 'django-rosetta'],
+        'prod': []
+    },
     packages=find_packages(),
     include_package_data=True,
     license='MIT',
