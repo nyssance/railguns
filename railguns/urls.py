@@ -1,41 +1,67 @@
 from django.apps.registry import apps
 from django.conf import settings
-from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.decorators.cache import cache_page
-from django.views.generic.base import RedirectView, TemplateView
-from django.views.i18n import javascript_catalog
+from django.urls import include, path, re_path
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import RedirectView
+from django.views.i18n import JavaScriptCatalog
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from .rest_framework.views import download_url, upload_params
-from .views import SwaggerSchemaView
 
-
-# 系统自带:
+# 系统自带
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^jsi18n/(?P<packages>\S+?)/$', javascript_catalog)
+    path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')  # https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
 ]
-# 第三方:
+# 第三方
 urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', obtain_jwt_token),
-    url(r'^api-token-refresh/', refresh_jwt_token),
-    url(r'^api-token-verify/', verify_jwt_token),
-    url(r'^developer/documentation/', SwaggerSchemaView.as_view()),
-    # url(r'^search/', include('haystack.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('api-token-auth/', obtain_jwt_token),
+    path('api-token-refresh/', refresh_jwt_token),
+    path('api-token-verify/', verify_jwt_token),
+    # path('search/', include('haystack.urls'))
 ]
-# RailgunS:
+# Docs
+API_TITLE = '{} API'.format(gettext('app_name'))
+API_DESCRIPTION = '...'
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title=API_TITLE,
+        default_version='v1',
+        description=API_DESCRIPTION
+    ),
+    validators=['flex', 'ssv'],
+    permission_classes=[permissions.IsAdminUser])
+
 urlpatterns += [
-    url(r'^download_url/(?P<pk>\w+)/$', download_url, name='download_url'),
-    url(r'^upload_params/(?P<pk>\w+)/$', upload_params, name='upload_params'),
-    url(r'^favicon\.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True)),
-    url(r'^robots\.txt', cache_page(60 * 60)(TemplateView.as_view(template_name='{}'.format('robots_test.txt' if settings.TEST_ENV else 'robots.txt'), content_type='text/plain')))
+    path('docs/', include_docs_urls(
+        title=API_TITLE,
+        description=API_DESCRIPTION,
+        permission_classes=[permissions.IsAdminUser])),
+    re_path(r'swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
+    path('swagger/', schema_view.with_ui(), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')
+]
+# Railgun S
+urlpatterns += [
+    re_path(r'download_url/(?P<cloud>(aliyun|oss))/$', download_url, name='download-url'),
+    re_path(r'upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', upload_params, name='upload-params'),
+    path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if apps.is_installed('rosetta'):
-    urlpatterns += [url(r'^rosetta/', include('rosetta.urls'))]
+    urlpatterns += [path('rosetta/', include('rosetta.urls'))]
+
+admin.site.site_header = _('app_name')
+admin.site.site_title = _('app_name')

@@ -1,31 +1,37 @@
 # Railgun S
 Only My Railgun
 
-Handlebar显示html 用`{{{ }}}`
-
+## Vendor
 框架用到的库
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](http://www.django-rest-framework.org)
-- [REST framework JWT Auth](http://getblimp.github.io/django-rest-framework-jwt/)
-- [REST Framework XML](http://jpadilla.github.io/django-rest-framework-xml/)
-- [Django REST Swagger](https://marcgibbons.github.io/django-rest-swagger/)
+- [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
+- [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/)
+- [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
+- [stringcase](https://github.com/okunishinishi/python-stringcase)
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
-- [Django Filter](https://django-filter.readthedocs.io/en/latest/)
+- [django-crispy-forms](https://django-crispy-forms.readthedocs.io)
+- [Django Extensions](https://django-extensions.readthedocs.io)
+- [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 - [pylibmc](https://github.com/lericson/pylibmc)
 - [redis-py](https://github.com/andymccurdy/redis-py)
 
-可选库
-- [Django REST Framework JSON CamelCase](https://github.com/vbabiy/djangorestframework-camel-case)
-- [Rosetta](https://django-rosetta.readthedocs.io/en/latest/)
-
 前端库
+- [axios](https://github.com/axios/axios)
 - [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
 - [jQuery](https://jquery.com)
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
-- [Handlebars](http://handlebarsjs.com)
-- [Material Design Lite](https://getmdl.io)
+- [Vue.js](https://vuejs.org/)
+- [Material Components for the Web](https://material.io/components/web/)
+
+前端可选库
+- [clipboard.js](https://clipboardjs.com/)
+- [GeoPattern](http://btmills.github.io/geopattern/)
+- [localForage](https://localforage.github.io/localForage/)
+- [Lodash](https://lodash.com/)
+- [Moment](http://momentjs.com/)

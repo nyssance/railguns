@@ -1,0 +1,27 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/collection_list -->
+{% endblock %}
+
+{% block list %}<div class="mdc-grid-list">
+            {% block list_header %}<list-header></list-header>{% endblock %}
+            <ul class="mdc-grid-list__tiles">
+               {% block item %}<li class="mdc-grid-tile" v-for="(item, index) in items">
+                   <small-card :title="index" action="按钮"></small-card>
+               </li>{% endblock %}
+            </ul>
+            {% block list_footer %}<list-footer title=""></list-footer>{% endblock %}
+        </div>{% endblock %}
+
+{% block framework_js %}{{ block.super }}    <!-- 💙 mdc/collection_list -->
+    <script>
+        function initGridList() { // 居中网格
+            let nodes = document.querySelectorAll('.mdc-grid-list')
+            for (let node of nodes) {
+                mdc.gridList.MDCGridList.attachTo(node)
+            }
+        }
+        setTimeout(function() {
+            initGridList()
+        }, 100)
+    </script>
+{% endblock %}

@@ -1,30 +1,42 @@
+from urllib.parse import urlparse
+
 from django.conf import settings
 from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
-# headers = get_headers(request, ['HTTP_APP_SCHEME', 'HTTP_USER_AGENT', 'HTTP_HOST'])
-# print(headers)
 def get_headers(request, keys=[]):
     return dict((key, value) for (key, value) in request.META.items() if key in keys)
 
 
-class BaseView(TemplateView):
+def generate_uri(urlstring, request):
+    if not urlstring or urlparse(urlstring).scheme:  # 如果为空或有scheme
+        return urlstring
+    else:
+        # headers = get_headers(request, ['HTTP_APP_SCHEME', 'HTTP_USER_AGENT', 'HTTP_HOST'])
+        # print(headers)
+        app_scheme = get_headers(request, ['HTTP_APP_SCHEME']).get('HTTP_APP_SCHEME')
+        if app_scheme:
+            return '{}:/{}'.format(app_scheme, urlstring)
+        else:
+            return '{}{}/'.format(settings.BASE_URL, urlstring)
+
+
+class WebView(TemplateView):
     name = None
+    title = None
+    endpoint = None
 
-
-class WebView(BaseView):
     def get(self, request, *args, **kwargs):
-        title = kwargs.get('title', '{} - {}'.format(_(self.name), _('app_name')))
-        endpoint = kwargs.get('endpoint', '/{}{}'.format(settings.API_VERSION, request.get_full_path()))
+        verbose = ''
+        if self.name.endswith('_create'):  # 创建页
+            verbose_name = (' ').join(gettext(item) for item in self.name.split('_')[::-1])  # NY: 用gettext_lazy会报错
+        else:
+            verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
+        title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
+        # '{} - {}'.format(verbose_name, _('app_name')) // TODO: PC版用这个
+        endpoint = self.endpoint if self.endpoint is not None else '/{}{}'.format(settings.API_VERSION, request.get_full_path())
         template_name = self.template_name if self.template_name else '{}.html'.format(self.name)
-        return render(request, template_name, locals())
-
-
-class MobileView(BaseView):
-    def get(self, request, *args, **kwargs):
-        title = kwargs.get('title', _(self.name))
-        endpoint = kwargs.get('endpoint', '/{}{}'.format(settings.API_VERSION, request.get_full_path().replace(kwargs.get('path', '/m/'), '/')))
-        template_name = self.template_name if self.template_name else 'mobile/{}.html'.format(self.name)
         return render(request, template_name, locals())

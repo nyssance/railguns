@@ -10,7 +10,7 @@ def timestamp(date):
 
 
 def generate_shard_id(user_id):
-    time_offset = int(timestamp(datetime.datetime.now()) - 1425168000)  # 2015-03-01 00:00:00
+    time_offset = int(timestamp(datetime.datetime.now()) - 1510358400)  # 2017-11-11 00:00:00 中国时间
     return user_id | time_offset << 32
 
 
@@ -21,16 +21,9 @@ def get_object_or_none(model, using='default', **kwargs):
         return None
 
 
-def get_pk_int(view):
-    """
-    必须转为int否则不等于request.user.id, int必须有值安全起见设默认值0
-    """
-    return int(view.kwargs.get('pk', 0))
-
-
 def get_user_id(pk):
     """
-    需要保证传入的pk都是int, 所以在views中需要和和get_pk_int配合使用
+    需要保证传入的pk都是int
     """
     return pk & 0xFFFFFFFF
 
@@ -42,7 +35,7 @@ def db_master(user_id=None):
     if not user_id:
         return 'default'
     else:
-        if user_id < 10000:
+        if user_id < 10001:
             return 'default'
         else:
             return 'db_{}'.format(user_id % settings.SHARD_COUNT)
@@ -57,7 +50,7 @@ def redis_master(user_id=None):
     if not user_id:
         return 0
     else:
-        if user_id < 10000:
+        if user_id < 10001:
             return 0
         else:
             return int(user_id / 1000)

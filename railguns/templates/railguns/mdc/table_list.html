@@ -1,0 +1,29 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/table_list -->
+{% endblock %}
+
+{% block list %}<div>
+            {% block list_header %}<list-header></list-header>{% endblock %}
+            <div class="mdc-list mdc-list--avatar-list">
+                {% block item %}<list-item-default v-for="(item, index) in items" :title="index" :key="item.id"></list-item-default>{% endblock %}
+            </div>
+            {% block list_footer %}<list-footer></list-footer>{% endblock %}
+        </div>{% endblock %}
+
+{% block framework_js %}{{ block.super }}    <!-- 💙 mdc/table_list -->
+    <script>
+        (function() { // autoInit 的  Ripple 方法 无法处理动态内容, 根据官方demo添加这种方法
+            // Delay initialization within development until styles have loaded
+            setTimeout(initInteractiveLists, 250)
+
+            function initInteractiveLists() {
+                let interactiveListItems = document.querySelectorAll('a.mdc-list-item');
+                for (li of interactiveListItems) {
+                    if (!li.href.endsWith('#')) {
+                        mdc.ripple.MDCRipple.attachTo(li)
+                    }
+                }
+            }
+        })()
+    </script>
+{% endblock %}

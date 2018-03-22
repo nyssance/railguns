@@ -1,0 +1,12 @@
+{% extends './base.html' %}
+{% load static %}
+{% block structure %}{{ block.super }}<!--       mdc/detail -->
+{% endblock %}
+
+{% block content %}
+        <div>id: {{ id }}</div>
+{% endblock %}
+
+{% block framework_js %}<!-- 💙 mdc/detail -->
+    <script src="{% static 'railguns/js/vue/detail.js' %}"></script>
+{% endblock %}

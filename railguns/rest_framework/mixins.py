@@ -1,45 +1,60 @@
-from collections import OrderedDict
 import datetime
 
 from django.utils.timezone import localtime
-from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
+
+from .utils import get_list
 
 
-class IdStrMixin(serializers.Serializer):
-    id_str = serializers.SerializerMethodField()
+class ModelMixin(object):
+
+    def get_model(self):
+        return self.serializer_class.Meta.model
+
+
+class IdStrMixin(Serializer):
+    id_str = SerializerMethodField()
 
     def get_id_str(self, obj):
         return str(obj.id)
 
 
-class ImageUrlsMixin(serializers.Serializer):
-    images = serializers.SerializerMethodField()
+class ImagesMixin(Serializer):
+    images = SerializerMethodField()
 
     def get_images(self, obj):
         data = []
-        if obj.image_urls.strip() != '':
-            data = [{'url': item.strip(), 'uri': item.strip()} for item in obj.image_urls.split('\n')]
-        return OrderedDict([('count', len(data)), ('next', None), ('previous', None), ('results', data)])
+        if hasattr(obj, 'images'):
+            data = [{'uri': item.strip()} for item in obj.images.strip().split('\n')]
+        else:
+            pass
+        return get_list(data)
 
 
-class TagsMixin(serializers.Serializer):
-    tags = serializers.SerializerMethodField()
+class TagsMixin(Serializer):
+    tags = SerializerMethodField()
 
     def get_tags(self, obj):
         data = []
-        for item in obj.tags.strip().split('#'):
-            if item.strip() != '':
-                data.append({'name': item.strip()})
-        return OrderedDict([('count', len(data)), ('next', None), ('previous', None), ('results', data)])
+        if hasattr(obj, 'tags'):
+            for item in obj.tags.strip().split('#'):
+                if item.strip():
+                    data.append({'name': item.strip()})
+        else:
+            pass
+        return get_list(data)
 
 
 class OwnerMixin(object):
+
     def pre_save(self, obj):
         obj.user_id = self.request.user.id
 
 
 class PutToPatchMixin(object):
+
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', True)
         instance = self.get_object()
@@ -50,19 +65,20 @@ class PutToPatchMixin(object):
 
 
 class PutToPatchApiViewMixin(object):
+
     def put(self, request, *args, **kwargs):
         return self.patch(request, *args, **kwargs)
 
 
-class StartDateMixin(serializers.Serializer):
-    start_date = serializers.SerializerMethodField()
+class StartDateMixin(Serializer):
+    start_date = SerializerMethodField()
 
     def get_start_date(self, obj):
         return localtime(obj.start_time).strftime('%Y-%m-%d')
 
 
-class EndDateMixin(serializers.Serializer):
-    end_date = serializers.SerializerMethodField()
+class EndDateMixin(Serializer):
+    end_date = SerializerMethodField()
 
     def get_end_date(self, obj):
         if obj.period <= 0:

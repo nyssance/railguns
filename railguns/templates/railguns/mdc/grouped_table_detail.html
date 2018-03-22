@@ -1,0 +1,20 @@
+{% extends './detail.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/grouped_table_detail -->
+{% endblock %}
+
+{% block content %}<div class="mdc-list-group" style="margin: 0 auto; max-width: 600px;">
+            {% block items %}<h3 class="mdc-list-group__subheader">&#xA0;</h3>
+            <ul class="mdc-list mdc-list--avatar-list">
+                <list-item-value1 icon="https://material-components-web.appspot.com/images/animal3.svg" title="id" :subtitle="data.id"></list-item-value1>
+            </ul>
+            <hr class="mdc-list-divider">
+            <h3 class="mdc-list-group__subheader">List 2</h3>
+            <ul class="mdc-list mdc-list--avatar-list">
+                <list-item-value1 icon="https://material-components-web.appspot.com/images/animal1.svg" title="1" subtitle="A"></list-item-value1>
+                <li role="separator" class="mdc-list-divider mdc-list-divider--inset"></li>
+                <list-item-value1 icon="https://material-components-web.appspot.com/images/animal2.svg" title="2" subtitle="B"></list-item-value1>
+                <li role="separator" class="mdc-list-divider mdc-list-divider--inset"></li>
+                <list-item-value1 icon="https://material-components-web.appspot.com/images/animal3.svg" title="3" subtitle="C"></list-item-value1>
+                <li role="separator" class="mdc-list-divider mdc-list-divider--inset"></li>
+            </ul>{% endblock %}
+        </div>{% endblock %}
