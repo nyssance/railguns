@@ -5,6 +5,7 @@ from .utils import db_master, generate_shard_id, get_user_id
 
 
 class DateTimeModelMixin(models.Model):
+    id = models.PositiveIntegerField(primary_key=True, editable=False)
     created_time = models.DateTimeField(_('created_time'), auto_now_add=True)
     updated_time = models.DateTimeField(_('updated_time'), auto_now=True)
 
@@ -22,7 +23,7 @@ class BaseModel(DateTimeModelMixin):
 
 
 class OwnerModel(BaseModel):
-    user_id = models.IntegerField(default=0, editable=False)
+    user_id = models.PositiveIntegerField(default=0, editable=False)
     username = models.CharField(max_length=150, editable=False)  # 长度和Django的User保持一致
     user_images = models.CharField(_('images'), max_length=2000, blank=True, editable=False)
 
@@ -45,7 +46,7 @@ class PostModel(OwnerModel):
 
 
 class ShardModel(OwnerModel):
-    id = models.BigIntegerField(primary_key=True, editable=False)
+    id = models.BigAutoField()
 
     class Meta(OwnerModel.Meta):
         abstract = True
@@ -58,7 +59,7 @@ class ShardModel(OwnerModel):
 
 
 class ShardLCModel(OwnerModel):
-    id = models.BigIntegerField(primary_key=True, editable=False)
+    id = models.BigAutoField()
     is_origin = models.BooleanField(default=True)
 
     class Meta(OwnerModel.Meta):
