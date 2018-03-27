@@ -21,10 +21,10 @@ class AbstractBaseModel(DateTimeModelMixin):
         ordering = ['-pk']
 
 
-class BaseModel(DateTimeModelMixin):
+class BaseModel(AbstractBaseModel):
     id = models.PositiveIntegerField(primary_key=True, editable=False)
 
-    class Meta:
+    class Meta(AbstractBaseModel.Meta):
         abstract = True
 
 
