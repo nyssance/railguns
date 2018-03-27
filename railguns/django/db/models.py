@@ -23,7 +23,7 @@ class BaseModel(DateTimeModelMixin):
 
 
 class OwnerModel(BaseModel):
-    user_id = models.PositiveIntegerField(default=0, editable=False)
+    user_id = models.PositiveIntegerField(default=0, editable=False) // TODO: default=1
     username = models.CharField(max_length=150, editable=False)  # 长度和Django的User保持一致
     user_images = models.CharField(_('images'), max_length=2000, blank=True, editable=False)
 
@@ -46,7 +46,7 @@ class PostModel(OwnerModel):
 
 
 class ShardModel(OwnerModel):
-    id = models.BigAutoField()
+    id = models.BigAutoField(primary_key=True)
 
     class Meta(OwnerModel.Meta):
         abstract = True
@@ -59,7 +59,7 @@ class ShardModel(OwnerModel):
 
 
 class ShardLCModel(OwnerModel):
-    id = models.BigAutoField()
+    id = models.BigAutoField(primary_key=True)
     is_origin = models.BooleanField(default=True)
 
     class Meta(OwnerModel.Meta):
