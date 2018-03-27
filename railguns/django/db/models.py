@@ -5,7 +5,6 @@ from .utils import db_master, generate_shard_id, get_user_id
 
 
 class DateTimeModelMixin(models.Model):
-    id = models.PositiveIntegerField(primary_key=True, editable=False)
     created_time = models.DateTimeField(_('created_time'), auto_now_add=True)
     updated_time = models.DateTimeField(_('updated_time'), auto_now=True)
 
@@ -13,13 +12,20 @@ class DateTimeModelMixin(models.Model):
         abstract = True
 
 
-class BaseModel(DateTimeModelMixin):
+class AbstractBaseModel(DateTimeModelMixin):
     is_active = models.BooleanField(_('active'), default=True)
     objects = models.Manager()  # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
 
     class Meta:
         abstract = True
         ordering = ['-pk']
+
+
+class BaseModel(DateTimeModelMixin):
+    id = models.PositiveIntegerField(primary_key=True, editable=False)
+
+    class Meta:
+        abstract = True
 
 
 class OwnerModel(BaseModel):
