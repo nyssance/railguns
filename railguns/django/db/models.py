@@ -22,14 +22,13 @@ class AbstractBaseModel(DateTimeModelMixin):
 
 
 class BaseModel(AbstractBaseModel):
-    id = models.PositiveIntegerField(primary_key=True, editable=False)
 
     class Meta(AbstractBaseModel.Meta):
         abstract = True
 
 
 class OwnerModel(BaseModel):
-    user_id = models.PositiveIntegerField(default=0, editable=False) # TODO: default=1
+    user_id = models.IntegerField(default=0, editable=False) # TODO: default=1
     username = models.CharField(max_length=150, editable=False)  # 长度和Django的User保持一致
     user_images = models.CharField(_('images'), max_length=2000, blank=True, editable=False)
 
