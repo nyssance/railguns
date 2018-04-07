@@ -5,7 +5,7 @@ from rest_framework.fields import SerializerMethodField
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
-from .utils import get_list
+from .utils import get_nested_list
 
 
 class ModelMixin(object):
@@ -30,7 +30,7 @@ class ImagesMixin(Serializer):
             data = [{'uri': item.strip()} for item in obj.images.strip().split('\n')]
         else:
             pass
-        return get_list(data)
+        return get_nested_list(data)
 
 
 class TagsMixin(Serializer):
@@ -44,7 +44,7 @@ class TagsMixin(Serializer):
                     data.append({'name': item.strip()})
         else:
             pass
-        return get_list(data)
+        return get_nested_list(data)
 
 
 class OwnerMixin(object):
