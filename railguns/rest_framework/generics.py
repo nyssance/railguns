@@ -10,7 +10,7 @@ class CreateAPI(mixins.ModelMixin, CreateAPIView):
         return self.get_model().objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user.id, username=self.request.user.username, user_images=self.request.user.images)
+        serializer.save(user_id=self.request.user.id, username=self.request.user.username, user_avatar=self.request.user.avatar)
 
 
 class ListAPI(mixins.ModelMixin, ListAPIView):
@@ -29,7 +29,7 @@ class ListCreateAPI(mixins.ModelMixin, ListCreateAPIView):
         return self.get_model().objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user.id, username=self.request.user.username, user_images=self.request.user.images)
+        serializer.save(user_id=self.request.user.id, username=self.request.user.username, user_avatar=self.request.user.avatar)
 
 
 class RetrieveAPI(mixins.ModelMixin, RetrieveAPIView):
@@ -46,10 +46,3 @@ class RetrieveUpdateAPI(mixins.ModelMixin, mixins.PutToPatchMixin, RetrieveUpdat
         if self.request.method == 'GET':
             return self.get_model().objects.filter(is_active=True)
         return self.get_model().objects.all()
-
-
-class OwnerListAPI(mixins.ModelMixin, ListAPIView):
-    """拥有者 : 列表 API"""
-
-    def get_queryset(self):
-        return self.get_model().objects.filter(user_id=self.kwargs[self.lookup_field], is_active=True)

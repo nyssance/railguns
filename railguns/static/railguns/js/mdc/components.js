@@ -29,14 +29,14 @@ Vue.component('list-footer', {
 // 菜单
 Vue.component('menu-item', {
     props: ['icon', 'title', 'uri'],
-    template: `<a :href="uri" class="material-icons mdc-toolbar__icon" :aria-label="title" :alt="title">{{ icon }}</a>`
+    template: `<a :href="uri" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
 })
 
 // 基本模版
 const icon = `<img v-if="icon" class="mdc-list-item__graphic" :src="icon">`
 
 // style="color: #fce4ec; background-color: #ec407a; width: 40px; height: 40px; border-radius: 50%;" 
-const icon1 = `<span v-if="icon" class="mdc-list-item__graphic" role="presentation">
+const icon1 = `<span v-if="icon" class="mdc-list-item__graphic" role="presentation" :style="style">
   <i class="material-icons" aria-hidden="true">{{ icon }}</i>
 </span>`
 
@@ -67,14 +67,19 @@ const list_item_value1 = `
 
 // List Item
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'uri', 'datavalue'],
+    props: ['icon', 'title', 'accessory', 'uri', 'datavalue', 'icon_color'],
     template: `
         <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_default}
         </a>
         <li v-else class="mdc-list-item" :datavalue="datavalue">
             ${list_item_default}
-        </li>`
+        </li>`,
+    computed: { // SO: https://stackoverflow.com/a/42872117
+        style() {
+            return 'color: ' + this.icon_color
+        }
+    }
 })
 
 Vue.component('list-item-subtitle', {
@@ -97,6 +102,11 @@ Vue.component('list-item-value1', {
         <li v-else class="mdc-list-item">
             ${list_item_value1}
         </li>`
+})
+
+Vue.component('list-divider', {
+    template: `
+        <hr class="mdc-list-divider">`
 })
 
 // 卡片

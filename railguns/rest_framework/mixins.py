@@ -25,26 +25,20 @@ class ImagesMixin(Serializer):
     images = SerializerMethodField()
 
     def get_images(self, obj):
-        data = []
         if hasattr(obj, 'images'):
-            data = [{'uri': item.strip()} for item in obj.images.strip().split('\n')]
+            return get_nested_list([{'uri': item.strip()} for item in obj.images.split('\n') if item.strip()])
         else:
-            pass
-        return get_nested_list(data)
+            return '👈⚠️️字段不存在，请去除。'
 
 
 class TagsMixin(Serializer):
     tags = SerializerMethodField()
 
     def get_tags(self, obj):
-        data = []
         if hasattr(obj, 'tags'):
-            for item in obj.tags.strip().split('#'):
-                if item.strip():
-                    data.append({'name': item.strip()})
+            return get_nested_list([{'name': item.strip()} for item in obj.tags.split('#') if item.strip()])
         else:
-            pass
-        return get_nested_list(data)
+            return '👈⚠️️字段不存在，请去除。'
 
 
 class OwnerMixin(object):

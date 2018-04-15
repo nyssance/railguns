@@ -7,14 +7,14 @@
 
 {% block items %}
             <h3 class="mdc-list-group__subheader">&#xA0;</h3>
-            <hr class="mdc-list-divider">
+            <list-divider></list-divider>
             <ul class="mdc-list">
                 <list-item-default v-for="item in items" :key="item.value"
                     :title="item.label"
                     accessory="radio_button_unchecked"
                     :datavalue="item.value"></list-item-default>
             </ul>
-            <hr class="mdc-list-divider">
+            <list-divider></list-divider>
             <ul class="mdc-list">
                 <input @click="patch" type="submit" value="提交">
             </ul>{% endblock %}

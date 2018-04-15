@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 <!-- 加载 -->
-{% load i18n static %}
+{% load static %}
 <!-- 结构 -->
 {% block structure %}{{ block.super }}<!--   base_quick -->
 {% endblock %}
@@ -17,7 +17,7 @@
     <!-- 🍺 js 开始 -->{% block js %}
     <!-- 💙 base_quick -->
     <!-- Django -->
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/js-cookie/latest/js.cookie.min.js"></script>
     <script src="{% static 'railguns/js/django.js' %}"></script>
     <!-- Vendor -->
@@ -29,9 +29,10 @@
         <script src="{% static 'vendor/axios.min.js' %}"></script>
     {% endif %}
     <!--  -->
-    <script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.min.js"></script>
     <script src="https://cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery.lazy/1.7.6/jquery.lazy.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.lazy/1.7.7/jquery.lazy.min.js"></script>
+    <script src="https://cdn.bootcss.com/Chart.js/2.7.2/Chart.min.js"></script>
     <!--  -->
     <script src="{% static 'railguns/js/vendor.js' %}"></script>
     {% endblock %}

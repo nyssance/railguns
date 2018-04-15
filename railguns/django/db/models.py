@@ -30,7 +30,7 @@ class BaseModel(AbstractBaseModel):
 class OwnerModel(BaseModel):
     user_id = models.IntegerField(default=0, editable=False) # TODO: default=1
     username = models.CharField(max_length=150, editable=False)  # 长度和Django的User保持一致
-    user_images = models.CharField(_('images'), max_length=2000, blank=True, editable=False)
+    user_avatar = models.CharField(_('avatar'), max_length=255, blank=True, editable=False)
 
     class Meta(BaseModel.Meta):
         abstract = True

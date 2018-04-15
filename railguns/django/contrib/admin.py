@@ -28,7 +28,7 @@ class SuperAdmin(PreviewMixin, admin.ModelAdmin):
                     obj.user_id = request.user.id
             if isinstance(obj, OwnerModel):
                 obj.username = request.user.username
-                obj.user_images = request.user.images
+                obj.user_avatar = request.user.avatar
         super().save_model(request, obj, form, change)
 
     def format_currency(self, amount, min):

@@ -1,6 +1,6 @@
 'use strict'
 
-// https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+// DJ: https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
 var csrftoken = Cookies.get('csrftoken')
 
 function csrfSafeMethod(method) {

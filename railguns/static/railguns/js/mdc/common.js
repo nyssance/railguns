@@ -4,7 +4,7 @@
 let element = document.querySelector('.mdc-drawer--temporary')
 if (element != null) {
     let drawer = new mdc.drawer.MDCTemporaryDrawer(element)
-    document.querySelector('.mdc-toolbar__menu-icon').addEventListener('click', () => drawer.open = true)
+    document.querySelector('.mdc-top-app-bar__navigation-icon').addEventListener('click', () => drawer.open = true)
 } else {
     console.log('没有 Drawer')
 }
