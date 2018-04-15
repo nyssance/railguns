@@ -28,8 +28,8 @@ Vue.component('list-footer', {
 
 // 菜单
 Vue.component('menu-item', {
-    props: ['icon', 'title', 'uri'],
-    template: `<a :href="uri" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
+    props: ['icon', 'title', 'link'],
+    template: `<a :href="link" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
 })
 
 // 基本模版
@@ -67,9 +67,9 @@ const list_item_value1 = `
 
 // List Item
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'uri', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'icon_color'],
     template: `
-        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
+        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_default}
         </a>
         <li v-else class="mdc-list-item" :datavalue="datavalue">
@@ -83,9 +83,9 @@ Vue.component('list-item-default', {
 })
 
 Vue.component('list-item-subtitle', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'uri'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'link'],
     template: `
-        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
+        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
             ${list_item_subtitle}
         </a>
         <li v-else class="mdc-list-item">
@@ -94,9 +94,9 @@ Vue.component('list-item-subtitle', {
 })
 
 Vue.component('list-item-value1', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'uri', 'datavalue'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'link', 'datavalue'],
     template: `
-        <a v-if="uri" :href="uri" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
+        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_value1}
         </a>
         <li v-else class="mdc-list-item">
@@ -111,14 +111,14 @@ Vue.component('list-divider', {
 
 // 卡片
 Vue.component('small-card', {
-    props: ['title', 'action', 'uri'],
+    props: ['title', 'action', 'link'],
     template: `
         <div class="mdc-card">
             <section class="mdc-card__media">
                 <h1 class="mdc-card__title mdc-card__title--large">{{ title }}</h1>
             </section>
             <section class="mdc-card__actions">
-                <a :href="uri" class="mdc-button mdc-button--compact mdc-card__action">{{ action }}</a>
+                <a :href="link" class="mdc-button mdc-button--compact mdc-card__action">{{ action }}</a>
             </section>
         </div>`
 })
