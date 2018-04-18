@@ -1,6 +1,5 @@
 from urllib.parse import urlparse
 
-from django.conf import settings
 from django.shortcuts import render
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +20,7 @@ def generate_uri(urlstring, request):
         if app_scheme:
             return '{}:/{}'.format(app_scheme, urlstring)
         else:
-            return '{}{}/'.format(settings.BASE_URL, urlstring)
+            return '{}/'.format(urlstring)
 
 
 class WebView(TemplateView):
@@ -37,6 +36,6 @@ class WebView(TemplateView):
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
         # '{} - {}'.format(verbose_name, _('app_name')) // TODO: PC版用这个
-        endpoint = self.endpoint if self.endpoint is not None else '/{}{}'.format(settings.API_VERSION, request.get_full_path())
+        endpoint = self.endpoint if self.endpoint is not None else '/api{}'.format(request.get_full_path())
         template_name = self.template_name if self.template_name else '{}.html'.format(self.name)
         return render(request, template_name, locals())
