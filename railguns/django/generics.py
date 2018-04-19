@@ -40,4 +40,5 @@ class WebView(TemplateView):
         endpoint = self.endpoint if self.endpoint is not None else '/api/{}{}'.format(settings.REST_FRAMEWORK['DEFAULT_VERSION'],
                                                                                       request.get_full_path())
         template_name = self.template_name if self.template_name else '{}.html'.format(self.name)
+        extras = kwargs
         return render(request, template_name, locals())
