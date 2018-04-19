@@ -35,7 +35,7 @@ def db_master(user_id=None):
     if not user_id:
         return 'default'
     else:
-        if user_id < 10001:
+        if user_id < 100001:
             return 'default'
         else:
             return 'db_{}'.format(user_id % settings.SHARD_COUNT)
@@ -50,7 +50,7 @@ def redis_master(user_id=None):
     if not user_id:
         return 0
     else:
-        if user_id < 10001:
+        if user_id < 100001:
             return 0
         else:
             return int(user_id / 1000)
