@@ -34,11 +34,10 @@ class SuperAdmin(PreviewMixin, admin.ModelAdmin):
     def format_currency(self, amount, min):
         price = amount / 100
         locale.setlocale(locale.LC_ALL, '')
-        formatted = locale.currency(price, symbol=False, grouping=True)
+        formatted = locale.currency(price, False, True)
         if price < min:
-            return '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, symbol=False, grouping=True))
-        else:
-            return formatted
+            formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, False, True))
+        return format_html(formatted)
 
     def log_change(self, request, obj, message):
         new_message = '{}'.format(serializers.serialize('json', [obj]))
