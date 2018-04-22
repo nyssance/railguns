@@ -3,7 +3,7 @@
 {% endblock %}
 
 {% block list %}<div class="mdc-grid-list">
-            {% block list_header %}<list-header></list-header>{% endblock %}
+            {% block list_header %}{% endblock %}
             <ul class="mdc-grid-list__tiles">
                {% block item %}<li class="mdc-grid-tile" v-for="(item, index) in items">
                    <small-card :title="index" action="按钮"></small-card>

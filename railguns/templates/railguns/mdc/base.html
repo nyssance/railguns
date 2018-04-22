@@ -5,8 +5,7 @@
 {% block structure %}{{ block.super }}<!--     mdc/base -->
 {% endblock %}
 
-{% block css %}
-    <link rel="stylesheet" href="https://cdn.bootcss.com/normalize/8.0.0/normalize.min.css">
+{% block css %}{{ block.super }}
     <!-- 💙 mdc/base -->
     <link rel="stylesheet" href="{% static 'vendor/material-components-web.min.css' %}">
 {#    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">#}
@@ -40,7 +39,10 @@
 
 {% block js %}{{ block.super }}<!-- 💙 mdc/base -->
 	<script src="{% static 'vendor/material-components-web.min.js' %}"></script>
-    <script>window.mdc.autoInit()</script>
+    <script>
+        document.body.classList.add('mdc-typography')
+        window.mdc.autoInit()
+    </script>
     <script src="{% static 'railguns/js/mdc/components.js' %}"></script>
     <script src="{% static 'railguns/js/vue/common.js' %}"></script>
     {% block framework_js %}{% endblock %}

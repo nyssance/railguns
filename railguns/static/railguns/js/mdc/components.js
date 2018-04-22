@@ -40,11 +40,12 @@ const icon1 = `<span v-if="icon" class="mdc-list-item__graphic" role="presentati
   <i class="material-icons" aria-hidden="true">{{ icon }}</i>
 </span>`
 
-const accessory_link = `    <a v-if="accessory" href="#" class="material-icons mdc-list-item__meta"
+const accessory_link = `    <a v-if="accessory" href="#" class="mdc-list-item__meta material-icons"
         aria-label="Add to favorites" title="Add to favorites"
         onclick="event.preventDefault()">{{ accessory }}</a>`
 
-const accessory = `<i v-if="accessory" class="material-icons mdc-list-item__meta">{{ accessory }}</i>`
+const accessory = `<i v-if="accessory" class="mdc-list-item__meta material-icons">{{ accessory }}</i>
+<i v-else-if="link" class="mdc-list-item__meta material-icons">chevron_right</i>`
 
 const list_item_default = `
     ${icon1}
@@ -59,11 +60,17 @@ const list_item_subtitle = `
     </span>
     ${accessory}`
 
+// SO: https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 const list_item_value1 = `
     ${icon}
     {{ title }}
-    <span style="margin-left: auto; margin-right: 8px; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">{{ subtitle }}</span>
-    <i v-if="accessory" class="material-icons mdc-list-item__meta" style="margin-left: -8px">{{ accessory }}</i>`
+    <span style="overflow: hidden;
+                    white-space:nowrap;
+                    width:240px;
+                    display:inline-block;
+                    text-overflow: ellipsis;
+                    margin-left: auto; margin-right: 8px; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">{{ subtitle }}</span>
+    ${accessory}`
 
 // List Item
 Vue.component('list-item-default', {
@@ -102,6 +109,12 @@ Vue.component('list-item-value1', {
         <li v-else class="mdc-list-item">
             ${list_item_value1}
         </li>`
+})
+
+Vue.component('list-section-header', {
+    props: ['title'],
+    template: `
+        <h3 class="mdc-list-group__subheader">{{ title }}&#xA0;</h3>`
 })
 
 Vue.component('list-divider', {

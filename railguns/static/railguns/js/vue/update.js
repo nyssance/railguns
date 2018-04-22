@@ -5,9 +5,9 @@ var currentValue = null // 更新用
 function updateCheckList(selected) {
     console.warn('选中 ' + selected)
     for (let li of document.getElementsByTagName('li')) {
-        if (li.attributes['class'].value == 'mdc-list-item') {
+        if (li.attributes['class'].value === 'mdc-list-item') {
             let i = li.getElementsByTagName('i')
-            if (li.attributes['datavalue'].value == selected) {
+            if (li.attributes['datavalue'].value === selected) {
                 i[0].innerHTML = 'radio_button_checked'
             } else {
                 i[0].innerHTML = 'radio_button_unchecked'
@@ -35,8 +35,8 @@ var content = new Vue({
     updated: function() {
         currentValue = getQueryString('selected') // 第一次进来当前值从地址栏参数获取
         for (let li of document.getElementsByTagName('li')) {
-            if (li.attributes['class'].value == 'mdc-list-item') {
-                if (li.attributes['datavalue'].value == currentValue) {
+            if (li.attributes['class'].value === 'mdc-list-item') {
+                if (li.attributes['datavalue'].value === currentValue) {
                     let i = li.getElementsByTagName('i')
                     i[0].innerHTML = 'radio_button_checked'
                 }
@@ -53,7 +53,7 @@ var content = new Vue({
     },
     methods: {
         patch: function() { // 更新数据
-            if (currentValue == getQueryString('selected')) {
+            if (currentValue === getQueryString('selected')) {
                 console.warn('与之前相同, 不提交服务器更新')
                 history.back() // 只返回不刷新
             } else {

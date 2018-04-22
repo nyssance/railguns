@@ -15,6 +15,7 @@ function getData(endpoint, params, success, failure) {
             params: params
         })
         .then(function(response) {
+            console.log('Content-Type:', response.headers['content-type'])
             console.log('Response:', response)
             if (response.status === 200) { // 200 才重绘
                 success && success(response.data)
@@ -25,23 +26,24 @@ function getData(endpoint, params, success, failure) {
             if (error.response) { // 请求已经发出，但是服务器响应返回的状态吗不在2xx的范围内
                 console.log(error.response.data)
                 console.log(error.response.status)
+                console.log(error.response.statusText)
                 console.log(error.response.headers)
             } else if (error.request) { // 请求已经发出，没有响应
                 console.log(error.request)
             } else { // 一些错误是在设置请求的时候触发
-                console.log('Error:', error.message)
+                console.error('Error:', error.message)
             }
-            console.log(error.config)
+            console.error(error.config)
         })
 }
 
 // 获取 Endpoint
 function getEndpoint(element) {
-    let endpoint = element.dataset.endpoint // element.getAttribute('data-endpoint')
-    if ((typeof endpoint) == 'string' && endpoint != '') {
+    let endpoint = (element.dataset.endpoint || '').trim() // element.getAttribute('data-endpoint')
+    if (endpoint) {
         console.warn(element.id, 'Endpoint:', endpoint)
     } else {
-        console.error('没有endpoint')
+        console.warn('没有 endpoint')
     }
     return endpoint
 }
@@ -51,10 +53,3 @@ function getQueryString(name) {
     var r = window.location.search.substr(1).match(regx)
     return !!r ? decodeURIComponent(r[2]) : null
 }
-
-var app_bar = new Vue({
-    el: '#app_bar',
-    data: {
-        message: 'Hello App bar!'
-    }
-})

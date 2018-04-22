@@ -3,7 +3,7 @@
 {% endblock %}
 
 {% block list %}<div>
-            {% block list_header %}<list-header></list-header>{% endblock %}
+            {% block list_header %}{% endblock %}
             <div class="mdc-list mdc-list--avatar-list">
                 {% block item %}<list-item-default v-for="(item, index) in items" :title="index" :key="item.id"></list-item-default>{% endblock %}
             </div>

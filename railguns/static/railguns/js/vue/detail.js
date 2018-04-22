@@ -9,11 +9,13 @@ var content = new Vue({
     },
     mounted: function() {
         let element = this.$el
-        if (element != null) { // 获取 endpoint
+        if (element) { // 获取 endpoint
             let endpoint = getEndpoint(element)
-            getData(endpoint, null, function(response) {
-                this.data = response
-            }.bind(this))
+            if (endpoint) {
+                getData(endpoint, null, function(response) {
+                    this.data = response
+                }.bind(this))
+            }
         } else {
             console.error('#content 不存在')
         }
@@ -21,7 +23,7 @@ var content = new Vue({
     updated: function() { // 组件挂载之后
         let endpoint = '初始化'
         let element = this.$el
-        if (element != null) { // 获取 endpoint
+        if (element) { // 获取 endpoint
             endpoint = getEndpoint(element)
         } else {
             console.error('#endpoint 不存在')
