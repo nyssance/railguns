@@ -22,9 +22,9 @@ var content = new Vue({
                 let endpoint = getEndpoint(element)
                 if (endpoint) {
                     axios.post(endpoint, this.data, {
-                        xsrfCookieName: 'csrftoken',
-                        xsrfHeaderName: 'X-CSRFToken',
-                    })
+                            xsrfCookieName: 'csrftoken',
+                            xsrfHeaderName: 'X-CSRFToken',
+                        })
                         .then(function(response) {
                             console.log('Response:', response)
                             // history.back()
