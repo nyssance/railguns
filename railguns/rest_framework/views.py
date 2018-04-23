@@ -44,14 +44,14 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     if content_encoding == 'gzip':
         policy_object['conditions'].append(['starts-with', '$Content-Encoding', content_encoding])
     policy = b64encode(json.dumps(policy_object).replace('\n', '').replace('\r', '').encode())
-    if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET
-        signature = b64encode(hmac.new(settings.CLOUD_SECRET_ACCESS_KEY.encode(), policy, hashlib.sha1).digest())
+    if settings.CLOUD_SS_SECRET:  # 如果有SECRET
+        signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode(), policy, hashlib.sha1).digest())
     # 返回params
     params = {'key': path, 'Content-Type': content_type, 'policy': policy.decode(), 'signature': signature.decode()}
     if cloud in ['aliyun', 'oss']:
-        params['OSSAccessKeyId'] = settings.CLOUD_ACCESS_KEY_ID
+        params['OSSAccessKeyId'] = settings.CLOUD_SS_ID
     elif cloud in ['aws', 's3']:
-        params['AWSAccessKeyId'] = settings.CLOUD_ACCESS_KEY_ID
+        params['AWSAccessKeyId'] = settings.CLOUD_SS_ID
         params['acl'] = 'public-read'
         params['success_action_status'] = '201'
     if content_encoding == 'gzip':
@@ -85,12 +85,12 @@ class DownloadUrlView(generics.RetrieveAPIView):
         url = request.GET.get('url')  # http://test-documents-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/contract/001/Linux_Command3.pdf
         if url:
             url_components = urlparse(url)
-            bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_STORAGE_BASE_DOMAIN_NAME), '')
+            bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')
             expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
             string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
-            if settings.CLOUD_SECRET_ACCESS_KEY:  # 如果有SECRET
-                signature = b64encode(hmac.new(settings.CLOUD_SECRET_ACCESS_KEY.encode(), string_to_sign.encode(), hashlib.sha1).digest())
-            params = {'url': '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_ACCESS_KEY_ID, expires, quote_plus(signature))}
+            if settings.CLOUD_SS_SECRET:  # 如果有SECRET
+                signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode(), string_to_sign.encode(), hashlib.sha1).digest())
+            params = {'url': '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires, quote_plus(signature))}
             return Response(params)
         else:
             raise APIException('url不能为空')
