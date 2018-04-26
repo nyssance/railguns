@@ -24,7 +24,8 @@ class CurrencyMixin(object):
     def format_currency(self, amount, min):
         value = amount / 100
         locale.setlocale(locale.LC_ALL, '')
-        formatted = locale.currency(value, False, True)
+        locale._override_localeconv = {'n_sign_posn': 1}
+        formatted = locale.currency(value, grouping=True)
         if value < min:
             formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, False, True))
         return format_html(formatted)
