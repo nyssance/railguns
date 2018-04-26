@@ -21,9 +21,10 @@ class PreviewMixin(object):
 
 class CurrencyMixin(object):
 
-    def format_currency(self, amount, min):
+    def format_currency(self, amount, min, currency='CNY'):
         value = amount / 100
-        locale.setlocale(locale.LC_ALL, '')
+        my_locale = 'zh_CN.UTF-8' if currency == 'CNY' else ''
+        locale.setlocale(locale.LC_ALL, my_locale)
         locale._override_localeconv = {'n_sign_posn': 1}
         formatted = locale.currency(value, grouping=True)
         if value < min:
