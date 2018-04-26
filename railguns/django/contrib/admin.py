@@ -19,7 +19,18 @@ class PreviewMixin(object):
     get_preview.short_description = _('preview')
 
 
-class SuperAdmin(PreviewMixin, admin.ModelAdmin):
+class CurrencyMixin(object):
+
+    def format_currency(self, amount, min):
+        value = amount / 100
+        locale.setlocale(locale.LC_ALL, '')
+        formatted = locale.currency(value, False, True)
+        if value < min:
+            formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, False, True))
+        return format_html(formatted)
+
+
+class SuperAdmin(CurrencyMixin, PreviewMixin, admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # 如果obj.pk不存在, 为新创建
@@ -30,14 +41,6 @@ class SuperAdmin(PreviewMixin, admin.ModelAdmin):
                 obj.username = request.user.username
                 obj.user_avatar = request.user.avatar
         super().save_model(request, obj, form, change)
-
-    def format_currency(self, amount, min):
-        price = amount / 100
-        locale.setlocale(locale.LC_ALL, '')
-        formatted = locale.currency(price, False, True)
-        if price < min:
-            formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, False, True))
-        return format_html(formatted)
 
     def log_change(self, request, obj, message):
         new_message = '{}'.format(serializers.serialize('json', [obj]))
