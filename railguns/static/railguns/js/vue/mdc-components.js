@@ -64,12 +64,7 @@ const list_item_subtitle = `
 const list_item_value1 = `
     ${icon}
     {{ title }}
-    <span style="overflow: hidden;
-                    white-space:nowrap;
-                    width:240px;
-                    display:inline-block;
-                    text-overflow: ellipsis;
-                    margin-left: auto; margin-right: 8px; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">{{ subtitle }}</span>
+    <span style="margin-left: auto; margin-right: 8px; color: var(--mdc-theme-text-secondary-on-background,rgba(0,0,0,.54));">{{ subtitle }}</span>
     ${accessory}`
 
 // List Item
