@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
-$(function() {
+$(function () {
     // jQuery Lazy
     $('.lazy').Lazy({
         effect: 'fadeIn',
         visibleOnly: true,
-        onError: function(element) {
-            console.log('error loading ' + element.data('src'))
+        onError: function onError(element) {
+            console.log('error loading ' + element.data('src'));
         }
-    })
-})
+    });
+});

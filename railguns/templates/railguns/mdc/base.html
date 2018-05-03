@@ -7,30 +7,32 @@
 
 {% block css %}{{ block.super }}
     <!-- 💙 mdc/base -->
-    <link rel="stylesheet" href="{% static 'vendor/material-components-web.min.css' %}">
+{#    <link rel="stylesheet" href="{% static 'vendor/material-components-web.min.css' %}">#}
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 {#    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">#}
 {#    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">#}
 {#    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">#}
-    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+{#    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">#}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!-- 💛 自定义 css -->{% endblock %}
 
 {% block body %}
     <!-- app bar 区域 -->
-    {% block app_bar %}<header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app_bar">
-        <div class="mdc-top-app-bar__row">
-            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                {% block left_bar_item %}<!-- http://www.w3school.com.cn/js/js_window_history.asp -->
-                <!-- https://stackoverflow.com/questions/14815838/webkit-chrome-history-back-1-onclick-vs-href -->
-                <a href="#" onclick="history.back();return false;" class="mdc-top-app-bar__navigation-icon"><i class="material-icons">&#xE5C4;</i></a>{% endblock %}
-                <span class="mdc-top-app-bar__title">{{ title }}</span>
-            </section>
-            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                {% block menu %}{% endblock %}
-            </section>
-        </div>
-    </header>{% endblock %}
-    <!-- drawer 区域 -->{% block drawer %}<!-- 无侧导航栏 -->{% endblock %}
+{#    {% block app_bar %}<header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app_bar">#}
+{#        <div class="mdc-top-app-bar__row">#}
+{#            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">#}
+{#                {% block left_bar_item %}<!-- http://www.w3school.com.cn/js/js_window_history.asp -->#}
+{#                <!-- https://stackoverflow.com/questions/14815838/webkit-chrome-history-back-1-onclick-vs-href -->#}
+{#                <a href="#" onclick="history.back();return false;" class="mdc-top-app-bar__navigation-icon"><i class="material-icons">&#xE5C4;</i></a>{% endblock %}#}
+{#                <span class="mdc-top-app-bar__title">{{ title }}</span>#}
+{#            </section>#}
+{#            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">#}
+{#                {% block menu %}{% endblock %}#}
+{#            </section>#}
+{#        </div>#}
+{#    </header>{% endblock %}#}
+{#    <!-- drawer 区域 -->{% block drawer %}<!-- 无侧导航栏 -->{% endblock %}#}
     <!-- main 区域 -->
     <main class="mdc-top-app-bar-fixed-adjust" data-endpoint="{{ endpoint }}" id="content">
         {% block content %}{% endblock %}
@@ -39,11 +41,11 @@
 
 {% block js %}{{ block.super }}<!-- 💙 mdc/base -->
 	<script src="{% static 'vendor/material-components-web.min.js' %}"></script>
-    <script>
-        document.body.classList.add('mdc-typography')
-        window.mdc.autoInit()
-    </script>
-    <script src="{% static 'railguns/js/vue/mdc-components.js' %}"></script>
+{#    <script>#}
+{#        document.body.classList.add('mdc-typography')#}
+{#        window.mdc.autoInit()#}
+{#    </script>#}
+    <script src="{% static 'railguns/js/vue/weui-components.js' %}"></script>
     <script src="{% static 'railguns/js/vue/common.js' %}"></script>
     {% block framework_js %}{% endblock %}
     <script src="{% static 'railguns/js/mdc/common.js' %}"></script>

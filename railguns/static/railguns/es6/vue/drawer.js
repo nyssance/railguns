@@ -1,10 +1,8 @@
-'use strict';
-
 var drawer = new Vue({
     el: '#drawer',
-    data: function data() {
+    data: function() {
         return {
             items: []
-        };
+        }
     }
-});
+})

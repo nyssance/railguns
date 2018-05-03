@@ -1,17 +1,13 @@
-{% extends '../grouped_table_detail.html' %}
+{% extends '../detail.html' %}
 {% load static %}
 {% block structure %}{{ block.super }}<!--           mdc/form/create -->
-{% endblock %}
-
-{% block content %}
-            <div>id: {{ id }}</div>
 {% endblock %}
 
 {% block framework_js %}<!-- 💙 mdc/form/create -->
     <script src="{% static 'railguns/js/vue/create.js' %}"></script>
     <script>
         (function() {
-            let tfs = document.querySelectorAll('.mdc-text-field:not([data-demo-no-auto-js])');
+            var tfs = document.querySelectorAll('.mdc-text-field:not([data-demo-no-auto-js])');
             for (tf of tfs) {
                 mdc.textField.MDCTextField.attachTo(tf)
             }

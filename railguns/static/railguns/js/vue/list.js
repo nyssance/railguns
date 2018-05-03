@@ -1,23 +1,24 @@
-'use strict'
+'use strict';
 
 var content = new Vue({
     el: '#content',
-    data: function() {
+    data: function data() {
         return {
             items: []
-        }
+        };
     },
-    mounted: function() {
-        let element = this.$el
+    mounted: function mounted() {
+        var element = this.$el;
         if (element) {
-            let endpoint = getEndpoint(element)
+            var endpoint = getEndpoint(element);
             if (endpoint) {
-                getData(endpoint, null, function(response) {
-                    this.items = response.results
-                }.bind(this))
+                getData(endpoint, null, function (response) {
+                    this.items = response.results;
+                    if (this.items.length == 0) {}
+                }.bind(this));
             }
         } else {
-            console.error('#content 不存在')
+            console.error('#content 不存在');
         }
     }
-})
+});
