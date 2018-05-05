@@ -37,16 +37,18 @@ const accessory = `<div v-if="link" class="weui-cell__ft"></div>`
 const list_item_default = `
     ${icon1}
     <div class="weui-cell__bd">
-        <span v-if="badge" style="vertical-align: middle">{{ title }}</span>
-        <span v-if="badge" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>
+        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>
         <p v-else>{{ title }}</p>
+        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>
     </div>
     <div class="weui-cell__ft"></div>`
 
 const list_item_subtitle = `
     ${icon}
     <div class="weui-cell__bd">
-        <p>{{ title }}</p>
+        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>
+        <p v-else>{{ title }}</p>
+        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>
         <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>
     </div>
     <div class="weui-cell__ft"></div>`
@@ -55,7 +57,9 @@ const list_item_subtitle = `
 const list_item_value1 = `
     ${icon}
     <div class="weui-cell__bd">
-        <p>{{ title }}</p>
+        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>
+        <p v-else>{{ title }}</p>
+        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>
     </div>
     <div class="weui-cell__ft">{{ subtitle }}</div>`
 
@@ -112,7 +116,7 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'badge', 'link', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'icon_color'],
     template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">
             ${list_item_default}
@@ -129,7 +133,7 @@ Vue.component('list-item-default', {
 
 // - 副标题
 Vue.component('list-item-subtitle', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badge', 'link'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'link'],
     template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_subtitle}
@@ -141,7 +145,7 @@ Vue.component('list-item-subtitle', {
 
 // - 左右
 Vue.component('list-item-value1', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badge', 'link', 'datavalue'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'link', 'datavalue'],
     template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">
             ${list_item_value1}
@@ -153,7 +157,7 @@ Vue.component('list-item-value1', {
 
 // 面板
 Vue.component('panel', {
-    props: ['icon', 'title', 'subtitle', 'badge', 'link'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link'],
     template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div class="weui-media-box__hd">
@@ -168,7 +172,7 @@ Vue.component('panel', {
 
 // - 卡片
 Vue.component('small-card', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badge', 'meta', 'time', 'extra', 'link'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'meta', 'time', 'extra', 'link'],
     template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div v-if="icon" class="weui-media-box__hd">
@@ -188,7 +192,7 @@ Vue.component('small-card', {
 
 // Grid Item
 Vue.component('grid-item', {
-    props: ['icon', 'title', 'subtitle', 'badge', 'link', 'icon_color'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'icon_color'],
     template: `
         <a :href="link" class="weui-grid">
             <div v-if="icon" class="weui-grid__icon">

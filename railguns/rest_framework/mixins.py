@@ -36,7 +36,7 @@ class TagsMixin(Serializer):
 
     def get_tags(self, obj):
         if hasattr(obj, 'tags'):
-            return get_nested_list([{'name': item.strip()} for item in obj.tags.split('#') if item.strip()])
+            return [item.strip() for item in obj.tags.split('#') if item.strip()]
         else:
             return '👈⚠️️字段不存在，请去除。'
 

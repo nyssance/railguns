@@ -27,12 +27,12 @@ var icon1 = '<div v-if="icon" class="weui-cell__hd" :style="style"><i :class="\'
 
 var accessory = '<div v-if="link" class="weui-cell__ft"></div>';
 
-var list_item_default = '\n    ' + icon1 + '\n    <div class="weui-cell__bd">\n        <span v-if="badge" style="vertical-align: middle">{{ title }}</span>\n        <span v-if="badge" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n        <p v-else>{{ title }}</p>\n    </div>\n    <div class="weui-cell__ft"></div>';
+var list_item_default = '\n    ' + icon1 + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n    </div>\n    <div class="weui-cell__ft"></div>';
 
-var list_item_subtitle = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <p>{{ title }}</p>\n        <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>\n    </div>\n    <div class="weui-cell__ft"></div>';
+var list_item_subtitle = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n        <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>\n    </div>\n    <div class="weui-cell__ft"></div>';
 
 // SO: https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-var list_item_value1 = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <p>{{ title }}</p>\n    </div>\n    <div class="weui-cell__ft">{{ subtitle }}</div>';
+var list_item_value1 = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n    </div>\n    <div class="weui-cell__ft">{{ subtitle }}</div>';
 
 // 列表 List
 // - 网格列表
@@ -70,7 +70,7 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'badge', 'link', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'icon_color'],
     template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">\n            ' + list_item_default + '\n        </a>\n        <div v-else class="weui-cell" :datavalue="datavalue">\n            ' + list_item_default + '\n        </div>',
     computed: {
         // SO: https://stackoverflow.com/a/42872117
@@ -82,31 +82,31 @@ Vue.component('list-item-default', {
 
 // - 副标题
 Vue.component('list-item-subtitle', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badge', 'link'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'link'],
     template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access">\n            ' + list_item_subtitle + '\n        </a>\n        <div v-else class="weui-cell">\n            ' + list_item_subtitle + '\n        </div>'
 });
 
 // - 左右
 Vue.component('list-item-value1', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badge', 'link', 'datavalue'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'link', 'datavalue'],
     template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">\n            ' + list_item_value1 + '\n        </a>\n        <div v-else class="weui-cell" :datavalue="datavalue">\n            ' + list_item_value1 + '\n        </div>'
 });
 
 // 面板
 Vue.component('panel', {
-    props: ['icon', 'title', 'subtitle', 'badge', 'link'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link'],
     template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" :src="icon" style="border-radius: 50%">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n            </div>\n        </a>'
 });
 
 // - 卡片
 Vue.component('small-card', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badge', 'meta', 'time', 'extra', 'link'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'meta', 'time', 'extra', 'link'],
     template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div v-if="icon" class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" alt="" :src="icon">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n                <ul class="weui-media-box__info">\n                    <li class="weui-media-box__info__meta">{{ meta }}</li>\n                    <li class="weui-media-box__info__meta">{{ time }}</li>\n                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{ extra }}</li>\n                </ul>\n            </div>\n        </a>'
 });
 
 // Grid Item
 Vue.component('grid-item', {
-    props: ['icon', 'title', 'subtitle', 'badge', 'link', 'icon_color'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'icon_color'],
     template: '\n        <a :href="link" class="weui-grid">\n            <div v-if="icon" class="weui-grid__icon">\n                <img :src="icon" :style="style" alt="">\n            </div>\n            <p class="weui-grid__label">{{ subtitle }}</p>\n            <p class="weui-grid__label">{{ title }}</p>\n        </a>',
     computed: {
         style: function style() {

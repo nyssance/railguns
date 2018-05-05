@@ -6,6 +6,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from ..db.models import OwnerModel
+from ...tools.utils import locale_currency
 
 
 class PreviewMixin(object):
@@ -23,10 +24,7 @@ class CurrencyMixin(object):
 
     def format_currency(self, amount, min, currency='CNY'):
         value = amount / 100
-        my_locale = 'zh_CN.UTF-8' if currency == 'CNY' else ''
-        locale.setlocale(locale.LC_ALL, my_locale)
-        locale._override_localeconv = {'n_sign_posn': 1}
-        formatted = locale.currency(value, grouping=True)
+        formatted = locale_currency(currency, value)
         if value < min:
             formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, False, True))
         return format_html(formatted)

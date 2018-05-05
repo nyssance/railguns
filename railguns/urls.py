@@ -13,15 +13,15 @@ from rest_framework import permissions
 from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
-from .rest_framework.views import download_url, upload_params
+from .rest_framework.views import DownloadUrlView, UploadParamsView
 
-# 系统自带
+# Django
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')  # https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
 ]
-# 第三方
+# Vendor
 urlpatterns += [
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_jwt_token),
@@ -53,8 +53,8 @@ urlpatterns += [
 ]
 # Railgun S
 urlpatterns += [
-    re_path(r'download_url/(?P<cloud>(aliyun|oss))/$', download_url, name='download-url'),
-    re_path(r'upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', upload_params, name='upload-params'),
+    re_path(r'download_url/(?P<cloud>(aliyun|oss))/$', DownloadUrlView.as_view(), name='download-url'),
+    re_path(r'upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]
 
