@@ -12,14 +12,14 @@ function getData(endpoint, params, success, failure) {
     axios(endpoint, {
             params: params
         })
-        .then(function(response) {
-            console.log('Content-Type:', response.headers['content-type'])
-            console.log('Response:', response)
+        .then(function (response) {
+            console.debug('Content-Type:', response.headers['content-type'])
+            console.debug('Response:', response)
             if (response.status === 200) { // 200 才重绘
                 success && success(response.data)
             }
         })
-        .catch(function(error) {
+        .catch(function (error) {
             failure && failure(error)
             if (error.response) { // 请求已经发出，但是服务器响应返回的状态吗不在2xx的范围内
                 console.log(error.response.data)
@@ -47,7 +47,7 @@ function getEndpoint(element) {
 }
 
 function getQueryString(name) {
-    var regx = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i")
-    var r = location.search.substr(1).match(regx)
+    let regx = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i")
+    let r = location.search.substr(1).match(regx)
     return !!r ? decodeURIComponent(r[2]) : null
 }

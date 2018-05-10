@@ -14,8 +14,8 @@ function getData(endpoint, params, success, failure) {
     axios(endpoint, {
         params: params
     }).then(function (response) {
-        console.log('Content-Type:', response.headers['content-type']);
-        console.log('Response:', response);
+        console.debug('Content-Type:', response.headers['content-type']);
+        console.debug('Response:', response);
         if (response.status === 200) {
             // 200 才重绘
             success && success(response.data);

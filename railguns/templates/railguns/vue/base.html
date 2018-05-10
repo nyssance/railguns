@@ -2,11 +2,11 @@
 <!-- 加载 -->
 {% load static %}
 <!-- 结构 -->
-{% block structure %}{{ block.super }}<!--     mdc/base -->
+{% block structure %}{{ block.super }}<!--     vue/base -->
 {% endblock %}
 
 {% block css %}{{ block.super }}
-    <!-- 💙 mdc/base -->
+    <!-- 💙 vue/base -->
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 {#    <link rel="stylesheet" href="{% static 'vendor/material-components-web.min.css' %}">#}
@@ -19,19 +19,6 @@
 
 {% block body %}
     <!-- app bar 区域 -->
-{#    {% block app_bar %}<header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app_bar">#}
-{#        <div class="mdc-top-app-bar__row">#}
-{#            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">#}
-{#                {% block left_bar_item %}<!-- http://www.w3school.com.cn/js/js_window_history.asp -->#}
-{#                <!-- https://stackoverflow.com/questions/14815838/webkit-chrome-history-back-1-onclick-vs-href -->#}
-{#                <a href="#" onclick="history.back();return false;" class="mdc-top-app-bar__navigation-icon"><i class="material-icons">&#xE5C4;</i></a>{% endblock %}#}
-{#                <span class="mdc-top-app-bar__title">{{ title }}</span>#}
-{#            </section>#}
-{#            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">#}
-{#                {% block menu %}{% endblock %}#}
-{#            </section>#}
-{#        </div>#}
-{#    </header>{% endblock %}#}
 {#    <!-- drawer 区域 -->{% block drawer %}<!-- 无侧导航栏 -->{% endblock %}#}
     <!-- main 区域 -->
     <main data-endpoint="{{ endpoint }}" id="content">

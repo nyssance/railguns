@@ -131,5 +131,5 @@ Vue.component('text-field', {
 Vue.filter('dateFormat', function (dateStr) {
     var pattern = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'YYYY-MM-DD HH:mm:ss';
 
-    return moment(dateStr).format(pattern);
+    return dateStr ? moment(dateStr).format(pattern) : 'null'; // moment会自动容错输出当前时间, 真是多此一举.
 });

@@ -232,5 +232,5 @@ Vue.component('text-field', {
 
 // 💙 过滤器
 Vue.filter('dateFormat', (dateStr, pattern = 'YYYY-MM-DD HH:mm:ss') => {
-    return moment(dateStr).format(pattern)
+    return dateStr ? moment(dateStr).format(pattern) : 'null' // moment会自动容错输出当前时间, 真是多此一举.
 })

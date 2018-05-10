@@ -1,0 +1,16 @@
+{% extends '../detail.html' %}
+{% load static %}
+{% block structure %}{{ block.super }}<!--           vue/form/create -->
+{% endblock %}
+
+{% block framework_js %}<!-- 💙 vue/form/create -->
+    <script src="{% static 'railguns/js/vue/create.js' %}"></script>
+    <script>
+        (function() {
+            var tfs = document.querySelectorAll('.mdc-text-field:not([data-demo-no-auto-js])');
+            for (tf of tfs) {
+                mdc.textField.MDCTextField.attachTo(tf)
+            }
+        })()
+    </script>
+{% endblock %}
