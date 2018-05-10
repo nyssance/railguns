@@ -1,3 +1,5 @@
+import locale
+
 from django.contrib import admin
 from django.core import serializers
 from django.utils.html import format_html
