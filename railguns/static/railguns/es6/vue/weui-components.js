@@ -1,13 +1,7 @@
+// https://cn.vuejs.org/v2/style-guide/#Prop-名大小写-强烈推荐
+// https://cn.vuejs.org/v2/style-guide/#指令缩写-强烈推荐
+
 // 💙 组件
-Vue.component('app', {
-    template: `<div class="container"><div class="topBar">这个地方在渲染后不会被占用</div><slot></slot></div>`
-})
-Vue.component('app-header', {
-    template: `<div class="header" slot="header">this is header</div>`
-})
-Vue.component('app-content', {
-    template: `<div class="content">this is content</div>`
-})
 Vue.component('app-footer', {
     template: `
         <!--<div class="weui-footer weui-footer_fixed-bottom">-->
@@ -116,7 +110,7 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'iconColor'],
     template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">
             ${list_item_default}
@@ -126,7 +120,7 @@ Vue.component('list-item-default', {
         </div>`,
     computed: { // SO: https://stackoverflow.com/a/42872117
         style() {
-            return 'color: ' + this.icon_color
+            return 'color: ' + this.iconColor
         }
     }
 })
@@ -192,7 +186,7 @@ Vue.component('small-card', {
 
 // Grid Item
 Vue.component('grid-item', {
-    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'icon_color'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'iconColor'],
     template: `
         <a :href="link" class="weui-grid">
             <div v-if="icon" class="weui-grid__icon">
@@ -203,7 +197,7 @@ Vue.component('grid-item', {
         </a>`,
     computed: {
         style() {
-            return 'color: ' + this.icon_color
+            return 'color: ' + this.iconColor
         }
     }
 })
@@ -211,6 +205,44 @@ Vue.component('grid-item', {
 // 表单
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
+    // props: ['name', 'helper_text', 'value', 'type'],
+    props: {
+        id: {
+            type: String
+        },
+        name: {
+            type: String
+        },
+        placeholder: {
+            type: String,
+            required: false
+        },
+        value: {
+            type: String,
+            required: false
+        },
+        type: {
+            type: String,
+            default: 'text'
+        }
+    },
+    template: `
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">{{ name }}</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" :placeholder="placeholder" :type="type" :id="id">
+            </div>
+        </div>`,
+    methods: {
+        updateValue: function (value) {
+            this.$emit('input', value)
+        }
+    }
+})
+
+Vue.component('text-field1', {
     props: ['name', 'helper_text', 'value'],
     template: `
         <div class="weui-cell">
@@ -226,6 +258,68 @@ Vue.component('text-field', {
     methods: {
         updateValue: function (value) {
             this.$emit('input', value)
+        }
+    }
+})
+
+// Swiper
+Vue.component('swiper', {
+    props: {
+        height: {
+            type: Number,
+            default: 9 / 16
+        },
+        delay: {
+            type: Number,
+            default: 3000
+        },
+        loop: {
+            type: Boolean,
+            default: true
+        },
+        pagination: {
+            type: Boolean,
+            default: false
+        }
+    },
+    template: `
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <slot name="slide"></slot>
+            </div>
+             <!-- 如果需要分页器 -->
+             <div v-if="pagination" class="swiper-pagination"></div>
+        </div>`,
+    mounted: function () {
+        let screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+        let height = screenWidth * this.height
+        this.$el.style.height = height + 'px'
+    },
+    updated: function () {
+        let mySwiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: this.delay
+            },
+            loop: this.loop,
+            pagination: {
+                el: '.swiper-pagination'
+            }
+        })
+    }
+})
+
+Vue.component('swiper-slide', {
+    props: ['title', 'image', 'link'],
+    template: `
+        <a v-if="link" :href="link" class="swiper-slide">{{ title }}</a>
+        <div v-else class="swiper-slide">{{ title }}</div>`,
+    mounted: function () {
+        if (this.image) {
+            this.$el.style.backgroundImage = 'url(' + this.image + ')'
+            this.$el.style.backgroundPosition = 'center'
+            this.$el.style.backgroundSize = 'cover'
+        } else {
+            this.$el.style.backgroundColor = '#00e871'
         }
     }
 })

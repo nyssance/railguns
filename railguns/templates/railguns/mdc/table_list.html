@@ -1,0 +1,21 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/table_list -->
+{% endblock %}
+
+{% block framework_js %}{{ block.super }}    <!-- 💙 mdc/table_list -->
+    <script>
+        (function() { // autoInit 的  Ripple 方法 无法处理动态内容, 根据官方demo添加这种方法
+            // Delay initialization within development until styles have loaded
+            setTimeout(initInteractiveLists, 250)
+
+            function initInteractiveLists() {
+                var interactiveListItems = document.querySelectorAll('a.mdc-list-item');
+                for (li of interactiveListItems) {
+                    if (!li.href.endsWith('#')) {
+                        mdc.ripple.MDCRipple.attachTo(li)
+                    }
+                }
+            }
+        })()
+    </script>
+{% endblock %}

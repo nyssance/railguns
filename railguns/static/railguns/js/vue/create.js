@@ -5,12 +5,14 @@
 
 var content = new Vue({
     el: '#content',
-    data: {
-        data: {
-            name: '',
-            region: '',
-            type: ''
-        }
+    data: function data() {
+        return {
+            data: {
+                name: '',
+                region: '',
+                type: ''
+            }
+        };
     },
     methods: {
         create: function create() {

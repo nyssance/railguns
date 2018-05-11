@@ -10,16 +10,16 @@
 // Vue 傻逼, 不区分html注释和正式代码
 function getData(endpoint, params, success, failure) {
     axios(endpoint, {
-            params: params
-        })
-        .then(function (response) {
+        params: params
+    })
+        .then(response => {
             console.debug('Content-Type:', response.headers['content-type'])
             console.debug('Response:', response)
             if (response.status === 200) { // 200 才重绘
                 success && success(response.data)
             }
         })
-        .catch(function (error) {
+        .catch(error => {
             failure && failure(error)
             if (error.response) { // 请求已经发出，但是服务器响应返回的状态吗不在2xx的范围内
                 console.log(error.response.data)

@@ -1,9 +1,10 @@
-{% extends '../detail.html' %}
+{% extends '../base.html' %}
 {% load static %}
 {% block structure %}{{ block.super }}<!--           vue/form/create -->
 {% endblock %}
 
-{% block framework_js %}<!-- 💙 vue/form/create -->
+{% block js %}{{ block.super }}
+    <!-- 💙 vue/form/create -->
     <script src="{% static 'railguns/js/vue/create.js' %}"></script>
     <script>
         (function() {
@@ -13,4 +14,4 @@
             }
         })()
     </script>
-{% endblock %}
+    <!-- 💛 自定义 js -->{% endblock %}

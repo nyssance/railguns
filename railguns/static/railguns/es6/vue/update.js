@@ -16,13 +16,13 @@ function updateCheckList(selected) {
 
 var content = new Vue({
     el: '#content',
-    data: {
-        items: [],
-        data: {
-
+    data: function () {
+        return {
+            items: [],
+            data: {}
         }
     },
-    mounted: function() {
+    mounted: function () {
         let element = this.$el
         if (element != null) {
             this.items = JSON.parse(getQueryString('options'))
@@ -30,7 +30,7 @@ var content = new Vue({
             console.error('#content 不存在')
         }
     },
-    updated: function() {
+    updated: function () {
         currentValue = getQueryString('selected') // 第一次进来当前值从地址栏参数获取
         for (let li of document.getElementsByTagName('li')) {
             if (li.attributes['class'].value === 'mdc-list-item') {
@@ -38,7 +38,7 @@ var content = new Vue({
                     let i = li.getElementsByTagName('i')
                     i[0].innerHTML = 'radio_button_checked'
                 }
-                li.onclick = function(e) {
+                li.onclick = function (e) {
                     console.warn('on click')
                     let selected = li.attributes['datavalue'].value
                     if (currentValue != selected) {
@@ -50,7 +50,7 @@ var content = new Vue({
         }
     },
     methods: {
-        patch: function() { // 更新数据
+        patch: function () { // 更新数据
             if (currentValue === getQueryString('selected')) {
                 console.warn('与之前相同, 不提交服务器更新')
                 history.back() // 只返回不刷新
@@ -62,15 +62,15 @@ var content = new Vue({
                 console.warn('Endpoint:', endpoint)
                 console.warn('请求 更新 ' + json_string)
                 axios.patch(endpoint, this.data, {
-                        xsrfCookieName: 'csrftoken',
-                        xsrfHeaderName: 'X-CSRFToken',
-                    })
-                    .then(function(response) {
+                    xsrfCookieName: 'csrftoken',
+                    xsrfHeaderName: 'X-CSRFToken',
+                })
+                    .then(function (response) {
                         console.log('Response:', response)
                         history.back()
                         location.replace(endpoint.replace('/api/v1/', '/'))
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         alert(error.response)
                         console.log(error.response)
                     })

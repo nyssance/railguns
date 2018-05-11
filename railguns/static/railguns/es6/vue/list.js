@@ -2,27 +2,26 @@ var content = new Vue({
     el: '#content',
     data: function () {
         return {
+            endpoint: '',
             items: []
         }
     },
     mounted: function () {
         let element = this.$el
         if (element) {
-            let endpoint = getEndpoint(element)
-            this.getList(endpoint, null)
+            this.endpoint = getEndpoint(element)
+            if (this.endpoint) {
+                this.reload(null)
+            }
         } else {
             console.error('#content 不存在')
         }
     },
     methods: {
-        getList: function (endpoint, params) {
-            if (endpoint) {
-                getData(endpoint, params, function (response) {
-                    this.items = response.results
-                    if (this.items.length == 0) {
-                    }
-                }.bind(this))
-            }
+        reload: function (params) {
+            getData(this.endpoint, params, (response => {
+                this.items = response.results
+            }).bind(this))
         },
         // target 和 currentTarget 区别 https://juejin.im/post/59f16ffaf265da43085d4108
         toggle: function (event, params) {
@@ -32,9 +31,7 @@ var content = new Vue({
             if (before !== after) {
                 before.classList.remove(className)
                 after.classList.add(className)
-                let element = document.getElementById('content')
-                let endpoint = getEndpoint(element)
-                this.getList(endpoint, params)
+                this.reload(params)
             }
         }
     }

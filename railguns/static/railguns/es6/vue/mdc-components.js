@@ -97,7 +97,7 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'iconColor'],
     template: `
         <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
             ${list_item_default}
@@ -107,7 +107,7 @@ Vue.component('list-item-default', {
         </li>`,
     computed: { // SO: https://stackoverflow.com/a/42872117
         style() {
-            return 'color: ' + this.icon_color
+            return 'color: ' + this.iconColor
         }
     }
 })
@@ -169,7 +169,7 @@ Vue.component('text-field', {
             </p>
         </div>`,
     methods: {
-        updateValue: function(value) {
+        updateValue: function (value) {
             this.$emit('input', value)
         }
     }

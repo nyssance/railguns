@@ -64,12 +64,12 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'iconColor'],
     template: '\n        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">\n            ' + list_item_default + '\n        </a>\n        <li v-else class="mdc-list-item" :datavalue="datavalue">\n            ' + list_item_default + '\n        </li>',
     computed: {
         // SO: https://stackoverflow.com/a/42872117
         style: function style() {
-            return 'color: ' + this.icon_color;
+            return 'color: ' + this.iconColor;
         }
     }
 });

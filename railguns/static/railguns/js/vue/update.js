@@ -39,9 +39,11 @@ function updateCheckList(selected) {
 
 var content = new Vue({
     el: '#content',
-    data: {
-        items: [],
-        data: {}
+    data: function data() {
+        return {
+            items: [],
+            data: {}
+        };
     },
     mounted: function mounted() {
         var element = this.$el;

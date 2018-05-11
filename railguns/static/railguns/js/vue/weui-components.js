@@ -1,15 +1,9 @@
 'use strict';
 
+// https://cn.vuejs.org/v2/style-guide/#Prop-名大小写-强烈推荐
+// https://cn.vuejs.org/v2/style-guide/#指令缩写-强烈推荐
+
 // 💙 组件
-Vue.component('app', {
-    template: '<div class="container"><div class="topBar">\u8FD9\u4E2A\u5730\u65B9\u5728\u6E32\u67D3\u540E\u4E0D\u4F1A\u88AB\u5360\u7528</div><slot></slot></div>'
-});
-Vue.component('app-header', {
-    template: '<div class="header" slot="header">this is header</div>'
-});
-Vue.component('app-content', {
-    template: '<div class="content">this is content</div>'
-});
 Vue.component('app-footer', {
     template: '\n        <!--<div class="weui-footer weui-footer_fixed-bottom">-->\n        <div class="weui-footer">\n            <br>\n            <br>\n            <p class="weui-footer__links">\n                <!--<a href="javascript:home();" class="weui-footer__link">\u9996\u9875</a>-->\n            </p>\n            <p class="weui-footer__text">Copyright &copy; 2018 www.wowxjp.com</p>\n        </div>'
 });
@@ -70,12 +64,12 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'icon_color'],
+    props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'iconColor'],
     template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">\n            ' + list_item_default + '\n        </a>\n        <div v-else class="weui-cell" :datavalue="datavalue">\n            ' + list_item_default + '\n        </div>',
     computed: {
         // SO: https://stackoverflow.com/a/42872117
         style: function style() {
-            return 'color: ' + this.icon_color;
+            return 'color: ' + this.iconColor;
         }
     }
 });
@@ -106,11 +100,11 @@ Vue.component('small-card', {
 
 // Grid Item
 Vue.component('grid-item', {
-    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'icon_color'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'iconColor'],
     template: '\n        <a :href="link" class="weui-grid">\n            <div v-if="icon" class="weui-grid__icon">\n                <img :src="icon" :style="style" alt="">\n            </div>\n            <p class="weui-grid__label">{{ subtitle }}</p>\n            <p class="weui-grid__label">{{ title }}</p>\n        </a>',
     computed: {
         style: function style() {
-            return 'color: ' + this.icon_color;
+            return 'color: ' + this.iconColor;
         }
     }
 });
@@ -118,11 +112,94 @@ Vue.component('grid-item', {
 // 表单
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
+    // props: ['name', 'helper_text', 'value', 'type'],
+    props: {
+        id: {
+            type: String
+        },
+        name: {
+            type: String
+        },
+        placeholder: {
+            type: String,
+            required: false
+        },
+        value: {
+            type: String,
+            required: false
+        },
+        type: {
+            type: String,
+            default: 'text'
+        }
+    },
+    template: '\n        <div class="weui-cell">\n            <div class="weui-cell__hd">\n                <label class="weui-label">{{ name }}</label>\n            </div>\n            <div class="weui-cell__bd">\n                <input class="weui-input" :placeholder="placeholder" :type="type" :id="id">\n            </div>\n        </div>',
+    methods: {
+        updateValue: function updateValue(value) {
+            this.$emit('input', value);
+        }
+    }
+});
+
+Vue.component('text-field1', {
     props: ['name', 'helper_text', 'value'],
     template: '\n        <div class="weui-cell">\n            <div class="weui-cell__hd">\n                <label class="weui-label">{{ name }}</label>\n            </div>\n            <div class="weui-cell__bd">\n                <input type="text" \n                    v-bind:value="value"\n                    v-on:input="updateValue($event.target.value)">\n            </div>\n        </div>',
     methods: {
         updateValue: function updateValue(value) {
             this.$emit('input', value);
+        }
+    }
+});
+
+// Swiper
+Vue.component('swiper', {
+    props: {
+        height: {
+            type: Number,
+            default: 9 / 16
+        },
+        delay: {
+            type: Number,
+            default: 3000
+        },
+        loop: {
+            type: Boolean,
+            default: true
+        },
+        pagination: {
+            type: Boolean,
+            default: false
+        }
+    },
+    template: '\n        <div class="swiper-container">\n            <div class="swiper-wrapper">\n                <slot name="slide"></slot>\n            </div>\n             <!-- \u5982\u679C\u9700\u8981\u5206\u9875\u5668 -->\n             <div v-if="pagination" class="swiper-pagination"></div>\n        </div>',
+    mounted: function mounted() {
+        var screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        var height = screenWidth * this.height;
+        this.$el.style.height = height + 'px';
+    },
+    updated: function updated() {
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: this.delay
+            },
+            loop: this.loop,
+            pagination: {
+                el: '.swiper-pagination'
+            }
+        });
+    }
+});
+
+Vue.component('swiper-slide', {
+    props: ['title', 'image', 'link'],
+    template: '\n        <a v-if="link" :href="link" class="swiper-slide">{{ title }}</a>\n        <div v-else class="swiper-slide">{{ title }}</div>',
+    mounted: function mounted() {
+        if (this.image) {
+            this.$el.style.backgroundImage = 'url(' + this.image + ')';
+            this.$el.style.backgroundPosition = 'center';
+            this.$el.style.backgroundSize = 'cover';
+        } else {
+            this.$el.style.backgroundColor = '#00e871';
         }
     }
 });

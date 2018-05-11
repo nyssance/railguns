@@ -3,15 +3,17 @@
 
 var content = new Vue({
     el: '#content',
-    data: {
-        data: {
-            name: '',
-            region: '',
-            type: ''
+    data: function () {
+        return {
+            data: {
+                name: '',
+                region: '',
+                type: ''
+            }
         }
     },
     methods: {
-        create: function() {
+        create: function () {
             let element = this.$el
             if (element) {
                 console.warn(this.data) // 返回的是一个包含很多内容东西的对象 里边还有不想要的东西
@@ -20,16 +22,16 @@ var content = new Vue({
                 let endpoint = getEndpoint(element)
                 if (endpoint) {
                     axios.post(endpoint, this.data, {
-                            xsrfCookieName: 'csrftoken',
-                            xsrfHeaderName: 'X-CSRFToken',
-                        })
-                        .then(function(response) {
+                        xsrfCookieName: 'csrftoken',
+                        xsrfHeaderName: 'X-CSRFToken',
+                    })
+                        .then(function (response) {
                             console.log('Response:', response)
                             // history.back()
                             // location.reload(true)
                             // location.href = document.referrer
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                             console.log(error.response)
                         })
                 }

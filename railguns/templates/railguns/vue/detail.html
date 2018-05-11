@@ -3,6 +3,7 @@
 {% block structure %}{{ block.super }}<!--       vue/detail -->
 {% endblock %}
 
-{% block framework_js %}<!-- 💙 vue/detail -->
+{% block js %}{{ block.super }}
+    <!-- 💙 vue/detail -->
     <script src="{% static 'railguns/js/vue/detail.js' %}"></script>
-{% endblock %}
+    <!-- 💛 自定义 js -->{% endblock %}
