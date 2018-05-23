@@ -15,7 +15,6 @@ setup(
         'Django[argon2]',
         'djangorestframework',
         'djangorestframework-jwt',
-        'djangorestframework-xml',
         'drf-yasg',
         'drf-yasg[validation]',
         'stringcase',

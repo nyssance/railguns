@@ -6,7 +6,6 @@ Only My Railgun
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](http://www.django-rest-framework.org)
 - [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
-- [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/)
 - [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
 
