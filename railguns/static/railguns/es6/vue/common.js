@@ -20,18 +20,21 @@ function getData(endpoint, params, success, failure) {
             }
         })
         .catch(error => {
-            failure && failure(error)
-            if (error.response) { // 请求已经发出，但是服务器响应返回的状态吗不在2xx的范围内
-                console.log(error.response.data)
-                console.log(error.response.status)
-                console.log(error.response.statusText)
-                console.log(error.response.headers)
-            } else if (error.request) { // 请求已经发出，没有响应
-                console.log(error.request)
-            } else { // 一些错误是在设置请求的时候触发
-                console.error('Error:', error.message)
+            if (failure) {
+                failure && failure(error)
+            } else {
+                if (error.response) { // 请求已经发出，但是服务器响应返回的状态吗不在2xx的范围内
+                    console.log(error.response.data)
+                    console.log(error.response.status)
+                    console.log(error.response.statusText)
+                    console.log(error.response.headers)
+                } else if (error.request) { // 请求已经发出，没有响应
+                    console.log(error.request)
+                } else { // 一些错误是在设置请求的时候触发
+                    console.error('Error:', error.message)
+                }
+                console.error(error.config)
             }
-            console.error(error.config)
         })
 }
 

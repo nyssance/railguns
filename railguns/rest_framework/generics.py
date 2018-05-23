@@ -39,7 +39,7 @@ class RetrieveAPI(mixins.ModelMixin, RetrieveAPIView):
         return self.get_model().objects.filter(is_active=True)
 
 
-class RetrieveUpdateAPI(mixins.ModelMixin, mixins.PutToPatchMixin, RetrieveUpdateAPIView):
+class RetrieveUpdateAPI(mixins.ModelMixin, RetrieveUpdateAPIView):
     """详情 & 更新 API"""
 
     def get_queryset(self):

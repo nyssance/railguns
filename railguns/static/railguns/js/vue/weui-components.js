@@ -94,8 +94,8 @@ Vue.component('panel', {
 
 // - 卡片
 Vue.component('small-card', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'meta', 'time', 'extra', 'link'],
-    template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div v-if="icon" class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" alt="" :src="icon">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n                <ul class="weui-media-box__info">\n                    <li class="weui-media-box__info__meta">{{ meta }}</li>\n                    <li class="weui-media-box__info__meta">{{ time }}</li>\n                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{ extra }}</li>\n                </ul>\n            </div>\n        </a>'
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'meta', 'time', 'extra', 'link', 'button', 'buttonLink'],
+    template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div v-if="icon" class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" alt="" :src="icon">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n                <ul class="weui-media-box__info">\n                    <li class="weui-media-box__info__meta">{{ meta }}</li>\n                    <li class="weui-media-box__info__meta">{{ time }}</li>\n                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{ extra }}</li>\n                </ul>\n            </div>\n            <a v-if="button" :href="buttonLink" class="weui-btn weui-btn_mini weui-btn_primary">{{ button }}</a>\n        </a>'
 });
 
 // Grid Item
@@ -171,7 +171,7 @@ Vue.component('swiper', {
             default: false
         }
     },
-    template: '\n        <div class="swiper-container">\n            <div class="swiper-wrapper">\n                <slot name="slide"></slot>\n            </div>\n             <!-- \u5982\u679C\u9700\u8981\u5206\u9875\u5668 -->\n             <div v-if="pagination" class="swiper-pagination"></div>\n        </div>',
+    template: '\n        <div class="swiper-container">\n            <div class="swiper-wrapper">\n                <slot name="item"></slot>\n            </div>\n             <!-- \u5982\u679C\u9700\u8981\u5206\u9875\u5668 -->\n             <div v-if="pagination" class="swiper-pagination"></div>\n        </div>',
     mounted: function mounted() {
         var screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var height = screenWidth * this.height;
@@ -190,7 +190,7 @@ Vue.component('swiper', {
     }
 });
 
-Vue.component('swiper-slide', {
+Vue.component('swiper-item', {
     props: ['title', 'image', 'link'],
     template: '\n        <a v-if="link" :href="link" class="swiper-slide">{{ title }}</a>\n        <div v-else class="swiper-slide">{{ title }}</div>',
     mounted: function mounted() {

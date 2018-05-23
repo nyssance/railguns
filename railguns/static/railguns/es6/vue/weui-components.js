@@ -166,7 +166,10 @@ Vue.component('panel', {
 
 // - 卡片
 Vue.component('small-card', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'meta', 'time', 'extra', 'link'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'badges',
+        'meta', 'time', 'extra', 'link',
+        'button', 'buttonLink'
+    ],
     template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div v-if="icon" class="weui-media-box__hd">
@@ -181,6 +184,7 @@ Vue.component('small-card', {
                     <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{ extra }}</li>
                 </ul>
             </div>
+            <a v-if="button" :href="buttonLink" class="weui-btn weui-btn_mini weui-btn_primary">{{ button }}</a>
         </a>`
 })
 
@@ -285,7 +289,7 @@ Vue.component('swiper', {
     template: `
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <slot name="slide"></slot>
+                <slot name="item"></slot>
             </div>
              <!-- 如果需要分页器 -->
              <div v-if="pagination" class="swiper-pagination"></div>
@@ -308,7 +312,7 @@ Vue.component('swiper', {
     }
 })
 
-Vue.component('swiper-slide', {
+Vue.component('swiper-item', {
     props: ['title', 'image', 'link'],
     template: `
         <a v-if="link" :href="link" class="swiper-slide">{{ title }}</a>

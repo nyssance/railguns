@@ -47,23 +47,6 @@ class OwnerMixin(object):
         obj.user_id = self.request.user.id
 
 
-class PutToPatchMixin(object):
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', True)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-
-class PutToPatchApiViewMixin(object):
-
-    def put(self, request, *args, **kwargs):
-        return self.patch(request, *args, **kwargs)
-
-
 class StartDateMixin(Serializer):
     start_date = SerializerMethodField()
 
