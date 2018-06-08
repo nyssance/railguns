@@ -62,7 +62,7 @@ const list_item_value1 = `
 Vue.component('collection-list', {
     template: `
         <div class="weui-grids">
-            <slot name="item"></slot>
+            <slot></slot>
         </div>`
 })
 
@@ -70,7 +70,7 @@ Vue.component('collection-list', {
 Vue.component('table-list', {
     template: `
         <div>
-            <slot name="section">Table List</slot>
+            <slot>Table List</slot>
         </div>`
 })
 
@@ -84,10 +84,10 @@ Vue.component('table-list-section', {
     },
     template: `
         <div v-if="grouped" class="weui-cells">
-            <slot name="item"></slot>
+            <slot></slot>
         </div>
         <div v-else class="weui-cells" style="margin: 0">
-            <slot name="item">
+            <slot>
                 <div class="weui-loadmore weui-loadmore_line">
                     <span class="weui-loadmore__tips">暂无数据</span>
                 </div>
@@ -151,7 +151,9 @@ Vue.component('list-item-value1', {
 
 // 面板
 Vue.component('panel', {
-    props: ['icon', 'title', 'subtitle', 'badges', 'link'],
+    props: ['icon', 'title', 'subtitle', 'badges', 'link',
+        'button', 'buttonLink'
+    ],
     template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div class="weui-media-box__hd">
@@ -161,6 +163,7 @@ Vue.component('panel', {
                 <h4 class="weui-media-box__title">{{ title }}</h4>
                 <p class="weui-media-box__desc">{{ subtitle }}</p>
             </div>
+            <a v-if="button" :href="buttonLink" class="weui-btn weui-btn_mini weui-btn_primary">{{ button }}</a>
         </a>`
 })
 
@@ -289,7 +292,7 @@ Vue.component('swiper', {
     template: `
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <slot name="item"></slot>
+                <slot></slot>
             </div>
              <!-- 如果需要分页器 -->
              <div v-if="pagination" class="swiper-pagination"></div>

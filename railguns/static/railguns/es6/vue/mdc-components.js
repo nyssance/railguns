@@ -59,7 +59,7 @@ Vue.component('collection-list', {
     template: `
         <div class="mdc-grid-list>
             <ul class="mdc-grid-list__tiles">
-                <slot name="item"></slot>
+                <slot></slot>
             </ul>
         </div>`
 })
@@ -69,7 +69,7 @@ Vue.component('table-list', {
     props: ['grouped'],
     template: `
         <div class="mdc-list-group">
-            <slot name="section">Table List</slot>
+            <slot>Table List</slot>
         </div>`
 })
 
@@ -81,7 +81,7 @@ Vue.component('table-list-section', {
             <slot name="section-header"><h3 class="mdc-list-group__subheader">{{ title }}&#xA0;</h3></slot>
             <hr class="mdc-list-divider">
             <ul class="mdc-list mdc-list--avatar-list">
-                <slot name="item"></slot>
+                <slot></slot>
             </ul>
             <hr class="mdc-list-divider">
         </div>`

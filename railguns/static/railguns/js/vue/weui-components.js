@@ -31,12 +31,12 @@ var list_item_value1 = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n   
 // 列表 List
 // - 网格列表
 Vue.component('collection-list', {
-    template: '\n        <div class="weui-grids">\n            <slot name="item"></slot>\n        </div>'
+    template: '\n        <div class="weui-grids">\n            <slot></slot>\n        </div>'
 });
 
 // - 普通列表
 Vue.component('table-list', {
-    template: '\n        <div>\n            <slot name="section">Table List</slot>\n        </div>'
+    template: '\n        <div>\n            <slot>Table List</slot>\n        </div>'
 });
 
 // - 普通列表区块
@@ -47,7 +47,7 @@ Vue.component('table-list-section', {
             default: true
         }
     },
-    template: '\n        <div v-if="grouped" class="weui-cells">\n            <slot name="item"></slot>\n        </div>\n        <div v-else class="weui-cells" style="margin: 0">\n            <slot name="item">\n                <div class="weui-loadmore weui-loadmore_line">\n                    <span class="weui-loadmore__tips">\u6682\u65E0\u6570\u636E</span>\n                </div>\n            </slot>\n        </div>'
+    template: '\n        <div v-if="grouped" class="weui-cells">\n            <slot></slot>\n        </div>\n        <div v-else class="weui-cells" style="margin: 0">\n            <slot>\n                <div class="weui-loadmore weui-loadmore_line">\n                    <span class="weui-loadmore__tips">\u6682\u65E0\u6570\u636E</span>\n                </div>\n            </slot>\n        </div>'
 });
 
 // 列表 : 区域头
@@ -88,8 +88,8 @@ Vue.component('list-item-value1', {
 
 // 面板
 Vue.component('panel', {
-    props: ['icon', 'title', 'subtitle', 'badges', 'link'],
-    template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" :src="icon" style="border-radius: 50%">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n            </div>\n        </a>'
+    props: ['icon', 'title', 'subtitle', 'badges', 'link', 'button', 'buttonLink'],
+    template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" :src="icon" style="border-radius: 50%">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n            </div>\n            <a v-if="button" :href="buttonLink" class="weui-btn weui-btn_mini weui-btn_primary">{{ button }}</a>\n        </a>'
 });
 
 // - 卡片
@@ -171,7 +171,7 @@ Vue.component('swiper', {
             default: false
         }
     },
-    template: '\n        <div class="swiper-container">\n            <div class="swiper-wrapper">\n                <slot name="item"></slot>\n            </div>\n             <!-- \u5982\u679C\u9700\u8981\u5206\u9875\u5668 -->\n             <div v-if="pagination" class="swiper-pagination"></div>\n        </div>',
+    template: '\n        <div class="swiper-container">\n            <div class="swiper-wrapper">\n                <slot></slot>\n            </div>\n             <!-- \u5982\u679C\u9700\u8981\u5206\u9875\u5668 -->\n             <div v-if="pagination" class="swiper-pagination"></div>\n        </div>',
     mounted: function mounted() {
         var screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         var height = screenWidth * this.height;

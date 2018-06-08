@@ -7,13 +7,13 @@
 
 {% block content %}
             <table-list-section>
-                <list-item-default slot="item" v-for="item in items" :key="item.value"
+                <list-item-default v-for="item in items" :key="item.value"
                     :title="item.label"
                     accessory="radio_button_unchecked"
                     :datavalue="item.value"></list-item-default>
             </table-list-section>
             <table-list-section>
-                <input slot="item" @click="patch" type="submit" value="提交">
+                <input @click="patch" type="submit" value="提交">
             </table-list-section>{% endblock %}
 
 {% block js %}{{ block.super }}

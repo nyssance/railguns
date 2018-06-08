@@ -40,19 +40,19 @@ var list_item_value1 = '\n    ' + icon + '\n    {{ title }}\n    <span style="ma
 // 列表 List
 // - 网格列表
 Vue.component('collection-list', {
-    template: '\n        <div class="mdc-grid-list>\n            <ul class="mdc-grid-list__tiles">\n                <slot name="item"></slot>\n            </ul>\n        </div>'
+    template: '\n        <div class="mdc-grid-list>\n            <ul class="mdc-grid-list__tiles">\n                <slot></slot>\n            </ul>\n        </div>'
 });
 
 // - 普通列表
 Vue.component('table-list', {
     props: ['grouped'],
-    template: '\n        <div class="mdc-list-group">\n            <slot name="section">Table List</slot>\n        </div>'
+    template: '\n        <div class="mdc-list-group">\n            <slot>Table List</slot>\n        </div>'
 });
 
 // - 普通列表
 Vue.component('table-list-section', {
     props: ['title'],
-    template: '\n        <div>\n            <slot name="section-header"><h3 class="mdc-list-group__subheader">{{ title }}&#xA0;</h3></slot>\n            <hr class="mdc-list-divider">\n            <ul class="mdc-list mdc-list--avatar-list">\n                <slot name="item"></slot>\n            </ul>\n            <hr class="mdc-list-divider">\n        </div>'
+    template: '\n        <div>\n            <slot name="section-header"><h3 class="mdc-list-group__subheader">{{ title }}&#xA0;</h3></slot>\n            <hr class="mdc-list-divider">\n            <ul class="mdc-list mdc-list--avatar-list">\n                <slot></slot>\n            </ul>\n            <hr class="mdc-list-divider">\n        </div>'
 });
 
 // 列表 : 区域头
