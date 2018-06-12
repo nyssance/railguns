@@ -14,6 +14,13 @@ def generate_shard_id(user_id):
     return user_id | time_offset << 32
 
 
+def get_object(model, using='default', default=None, **kwargs):
+    try:
+        return model.objects.using(using).get(**kwargs)
+    except model.DoesNotExist:
+        return default
+
+
 def get_object_or_none(model, using='default', **kwargs):
     try:
         return model.objects.using(using).get(**kwargs)
