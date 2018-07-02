@@ -11,7 +11,7 @@ Vue.component('app-footer', {
             <p class="weui-footer__links">
                 <!--<a href="javascript:home();" class="weui-footer__link">首页</a>-->
             </p>
-            <p class="weui-footer__text">Copyright &copy; 2018 www.wowxjp.com</p>
+            <p class="weui-footer__text">Copyright &copy; 2018 www.qodomo.cn</p>
         </div>`
 })
 
@@ -22,7 +22,7 @@ Vue.component('menu-item', {
 })
 
 // 基本模版
-const icon = `<div v-if="icon" class="weui-cell__hd"><img style="width: 40px;border-radius: 50%;margin-right: 15px;display: block" alt="" :src="icon"></div>`
+const icon = `<div v-if="icon" class="weui-cell__hd"><img :src="icon" alt="" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block"></div>`
 
 const icon1 = `<div v-if="icon" class="weui-cell__hd" :style="style"><i :class="'fas fa-fw fa-' + icon" style="margin-right: 15px;display: block;"></i></div>`
 
@@ -34,8 +34,7 @@ const list_item_default = `
         <span v-if="badges" style="vertical-align: middle">{{ title }}</span>
         <p v-else>{{ title }}</p>
         <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>
-    </div>
-    <div class="weui-cell__ft"></div>`
+    </div>`
 
 const list_item_subtitle = `
     ${icon}
@@ -44,8 +43,7 @@ const list_item_subtitle = `
         <p v-else>{{ title }}</p>
         <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>
         <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>
-    </div>
-    <div class="weui-cell__ft"></div>`
+    </div>`
 
 // SO: https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 const list_item_value1 = `
@@ -114,6 +112,7 @@ Vue.component('list-item-default', {
     template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">
             ${list_item_default}
+            <div class="weui-cell__ft"></div>
         </a>
         <div v-else class="weui-cell" :datavalue="datavalue">
             ${list_item_default}
@@ -131,6 +130,7 @@ Vue.component('list-item-subtitle', {
     template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_subtitle}
+            <div class="weui-cell__ft"></div>
         </a>
         <div v-else class="weui-cell">
             ${list_item_subtitle}

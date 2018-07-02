@@ -5,7 +5,7 @@
 
 // 💙 组件
 Vue.component('app-footer', {
-    template: '\n        <!--<div class="weui-footer weui-footer_fixed-bottom">-->\n        <div class="weui-footer">\n            <br>\n            <br>\n            <p class="weui-footer__links">\n                <!--<a href="javascript:home();" class="weui-footer__link">\u9996\u9875</a>-->\n            </p>\n            <p class="weui-footer__text">Copyright &copy; 2018 www.wowxjp.com</p>\n        </div>'
+    template: '\n        <!--<div class="weui-footer weui-footer_fixed-bottom">-->\n        <div class="weui-footer">\n            <br>\n            <br>\n            <p class="weui-footer__links">\n                <!--<a href="javascript:home();" class="weui-footer__link">\u9996\u9875</a>-->\n            </p>\n            <p class="weui-footer__text">Copyright &copy; 2018 www.qodomo.cn</p>\n        </div>'
 });
 
 // 菜单
@@ -15,15 +15,15 @@ Vue.component('menu-item', {
 });
 
 // 基本模版
-var icon = '<div v-if="icon" class="weui-cell__hd"><img style="width: 40px;border-radius: 50%;margin-right: 15px;display: block" alt="" :src="icon"></div>';
+var icon = '<div v-if="icon" class="weui-cell__hd"><img :src="icon" alt="" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block"></div>';
 
 var icon1 = '<div v-if="icon" class="weui-cell__hd" :style="style"><i :class="\'fas fa-fw fa-\' + icon" style="margin-right: 15px;display: block;"></i></div>';
 
 var accessory = '<div v-if="link" class="weui-cell__ft"></div>';
 
-var list_item_default = '\n    ' + icon1 + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n    </div>\n    <div class="weui-cell__ft"></div>';
+var list_item_default = '\n    ' + icon1 + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n    </div>';
 
-var list_item_subtitle = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n        <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>\n    </div>\n    <div class="weui-cell__ft"></div>';
+var list_item_subtitle = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n        <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>\n    </div>';
 
 // SO: https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 var list_item_value1 = '\n    ' + icon + '\n    <div class="weui-cell__bd">\n        <span v-if="badges" style="vertical-align: middle">{{ title }}</span>\n        <p v-else>{{ title }}</p>\n        <span v-for="badge in badges" class="weui-badge" style="margin-left: 5px;">{{ badge }}</span>\n    </div>\n    <div class="weui-cell__ft">{{ subtitle }}</div>';
@@ -65,7 +65,7 @@ Vue.component('list-section-header', {
 // - 默认
 Vue.component('list-item-default', {
     props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'iconColor'],
-    template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">\n            ' + list_item_default + '\n        </a>\n        <div v-else class="weui-cell" :datavalue="datavalue">\n            ' + list_item_default + '\n        </div>',
+    template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">\n            ' + list_item_default + '\n            <div class="weui-cell__ft"></div>\n        </a>\n        <div v-else class="weui-cell" :datavalue="datavalue">\n            ' + list_item_default + '\n        </div>',
     computed: {
         // SO: https://stackoverflow.com/a/42872117
         style: function style() {
@@ -77,7 +77,7 @@ Vue.component('list-item-default', {
 // - 副标题
 Vue.component('list-item-subtitle', {
     props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'link'],
-    template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access">\n            ' + list_item_subtitle + '\n        </a>\n        <div v-else class="weui-cell">\n            ' + list_item_subtitle + '\n        </div>'
+    template: '\n        <a v-if="link" :href="link" class="weui-cell weui-cell_access">\n            ' + list_item_subtitle + '\n            <div class="weui-cell__ft"></div>\n        </a>\n        <div v-else class="weui-cell">\n            ' + list_item_subtitle + '\n        </div>'
 });
 
 // - 左右
