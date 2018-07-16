@@ -22,7 +22,7 @@ setup(
         'django-ckeditor',
         'django-crispy-forms',
         'django-extensions',
-        'django-filter==2.0.0.dev1',
+        'django-filter',
         'django-htmlmin',
         'itunes-iap',
         'mysqlclient',
