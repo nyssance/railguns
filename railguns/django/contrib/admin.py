@@ -34,9 +34,6 @@ class SuperAdmin(CurrencyMixin, PreviewMixin, admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # 如果obj.pk不存在, 为新创建
-            if 'user_id' in [f.name for f in obj._meta.get_fields()]:
-                if not obj.user_id:
-                    obj.user_id = request.user.id
             if isinstance(obj, OwnerModel):
                 obj.username = request.user.username
                 obj.user_avatar = request.user.avatar

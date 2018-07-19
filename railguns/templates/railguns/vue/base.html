@@ -1,5 +1,4 @@
 {% extends '../base_quick.html' %}
-<!-- 加载 -->
 {% load static %}
 <!-- 结构 -->
 {% block structure %}{{ block.super }}<!--     vue/base -->
@@ -8,12 +7,7 @@
 {% block css %}{{ block.super }}
     <!-- 💙 vue/base -->
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-{#    <link rel="stylesheet" href="{% static 'vendor/material-components-web.min.css' %}">#}
-{#    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">#}
-{#    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">#}
-{#    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">#}
-{#    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css">#}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!-- 💛 自定义 css -->{% endblock %}
 
@@ -26,12 +20,6 @@
     </main>
 {% endblock %}
 
-{% block js %}{{ block.super }}<!-- 💙 mdc/base -->
-{#	<script src="{% static 'vendor/material-components-web.min.js' %}"></script>#}
-{#    <script>#}
-{#        document.body.classList.add('mdc-typography')#}
-{#        window.mdc.autoInit()#}
-{#    </script>#}
+{% block js %}{{ block.super }}<!-- 💙 vue/base -->
     <script src="{% static 'railguns/js/vue/weui-components.js' %}"></script>
-    <script src="{% static 'railguns/js/vue/common.js' %}"></script>
-    <script src="{% static 'railguns/js/mdc/common.js' %}"></script>{% endblock %}
+    <script src="{% static 'railguns/js/vue/common.js' %}"></script>{% endblock %}
