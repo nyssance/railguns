@@ -8,14 +8,35 @@ Vue.component('app-footer', {
     template: '\n        <!--<div class="weui-footer weui-footer_fixed-bottom">-->\n        <div class="weui-footer">\n            <br>\n            <br>\n            <p class="weui-footer__links">\n                <!--<a href="javascript:home();" class="weui-footer__link">\u9996\u9875</a>-->\n            </p>\n            <p class="weui-footer__text">Copyright &copy; 2018 www.qodomo.cn</p>\n        </div>'
 });
 
+// TabBar 底部导航
+Vue.component('main-tabbar', {
+    template: '<div class="weui-tab">\n                   <div class="weui-tab__panel">\n                       <slot name="page"></slot>\n                   </div>\n                   <div class="weui-tabbar">\n                       <slot></slot>\n                   </div>\n               </div>'
+});
+
+Vue.component('tabbar-item', {
+    props: ['icon', 'title', 'link', 'selected'],
+    template: '<a :href="link" :class="\'weui-tabbar__item\' + selected_class">\n                   <img :src="icon" class="weui-tabbar__icon" alt="">\n                   <p class="weui-tabbar__label">{{ title }}</p>\n               </a>',
+    computed: {
+        selected_class: function selected_class() {
+            return this.selected ? ' weui-bar__item_on' : '';
+        }
+    }
+});
+
 // 菜单
 Vue.component('menu-item', {
     props: ['icon', 'title', 'link'],
     template: '<a :href="link" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>'
 });
 
+// 对话框
+Vue.component('alert', {
+    props: ['icon', 'title', 'message'],
+    template: '<div id="dialog" style="display: none;">\n                   <div class="weui-mask"></div>\n                   <div class="weui-dialog">\n                       <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>\n                       <div class="weui-dialog__bd" id="bd"></div>\n                       <div class="weui-dialog__ft">\n                           <div class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeDialog(this)">\u786E\u5B9A</div>\n                       </div>\n                   </div>\n               </div>'
+});
+
 // 基本模版
-var icon = '<div v-if="icon" class="weui-cell__hd"><img :src="icon" alt="" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block"></div>';
+var icon = '<div v-if="icon" class="weui-cell__hd"><img :src="icon" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block" alt=""></div>';
 
 var icon1 = '<div v-if="icon" class="weui-cell__hd" :style="style"><i :class="\'fas fa-fw fa-\' + icon" style="margin-right: 15px;display: block;"></i></div>';
 
@@ -95,7 +116,7 @@ Vue.component('panel', {
 // - 卡片
 Vue.component('small-card', {
     props: ['icon', 'title', 'subtitle', 'accessory', 'badges', 'meta', 'time', 'extra', 'link', 'button', 'buttonLink'],
-    template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div v-if="icon" class="weui-media-box__hd">\n                <img class="weui-media-box__thumb" alt="" :src="icon">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n                <ul class="weui-media-box__info">\n                    <li class="weui-media-box__info__meta">{{ meta }}</li>\n                    <li class="weui-media-box__info__meta">{{ time }}</li>\n                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{ extra }}</li>\n                </ul>\n            </div>\n            <a v-if="button" :href="buttonLink" class="weui-btn weui-btn_mini weui-btn_primary">{{ button }}</a>\n        </a>'
+    template: '\n        <a :href="link" class="weui-media-box weui-media-box_appmsg">\n            <div v-if="icon" class="weui-media-box__hd">\n                <img :src="icon" class="weui-media-box__thumb" alt="">\n            </div>\n            <div class="weui-media-box__bd">\n                <h4 class="weui-media-box__title">{{ title }}</h4>\n                <p class="weui-media-box__desc">{{ subtitle }}</p>\n                <ul class="weui-media-box__info">\n                    <li class="weui-media-box__info__meta">{{ meta }}</li>\n                    <li class="weui-media-box__info__meta">{{ time }}</li>\n                    <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{ extra }}</li>\n                </ul>\n            </div>\n            <a v-if="button" :href="buttonLink" class="weui-btn weui-btn_mini weui-btn_primary">{{ button }}</a>\n        </a>'
 });
 
 // Grid Item

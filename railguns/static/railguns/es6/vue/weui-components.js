@@ -15,14 +15,54 @@ Vue.component('app-footer', {
         </div>`
 })
 
+// TabBar 底部导航
+Vue.component('main-tabbar', {
+    template: `<div class="weui-tab">
+                   <div class="weui-tab__panel">
+                       <slot name="page"></slot>
+                   </div>
+                   <div class="weui-tabbar">
+                       <slot></slot>
+                   </div>
+               </div>`
+})
+
+Vue.component('tabbar-item', {
+    props: ['icon', 'title', 'link', 'selected'],
+    template: `<a :href="link" :class="'weui-tabbar__item' + selected_class">
+                   <img :src="icon" class="weui-tabbar__icon" alt="">
+                   <p class="weui-tabbar__label">{{ title }}</p>
+               </a>`,
+    computed: {
+        selected_class() {
+            return this.selected ? ' weui-bar__item_on' : ''
+        }
+    }
+})
+
 // 菜单
 Vue.component('menu-item', {
     props: ['icon', 'title', 'link'],
     template: `<a :href="link" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
 })
 
+// 对话框
+Vue.component('alert', {
+    props: ['icon', 'title', 'message'],
+    template: `<div id="dialog" style="display: none;">
+                   <div class="weui-mask"></div>
+                   <div class="weui-dialog">
+                       <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>
+                       <div class="weui-dialog__bd" id="bd"></div>
+                       <div class="weui-dialog__ft">
+                           <div class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeDialog(this)">确定</div>
+                       </div>
+                   </div>
+               </div>`
+})
+
 // 基本模版
-const icon = `<div v-if="icon" class="weui-cell__hd"><img :src="icon" alt="" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block"></div>`
+const icon = `<div v-if="icon" class="weui-cell__hd"><img :src="icon" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block" alt=""></div>`
 
 const icon1 = `<div v-if="icon" class="weui-cell__hd" :style="style"><i :class="'fas fa-fw fa-' + icon" style="margin-right: 15px;display: block;"></i></div>`
 
@@ -176,7 +216,7 @@ Vue.component('small-card', {
     template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div v-if="icon" class="weui-media-box__hd">
-                <img class="weui-media-box__thumb" alt="" :src="icon">
+                <img :src="icon" class="weui-media-box__thumb" alt="">
             </div>
             <div class="weui-media-box__bd">
                 <h4 class="weui-media-box__title">{{ title }}</h4>

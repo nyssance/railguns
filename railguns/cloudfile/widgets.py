@@ -7,7 +7,6 @@ from django.utils.safestring import mark_safe
 
 
 class CloudFileWidget(widgets.TextInput):
-
     html = ('<div class="s3direct" data-policy-url="{policy_url}">'
             '  <a class="file-link" target="_blank" href="{file_url}">{file_name}</a>'
             '  <a class="file-remove" href="#remove">Remove</a>'
