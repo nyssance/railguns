@@ -3,8 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
 from drf_yasg import openapi
@@ -19,7 +18,8 @@ from .rest_framework.views import DownloadUrlView, UploadParamsView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')  # https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
+    # https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')
 ]
 # Vendor
 urlpatterns += [
@@ -34,19 +34,13 @@ API_TITLE = '{} API'.format(gettext('app_name'))
 API_DESCRIPTION = '...'
 
 schema_view = get_schema_view(
-    openapi.Info(
-        title=API_TITLE,
-        default_version='v1',
-        description=API_DESCRIPTION
-    ),
+    openapi.Info(title=API_TITLE, default_version='v1', description=API_DESCRIPTION),
     validators=['flex', 'ssv'],
     permission_classes=[permissions.IsAdminUser])
 
 urlpatterns += [
-    path('docs/', include_docs_urls(
-        title=API_TITLE,
-        description=API_DESCRIPTION,
-        permission_classes=[permissions.IsAdminUser])),
+    path('docs/',
+         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
     re_path(r'swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
     path('swagger/', schema_view.with_ui(), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')

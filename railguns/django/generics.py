@@ -2,8 +2,7 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 from django.shortcuts import render
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
