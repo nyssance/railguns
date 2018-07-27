@@ -39,7 +39,7 @@ def update_project():
 @task
 def local_format():
     local('isort -rc .')
-    local('yapf -irp . -e setup.py')
+    local('yapf -irp .')
 
 
 @task

@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.8.8',
+    version='0.8.9',
     install_requires=[
         'Django',
         'Django[argon2]',
@@ -27,7 +27,7 @@ setup(
         'itunes-iap',
         'mysqlclient',
         'pylibmc',
-        'redis',
+        'redis'
     ],
     extras_require={
         'dev': ['django-cors-headers', 'django-haystack-panel', 'django-rosetta'],
@@ -42,6 +42,7 @@ setup(
     author='NY',
     author_email='nyssance@icloud.com',
     classifiers=[
+        #
         'Environment :: Web Environment',
         'Framework :: Django',
         'Framework :: Django :: 2.0',
@@ -53,5 +54,4 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
-    ]
-)
+    ])
