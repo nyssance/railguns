@@ -9,9 +9,9 @@ from fabric.operations import local
 from fabric.state import env
 from fabric.utils import puts
 
-# ===========
-# = GLOBALS =
-# ===========
+###########
+# GLOBALS #
+###########
 env.project_name = os.path.basename(os.path.dirname(__file__))
 env.colorize_errors = True
 env.proxy = '127.0.0.1:1087'
@@ -46,9 +46,8 @@ def local_format():
 def local_update_vendor():
     """更新前端库"""
     filenames = [
-        'axios.js', 'axios.min.js',
-        'vue.js', 'vue.min.js',
-        'material-components-web.min.css', 'material-components-web.min.js'
+        'axios.js', 'axios.min.js', 'vue.js', 'vue.min.js', 'material-components-web.min.css',
+        'material-components-web.min.js'
     ]
     for filename in filenames:
         curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(
