@@ -45,9 +45,14 @@ def local_format():
 @task
 def local_update_vendor():
     """更新前端库"""
-    filenames = ['axios.js', 'axios.min.js', 'vue.js', 'vue.min.js', 'material-components-web.min.css', 'material-components-web.min.js']
+    filenames = [
+        'axios.js', 'axios.min.js',
+        'vue.js', 'vue.min.js',
+        'material-components-web.min.css', 'material-components-web.min.js'
+    ]
     for filename in filenames:
-        curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(filename.split('.')[0], filename, env.project_name))
+        curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(
+            filename.split('.')[0], filename, env.project_name))
 
 
 # ========

@@ -27,7 +27,10 @@ class UserCreatedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        exclude = ['password', 'is_superuser', 'is_staff', 'date_joined', 'groups', 'user_permissions', 'is_active', 'last_login']
+        exclude = [
+            'password', 'is_superuser', 'is_staff', 'date_joined', 'groups', 'user_permissions', 'is_active',
+            'last_login'
+        ]
 
     def get_token(self, obj):
         return jwt_encode_handler(jwt_payload_handler(obj))

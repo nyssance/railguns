@@ -14,8 +14,9 @@ class PreviewMixin(object):
     image_height = 100
 
     def get_preview(self, obj):
-        html = '<br>'.join('<a href="{0}" rel="external" target="_blank"><img src="{0}" width="{1}" height="{2}"></a>'.format(
-            item.strip(), self.image_width, self.image_height) for item in obj.images.split('\n'))
+        html = '<br>'.join(
+            '<a href="{0}" rel="external" target="_blank"><img src="{0}" width="{1}" height="{2}"></a>'.format(
+                item.strip(), self.image_width, self.image_height) for item in obj.images.split('\n'))
         return format_html(html)
     get_preview.short_description = _('preview')
 
@@ -26,7 +27,8 @@ class CurrencyMixin(object):
         value = amount / 100
         formatted = locale_currency(currency, value)
         if value < min:
-            formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(min, False, True))
+            formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted, locale.currency(
+                min, False, True))
         return format_html(formatted)
 
 

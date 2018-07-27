@@ -25,7 +25,8 @@ def downloads(request):
 
 
 def show_urls(request):
-    url_info = os.popen('python {0.PROJECT_NAME}/manage.py show_urls |grep {0.API_VERSION}.apps.api.views |grep {}'.format(settings))
+    url_info = os.popen(
+        'python {0.PROJECT_NAME}/manage.py show_urls |grep {0.API_VERSION}.apps.api.views |grep {}'.format(settings))
     f = open('/tmp/service.java', 'a')
     for url in url_info.readlines():
         url_list = url.strip().split('\t')
@@ -36,14 +37,20 @@ def show_urls(request):
             method_list = dir(eval('views.{}'.format(url_list[1].replace(view_name, ''))))
             serializer_name = eval('views.{}.serializer_class'.format(url_list[1].replace(view_name, '')))
             if getattr(serializer_name, 'Meta', None):
-                model_name = eval('views.{}.serializer_class.Meta.model.__name__'.format(url_list[1].replace(view_name, '')))
+                model_name = eval('views.{}.serializer_class.Meta.model.__name__'.format(url_list[1].replace(
+                    view_name, '')))
             else:
-                if 'DetailSerializer' in eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name, ''))):
-                    model_name = eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name, '')))[:-16]
-                if 'ListSerializer' in eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name, ''))):
-                    model_name = eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name, '')))[:-14]
+                if 'DetailSerializer' in eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(
+                        view_name, ''))):
+                    model_name = eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name,
+                                                                                                      '')))[:-16]
+                if 'ListSerializer' in eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(
+                        view_name, ''))):
+                    model_name = eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name,
+                                                                                                      '')))[:-14]
                 else:
-                    model_name = eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name, '')))[:-10]
+                    model_name = eval('views.{}.serializer_class.__name__'.format(url_list[1].replace(view_name,
+                                                                                                      '')))[:-10]
             if 'list' in method_list:
                 if 'pk' in url_list[0]:  # TODO: 看看能不能用lookup_field
                     if 'cards' in url_list[0]:
@@ -65,7 +72,8 @@ def show_urls(request):
                 else:
                     pass
             if 'create' in method_list:
-                write_to_file(f, 'POST', url_list[0], model_name, class_name, '{}'.format(model_name), '{}'.format(model_name.lower()))
+                write_to_file(f, 'POST', url_list[0], model_name, class_name, '{}'.format(model_name),
+                              '{}'.format(model_name.lower()))
             if 'put' in method_list:
                 if 'pk' in url_list[0]:
                     if 'cards' in url_list[0]:
@@ -108,13 +116,15 @@ def write_to_file(f, method, url, model_name, class_name, params='', params_type
     url = url.replace('<pk>', '{pk}').replace('<name>', '{name}')
     if method == 'LIST':
         f.write('@{}("{}")\n'.format('GET', url))
-        f.write('Call<ListModel<{}>> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params else ''))
+        f.write('Call<ListModel<{}>> {}({});\n'.format(
+            model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params else ''))
     elif method == 'POST':
         f.write('@{}("{}")\n'.format(method, url))
         f.write('Call<{}> {}({});\n'.format(model_name, class_name, '@Body {} {}'.format(params, params_type)))
     else:
         f.write('@{}("{}")\n'.format(method, url))
-        f.write('Call<{}> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type) if params else ''))
+        f.write('Call<{}> {}({});\n'.format(model_name, class_name, '@Path("{0}") {1} {0}'.format(params, params_type)
+                                            if params else ''))
     f.write('\n')
 
 
@@ -127,7 +137,10 @@ def get_class_name(class_name):
 class ModelZipView(TemplateView):
 
     def get(self, request, *args, **kwargs):
-        return models_zip(request, file_path=kwargs.get('file_path', 'apps/api/serializers.py'), filter_list=kwargs.get('filter_list', []))
+        return models_zip(
+            request,
+            file_path=kwargs.get('file_path', 'apps/api/serializers.py'),
+            filter_list=kwargs.get('filter_list', []))
 
 
 def models_zip(request, file_path='apps/api/serializers.py', fields={}, filter_list=[]):
@@ -182,13 +195,16 @@ def choice_value(value):
 
 
 def is_list_model(field):
-    return field in ['cards', 'specials', 'featured', 'coupons', 'projects', 'tags', 'branches', 'contracts', 'comments', 'likes', 'cities']
+    return field in [
+        'cards', 'specials', 'featured', 'coupons', 'projects', 'tags', 'branches', 'contracts', 'comments', 'likes',
+        'cities'
+    ]
 
 
 def is_model(field):
     return field[0].title() in model_list or field[0] in [
-        'cards', 'specials', 'coupons', 'projects', 'publishers', 'tags', 'contracts', 'images', 'featured', 'comments', 'likes', 'cities',
-        'branches', 'type', 'status'
+        'cards', 'specials', 'coupons', 'projects', 'publishers', 'tags', 'contracts', 'images', 'featured',
+        'comments', 'likes', 'cities', 'branches', 'type', 'status'
     ]
 
 

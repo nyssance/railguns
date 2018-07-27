@@ -36,8 +36,8 @@ class WebView(TemplateView):
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
         # '{} - {}'.format(verbose_name, _('app_name'))  # TODO: PC版用这个
-        endpoint = self.endpoint if self.endpoint is not None else '/api/{}{}'.format(settings.REST_FRAMEWORK['DEFAULT_VERSION'],
-                                                                                      request.get_full_path())
+        endpoint = self.endpoint if self.endpoint is not None else '/api/{}{}'.format(
+            settings.REST_FRAMEWORK['DEFAULT_VERSION'], request.get_full_path())
         template_name = self.template_name if self.template_name else 'web/{}.html'.format(self.name)
         extras = kwargs
         return render(request, template_name, locals())
