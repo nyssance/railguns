@@ -24,7 +24,7 @@ setup(
         'django-extensions',
         'django-filter',
         'django-htmlmin',
-        'django-redis'
+        'django-redis',
         'itunes-iap',
         'mysqlclient'
     ],
