@@ -15,10 +15,9 @@ Only My Railgun
 - [Django Extensions](https://django-extensions.readthedocs.io)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
+- [django-redis](https://niwinz.github.io/django-redis/latest/)
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
-- [pylibmc](https://github.com/lericson/pylibmc)
-- [redis-py](https://github.com/andymccurdy/redis-py)
 
 前端库
 - [axios](https://github.com/axios/axios)

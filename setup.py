@@ -9,10 +9,10 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.9.0',
+    version='0.9.1',
     install_requires=[
         'Django',
-        'Django[argon2]',
+        'django[argon2]',
         'djangorestframework',
         'djangorestframework-jwt',
         'drf-yasg',
@@ -24,13 +24,12 @@ setup(
         'django-extensions',
         'django-filter',
         'django-htmlmin',
+        'django-redis'
         'itunes-iap',
-        'mysqlclient',
-        'pylibmc',
-        'redis'
+        'mysqlclient'
     ],
     extras_require={
-        'dev': ['django-cors-headers', 'django-haystack-panel', 'django-rosetta'],
+        'dev': ['django-haystack-panel', 'django-rosetta'],
         'prod': []
     },
     packages=find_packages(),
