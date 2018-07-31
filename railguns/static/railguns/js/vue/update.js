@@ -118,7 +118,7 @@ var content = new Vue({
                     history.back();
                     location.replace(endpoint.replace('/api/v1/', '/'));
                 }).catch(function (error) {
-                    alert(error.response);
+                    alert(JSON.stringify(error.response.data));
                     console.log(error.response);
                 });
             }

@@ -11,7 +11,7 @@ Vue.component('app-footer', {
             <p class="weui-footer__links">
                 <!--<a href="javascript:home();" class="weui-footer__link">首页</a>-->
             </p>
-            <p class="weui-footer__text">Copyright &copy; 2018 www.qodomo.cn</p>
+            <p class="weui-footer__text">Copyright &copy; 2018 www.uutou.cn</p>
         </div>`
 })
 

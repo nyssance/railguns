@@ -23,6 +23,10 @@ def generate_uri(urlstring, request):
             return '{}/'.format(urlstring)
 
 
+def get_title(string):
+    return '{}{} - {}'.format('【开发】', string, _('app_name'))
+
+
 class WebView(TemplateView):
     name = None
     title = None
@@ -33,10 +37,10 @@ class WebView(TemplateView):
             verbose_name = (' ').join(gettext(item) for item in self.name.split('_')[::-1])  # NY: 用gettext_lazy会报错
         else:
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
-        title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
-        # '{} - {}'.format(verbose_name, _('app_name'))  # TODO: PC版用这个
+        title = get_title(self.title if self.title is not None else verbose_name)  # 用 is not None 才能传入空标题
         endpoint = self.endpoint if self.endpoint is not None else '/api/{}{}'.format(
             settings.REST_FRAMEWORK['DEFAULT_VERSION'], request.get_full_path())
         template_name = self.template_name if self.template_name else 'web/{}.html'.format(self.name)
         extras = kwargs
+        is_weixin = 'MicroMessenger' in request.META.get('HTTP_USER_AGENT')
         return render(request, template_name, locals())
