@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.9.1',
+    version='0.9.2',
     install_requires=[
         'Django',
         'django[argon2]',
@@ -44,7 +44,7 @@ setup(
         #
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.1',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',

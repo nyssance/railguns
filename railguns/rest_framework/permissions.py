@@ -51,7 +51,7 @@ class IsRelationOrReadOnly(permissions.BasePermission):
         return obj.from_id == request.user.id or obj.to_id == request.user.id
 
 
-# http://www.django-rest-framework.org/api-guide/permissions/#examples
+# https://www.django-rest-framework.org/api-guide/permissions/#examples
 class BlacklistPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):

@@ -82,7 +82,7 @@ class DownloadUrlView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticatedOrWhitelist]
 
     def retrieve(self, request, *args, **kwargs):
-        url = request.GET.get('url')  # http://test-documents-cmcaifu-com.oss-cn-hangzhou.aliyuncs.com/contract/001/Linux_Command3.pdf
+        url = request.GET.get('url')  # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
         if url:
             url_components = urlparse(url)
             bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')

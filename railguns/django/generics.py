@@ -24,7 +24,7 @@ def generate_uri(urlstring, request):
 
 
 def get_title(string):
-    return '{}{} - {}'.format('【开发】', string, _('app_name'))
+    return '{}{}'.format('🦄 ' if settings.DEBUG else '', string)
 
 
 class WebView(TemplateView):

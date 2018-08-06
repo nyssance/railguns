@@ -4,7 +4,7 @@ Only My Railgun
 ## Vendor
 框架用到的库
 - [Django](https://www.djangoproject.com)
-- [Django REST framework](http://www.django-rest-framework.org)
+- [Django REST framework](https://www.django-rest-framework.org)
 - [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
 - [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
@@ -24,12 +24,13 @@ Only My Railgun
 - [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
 - [jQuery](https://jquery.com)
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
-- [Vue.js](https://vuejs.org/)
 - [Material Components for the Web](https://material.io/components/web/)
+- [Vue.js](https://vuejs.org)
+- [WeUI](https://github.com/Tencent/weui)
 
 前端可选库
-- [clipboard.js](https://clipboardjs.com/)
-- [GeoPattern](http://btmills.github.io/geopattern/)
+- [clipboard.js](https://clipboardjs.com)
+- [GeoPattern](https://btmills.github.io/geopattern/)
 - [localForage](https://localforage.github.io/localForage/)
-- [Lodash](https://lodash.com/)
-- [Moment](http://momentjs.com/)
+- [Lodash](https://lodash.com)
+- [Moment](https://momentjs.com)
