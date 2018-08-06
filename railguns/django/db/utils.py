@@ -21,13 +21,6 @@ def get_object(model, using='default', default=None, **kwargs):
         return default
 
 
-def get_object_or_none(model, using='default', **kwargs):
-    try:
-        return model.objects.using(using).get(**kwargs)
-    except model.DoesNotExist:
-        return None
-
-
 def get_user_id(pk):
     """
     需要保证传入的pk都是int
