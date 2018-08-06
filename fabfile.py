@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 
 import os
 import shutil
@@ -17,9 +17,9 @@ env.colorize_errors = True
 env.proxy = '127.0.0.1:1087'
 
 
-# ============
-# =  Hello   =
-# ============
+#########
+# TASKS #
+#########
 @task(default=True, alias='别名测试')
 def hello():
     puts('*' * 50)

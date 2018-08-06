@@ -25,8 +25,7 @@ setup(
         'django-filter',
         'django-htmlmin',
         'django-redis',
-        'itunes-iap',
-        'mysqlclient'
+        'itunes-iap'
     ],
     extras_require={
         'dev': ['django-haystack-panel', 'django-rosetta'],
