@@ -51,9 +51,11 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     if cloud in ['aliyun', 'oss']:
         params['OSSAccessKeyId'] = settings.CLOUD_SS_ID
     elif cloud in ['aws', 's3']:
-        params['AWSAccessKeyId'] = settings.CLOUD_SS_ID
-        params['acl'] = 'public-read'
-        params['success_action_status'] = '201'
+        params.update({
+            'AWSAccessKeyId': settings.CLOUD_SS_ID,
+            'acl': 'public-read',
+            'success_action_status': '201'
+        })
     if content_encoding == 'gzip':
         params['Content-Encoding'] = content_encoding
     if cache_control:
