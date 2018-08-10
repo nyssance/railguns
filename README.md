@@ -17,6 +17,7 @@ Only My Railgun
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [django-redis](https://niwinz.github.io/django-redis/latest/)
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
+- [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 
 前端库
 - [axios](https://github.com/axios/axios)

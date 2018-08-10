@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.9.2',
+    version='0.9.3',
     install_requires=[
         'Django',
         'django[argon2]',
@@ -25,7 +25,8 @@ setup(
         'django-filter',
         'django-htmlmin',
         'django-redis',
-        'itunes-iap'
+        'itunes-iap',
+        'mysqlclient'
     ],
     extras_require={
         'dev': ['django-haystack-panel', 'django-rosetta'],

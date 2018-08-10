@@ -32,7 +32,13 @@ Vue.component('menu-item', {
 // 对话框
 Vue.component('alert', {
     props: ['icon', 'title', 'message'],
-    template: '<div id="dialog" style="display: none;">\n                   <div class="weui-mask"></div>\n                   <div class="weui-dialog">\n                       <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>\n                       <div class="weui-dialog__bd" id="bd"></div>\n                       <div class="weui-dialog__ft">\n                           <div class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeDialog(this)">\u786E\u5B9A</div>\n                       </div>\n                   </div>\n               </div>'
+    template: '<div id="dialog" style="display: none;">\n                   <div class="weui-mask"></div>\n                   <div class="weui-dialog">\n                       <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>\n                       <div class="weui-dialog__bd" id="bd"></div>\n                       <div class="weui-dialog__ft">\n                           <div class="weui-dialog__btn weui-dialog__btn_primary" @click="cancel($event)">\u786E\u5B9A</div>\n                       </div>\n                   </div>\n               </div>',
+    methods: {
+        cancel: function cancel(event) {
+            // 不能用close(), 和系统方法重名
+            dialog.style.display = 'none';
+        }
+    }
 });
 
 // 基本模版
@@ -133,11 +139,7 @@ Vue.component('grid-item', {
 // 表单
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
-    // props: ['name', 'helper_text', 'value', 'type'],
     props: {
-        id: {
-            type: String
-        },
         name: {
             type: String
         },
@@ -154,19 +156,15 @@ Vue.component('text-field', {
             default: 'text'
         }
     },
-    template: '\n        <div class="weui-cell">\n            <div class="weui-cell__hd">\n                <label class="weui-label">{{ name }}</label>\n            </div>\n            <div class="weui-cell__bd">\n                <input class="weui-input" :placeholder="placeholder" :type="type" :id="id">\n            </div>\n        </div>',
+    template: '\n        <div class="weui-cell">\n            <div class="weui-cell__hd">\n                <label class="weui-label">{{ name }}</label>\n            </div>\n            <div class="weui-cell__bd">\n                <input class="weui-input" :placeholder="placeholder" :type="type" :value="currentValue" @input="updateValue">\n            </div>\n        </div>',
+    data: function data() {
+        return {
+            currentValue: this.value //将prop属性绑定到data属性上，以便修改prop属性（Vue不允许直接修改prop属性的值）
+        };
+    },
     methods: {
-        updateValue: function updateValue(value) {
-            this.$emit('input', value);
-        }
-    }
-});
-
-Vue.component('text-field1', {
-    props: ['name', 'helper_text', 'value'],
-    template: '\n        <div class="weui-cell">\n            <div class="weui-cell__hd">\n                <label class="weui-label">{{ name }}</label>\n            </div>\n            <div class="weui-cell__bd">\n                <input type="text" \n                    v-bind:value="value"\n                    v-on:input="updateValue($event.target.value)">\n            </div>\n        </div>',
-    methods: {
-        updateValue: function updateValue(value) {
+        updateValue: function updateValue(event) {
+            var value = event.target.value;
             this.$emit('input', value);
         }
     }

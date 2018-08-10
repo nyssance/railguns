@@ -14,7 +14,7 @@ function updateCheckList(selected) {
     }
 }
 
-var content = new Vue({
+let content = new Vue({
     el: '#content',
     data: function () {
         return {
@@ -61,19 +61,13 @@ var content = new Vue({
                 this.data = JSON.parse(json_string)
                 console.warn('Endpoint:', endpoint)
                 console.warn('请求 更新 ' + json_string)
-                axios.patch(endpoint, this.data, {
-                    xsrfCookieName: 'csrftoken',
-                    xsrfHeaderName: 'X-CSRFToken',
+                patch(endpoint, this.data, response => {
+                    console.log('Response:', response)
+                    history.back()
+                    location.replace(endpoint.replace('/api/v1/', '/'))
+                }, error => {
+                    console.log(error.response)
                 })
-                    .then(function (response) {
-                        console.log('Response:', response)
-                        history.back()
-                        location.replace(endpoint.replace('/api/v1/', '/'))
-                    })
-                    .catch(function (error) {
-                        alert(JSON.stringify(error.response.data))
-                        console.log(error.response)
-                    })
             }
         }
     }

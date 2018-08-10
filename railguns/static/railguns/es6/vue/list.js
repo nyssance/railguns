@@ -1,27 +1,21 @@
-var content = new Vue({
+let content = new Vue({
+    mixins: [base],
     el: '#content',
     data: function () {
         return {
             endpoint: '',
+            count: 0,
+            previous: null,
+            next:null,
             items: []
         }
     },
-    mounted: function () {
-        let element = this.$el
-        if (element) {
-            this.endpoint = getEndpoint(element)
-            if (this.endpoint) {
-                this.reload(null)
-            }
-        } else {
-            console.error('#content 不存在')
-        }
-    },
     methods: {
-        reload: function (params) {
-            getData(this.endpoint, params, (response => {
-                this.items = response.results
-            }).bind(this))
+        onLoadSuccess(response) {
+            this.count = response.count
+            this.previous = response.previous
+            this.next = response.next
+            this.items = response.results
         },
         // target 和 currentTarget 区别 https://juejin.im/post/59f16ffaf265da43085d4108
         toggle: function (event, params) {

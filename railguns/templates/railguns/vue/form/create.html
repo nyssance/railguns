@@ -6,12 +6,4 @@
 {% block js %}{{ block.super }}
     <!-- 💙 vue/form/create -->
     <script src="{% static 'railguns/js/vue/create.js' %}"></script>
-    <script>
-        (function() {
-            var tfs = document.querySelectorAll('.mdc-text-field:not([data-demo-no-auto-js])');
-            for (tf of tfs) {
-                mdc.textField.MDCTextField.attachTo(tf)
-            }
-        })()
-    </script>
     <!-- 💛 自定义 js -->{% endblock %}

@@ -98,7 +98,17 @@ var content = new Vue({
         }
     },
     methods: {
-        patch: function patch() {
+        patch: function (_patch) {
+            function patch() {
+                return _patch.apply(this, arguments);
+            }
+
+            patch.toString = function () {
+                return _patch.toString();
+            };
+
+            return patch;
+        }(function () {
             // 更新数据
             if (currentValue === getQueryString('selected')) {
                 console.warn('与之前相同, 不提交服务器更新');
@@ -110,18 +120,14 @@ var content = new Vue({
                 this.data = JSON.parse(json_string);
                 console.warn('Endpoint:', endpoint);
                 console.warn('请求 更新 ' + json_string);
-                axios.patch(endpoint, this.data, {
-                    xsrfCookieName: 'csrftoken',
-                    xsrfHeaderName: 'X-CSRFToken'
-                }).then(function (response) {
+                patch(endpoint, this.data, function (response) {
                     console.log('Response:', response);
                     history.back();
                     location.replace(endpoint.replace('/api/v1/', '/'));
-                }).catch(function (error) {
-                    alert(JSON.stringify(error.response.data));
+                }, function (error) {
                     console.log(error.response);
                 });
             }
-        }
+        })
     }
 });

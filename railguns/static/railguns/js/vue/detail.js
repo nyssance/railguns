@@ -1,23 +1,13 @@
 'use strict';
 
 var content = new Vue({
+    mixins: [base],
     el: '#content',
     data: function data() {
         return {
             endpoint: '',
             data: ''
         };
-    },
-    mounted: function mounted() {
-        var element = this.$el;
-        if (element) {
-            this.endpoint = getEndpoint(element);
-            if (this.endpoint) {
-                this.reload(null);
-            }
-        } else {
-            console.error('#content 不存在');
-        }
     },
     // updated: function () { // 组件挂载之后
     //     let endpoint = '初始化'
@@ -44,12 +34,8 @@ var content = new Vue({
     //     }
     // },
     methods: {
-        reload: function reload(params) {
-            var _this = this;
-
-            getData(this.endpoint, params, function (response) {
-                _this.data = response;
-            }.bind(this));
+        onLoadSuccess: function onLoadSuccess(response) {
+            this.data = response;
         }
     }
 });

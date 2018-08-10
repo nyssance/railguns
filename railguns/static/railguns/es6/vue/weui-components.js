@@ -55,10 +55,15 @@ Vue.component('alert', {
                        <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>
                        <div class="weui-dialog__bd" id="bd"></div>
                        <div class="weui-dialog__ft">
-                           <div class="weui-dialog__btn weui-dialog__btn_primary" onclick="closeDialog(this)">确定</div>
+                           <div class="weui-dialog__btn weui-dialog__btn_primary" @click="cancel($event)">确定</div>
                        </div>
                    </div>
-               </div>`
+               </div>`,
+    methods: {
+        cancel: function (event) { // 不能用close(), 和系统方法重名
+            dialog.style.display = 'none'
+        }
+    }
 })
 
 // 基本模版
@@ -252,11 +257,7 @@ Vue.component('grid-item', {
 // 表单
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
-    // props: ['name', 'helper_text', 'value', 'type'],
     props: {
-        id: {
-            type: String
-        },
         name: {
             type: String
         },
@@ -279,31 +280,17 @@ Vue.component('text-field', {
                 <label class="weui-label">{{ name }}</label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" :placeholder="placeholder" :type="type" :id="id">
+                <input class="weui-input" :placeholder="placeholder" :type="type" :value="currentValue" @input="updateValue">
             </div>
         </div>`,
-    methods: {
-        updateValue: function (value) {
-            this.$emit('input', value)
+    data: function () {
+        return {
+            currentValue: this.value //将prop属性绑定到data属性上，以便修改prop属性（Vue不允许直接修改prop属性的值）
         }
-    }
-})
-
-Vue.component('text-field1', {
-    props: ['name', 'helper_text', 'value'],
-    template: `
-        <div class="weui-cell">
-            <div class="weui-cell__hd">
-                <label class="weui-label">{{ name }}</label>
-            </div>
-            <div class="weui-cell__bd">
-                <input type="text" 
-                    v-bind:value="value"
-                    v-on:input="updateValue($event.target.value)">
-            </div>
-        </div>`,
+    },
     methods: {
-        updateValue: function (value) {
+        updateValue: function (event) {
+            let value = event.target.value
             this.$emit('input', value)
         }
     }
