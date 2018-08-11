@@ -28,12 +28,14 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     path = 'upload/{}'.format(create_filename(filename)) if rename else filename  # 是否重命名
     # 计算policy
     policy_object = {
-        'expiration': (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+        'expiration':
+        (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
         'conditions': [
             {
                 'bucket': bucket
             },
-            ['starts-with', '$key', path.split('/')[0]],  # https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
+            ['starts-with', '$key',
+             path.split('/')[0]],  # https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
             ['starts-with', '$Content-Type', content_type]
         ]
     }
@@ -51,11 +53,7 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     if cloud in ['aliyun', 'oss']:
         params['OSSAccessKeyId'] = settings.CLOUD_SS_ID
     elif cloud in ['aws', 's3']:
-        params.update({
-            'AWSAccessKeyId': settings.CLOUD_SS_ID,
-            'acl': 'public-read',
-            'success_action_status': '201'
-        })
+        params.update({'AWSAccessKeyId': settings.CLOUD_SS_ID, 'acl': 'public-read', 'success_action_status': '201'})
     if content_encoding == 'gzip':
         params['Content-Encoding'] = content_encoding
     if cache_control:
@@ -84,15 +82,21 @@ class DownloadUrlView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticatedOrWhitelist]
 
     def retrieve(self, request, *args, **kwargs):
-        url = request.GET.get('url')  # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
+        url = request.GET.get(
+            'url')  # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
         if url:
             url_components = urlparse(url)
             bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')
             expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
             string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
             if settings.CLOUD_SS_SECRET:  # 如果有SECRET
-                signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode(), string_to_sign.encode(), hashlib.sha1).digest())
-            params = {'url': '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires, quote_plus(signature))}
+                signature = b64encode(
+                    hmac.new(settings.CLOUD_SS_SECRET.encode(), string_to_sign.encode(), hashlib.sha1).digest())
+            params = {
+                'url':
+                '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires,
+                                                                      quote_plus(signature))
+            }
             return Response(params)
         else:
             raise APIException('url不能为空')
@@ -124,5 +128,6 @@ class UploadParamsView(generics.RetrieveAPIView):
         expiration = int(request.GET.get('expiration', 24 * 365 * 50))  # 过期时间
         content_encoding = request.GET.get('content_encoding', '')
         cache_control = request.GET.get('cache_control')
-        params = get_params(kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
+        params = get_params(
+            kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
         return Response(params)

@@ -57,20 +57,19 @@ def redis_master(user_id=None):
 
 
 def datetime_to_unixtime(date_time):
-    created_str = date_time.strftime('%Y-%m-%d %H:%M:%S')
-    date_time = datetime.datetime.strptime(created_str, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
+    date_string = date_time.strftime('%Y-%m-%d %H:%M:%S')
+    date_time = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
     return int(time.mktime(date_time.timetuple()))
 
 
 def unixtime_to_datetime(local_time):
-    date_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(local_time))
-    date_time = datetime.datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+    date_string = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(local_time))
+    date_time = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
     return date_time
 
 
 def unixtime_to_date(local_time):
-    date_str = time.strftime('%Y-%m-%d', time.localtime(local_time))
-    return date_str
+    return time.strftime('%Y-%m-%d', time.localtime(local_time))
 
 
 def datetime_timezone_zero():
@@ -79,5 +78,4 @@ def datetime_timezone_zero():
 
 def string_to_unixtime(string):
     date_time = datetime.datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
-    time_time = int(time.mktime(date_time.timetuple()))
-    return time_time
+    return int(time.mktime(date_time.timetuple()))

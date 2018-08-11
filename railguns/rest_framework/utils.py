@@ -1,14 +1,15 @@
-from collections import OrderedDict
 import datetime
 import hashlib
 import hmac
 import os
 import subprocess
 from base64 import b64encode
+from collections import OrderedDict
 from urllib.parse import quote_plus, urlparse
 
 from django.conf import settings
 from railguns.django.db.utils import timestamp
+
 
 def get_nested_list(data):
     return OrderedDict([('count', len(data)), ('data', data)])

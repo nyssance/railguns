@@ -2,7 +2,6 @@ import datetime
 
 from django.utils.timezone import localtime
 from rest_framework.fields import SerializerMethodField
-from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
 from .utils import get_nested_list

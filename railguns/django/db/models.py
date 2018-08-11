@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ..utils.translation import dj_gettext, format_gettext_lazy as _f
 from .utils import db_master, generate_shard_id, get_user_id
 
 
@@ -14,9 +15,10 @@ class DateTimeModelMixin(models.Model):
 
 
 class AbstractBaseModel(DateTimeModelMixin):
-    is_active = models.BooleanField(_('active'), default=True)
+    is_active = models.BooleanField(dj_gettext('active'), default=True)
 
-    objects = models.Manager()  # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
+    # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
+    objects = models.Manager()
 
     class Meta:
         abstract = True
@@ -30,8 +32,10 @@ class BaseModel(AbstractBaseModel):
 
 
 class OwnerModel(BaseModel):
-    user_id = models.IntegerField(default=0, editable=False)  # TODO: default=1
-    username = models.CharField(max_length=150, validators=[get_user_model().username_validator], editable=False)  # 长度和Django的User保持一致
+    user_id = models.IntegerField(_f('user', 'id'), default=0, editable=False)  # TODO: default=1
+    username = models.CharField(
+        dj_gettext('username'), max_length=150, validators=[get_user_model().username_validator],
+        editable=False)  # 长度和Django的User保持一致
     user_avatar = models.URLField(_('avatar'), max_length=255, blank=True, editable=False)
 
     class Meta(BaseModel.Meta):
