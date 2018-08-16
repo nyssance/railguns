@@ -3,13 +3,13 @@ from ipware.ip import get_ip
 from rest_framework import permissions
 
 
-class IsUserSelf(permissions.IsAuthenticated):  # 未登录用户id为None, 没必要继承BasePermission, 用IsAuthenticated更安全
+class IsMe(permissions.IsAuthenticated):  # 未登录用户id为None, 没必要继承BasePermission, 用IsAuthenticated更安全
 
     def has_object_permission(self, request, view, obj):
         return obj == request.user
 
 
-class IsUserSelfOrReadOnly(permissions.BasePermission):
+class IsMeOrReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
@@ -18,12 +18,6 @@ class IsUserSelfOrReadOnly(permissions.BasePermission):
 
 
 class IsOwnerOnList(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        return view.lookup_field in view.kwargs and view.kwargs[view.lookup_field] == request.user.id
-
-
-class IsOwnerOnUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return view.lookup_field in view.kwargs and view.kwargs[view.lookup_field] == request.user.id

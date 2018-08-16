@@ -1,23 +1,42 @@
 import datetime
 
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.hashers import make_password
 from django.utils.timezone import localtime
-from rest_framework.fields import SerializerMethodField
+from rest_framework.fields import CharField, SerializerMethodField
 from rest_framework.serializers import Serializer
+from rest_framework_jwt.settings import api_settings
 
 from .utils import get_nested_list
+
+
+class PasswordMixin(Serializer):
+    password = CharField(style={'input_type': 'password'}, min_length=6, max_length=128, write_only=True)
+
+    # SO: https://stackoverflow.com/questions/29746584/django-rest-framework-create-user-with-password
+    def validate_password(self, value):
+        return make_password(value)
+
+
+class TokenMixin(Serializer):
+    token = SerializerMethodField()
+
+    def get_token(self, obj):
+        request = self.context.get('request')
+        if request:
+            auth_login(request, obj)  # 主要为了记录last_login的, 其他的作用待研究
+        else:
+            print('request is None, 请在代码手动传入, 否则无法自动登录')
+        # https://getblimp.github.io/django-rest-framework-jwt/#additional-settings
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        return jwt_encode_handler(jwt_payload_handler(obj))
 
 
 class ModelMixin(object):
 
     def get_model(self):
         return self.serializer_class.Meta.model
-
-
-class IdStrMixin(Serializer):
-    id_str = SerializerMethodField()
-
-    def get_id_str(self, obj):
-        return str(obj.id)
 
 
 class ImagesMixin(Serializer):

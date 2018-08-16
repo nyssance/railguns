@@ -42,14 +42,14 @@ schema_view = get_schema_view(
 urlpatterns += [
     path('docs/',
          include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
-    re_path(r'swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
+    re_path(r'^swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
     path('swagger/', schema_view.with_ui(), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')
 ]
 # Railgun S
 urlpatterns += [
-    re_path(r'download_url/(?P<cloud>(aliyun|oss))/$', DownloadUrlView.as_view(), name='download-url'),
-    re_path(r'upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', UploadParamsView.as_view(), name='upload-params'),
+    re_path(r'^download_url/(?P<cloud>(aliyun|oss))/$', DownloadUrlView.as_view(), name='download-url'),
+    re_path(r'^upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]
 

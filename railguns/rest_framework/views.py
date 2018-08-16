@@ -116,12 +116,12 @@ class UploadParamsView(generics.RetrieveAPIView):
     throttle_classes = []
 
     def retrieve(self, request, *args, **kwargs):
-        filename = request.GET.get('filename', '')
+        filename = request.GET.get('filename')
+        if not filename:
+            raise APIException('filename不能为空')
         bucket = request.GET.get('bucket', settings.BUCKET_MEDIA)
         if bucket == settings.BUCKET_MEDIA:  # 传到static下的不修改大小写
             filename = filename.lower()
-        if not filename:
-            raise APIException('filename不能为空')
         rename = False
         if bucket == settings.BUCKET_MEDIA:
             rename = True
