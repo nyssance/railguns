@@ -34,3 +34,4 @@ Only My Railgun
 - [localForage](https://localforage.github.io/localForage/)
 - [Lodash](https://lodash.com)
 - [Moment](https://momentjs.com)
+- [Numeral.js](https://numeraljs.com/)
