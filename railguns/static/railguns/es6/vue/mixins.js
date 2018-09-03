@@ -25,11 +25,12 @@ const base = {
             console.warn('请覆写 onLoadSuccess')
         },
         onLoadFailure(error) {
-            this.showAlert(JSON.stringify(error.response.data))
-        },
-        showAlert: function (message) {
-            bd.innerHTML = message ? message : error.response.status + ' ( ' + error.response.statusText + ' )'
-            dialog.style.display = ''
+            let data = error.response.data
+            let message
+            if (data) {
+                message = JSON.stringify(data)
+            }
+            showAlert(error.response.status, message ? message : error.response.statusText)
         }
     }
 }

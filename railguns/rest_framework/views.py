@@ -10,7 +10,7 @@ from urllib.parse import quote_plus, urlparse
 from boto.s3.key import Key as S3Key
 from django.conf import settings
 from rest_framework import generics, status
-from rest_framework.exceptions import APIException
+from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.response import Response
 
 from ..django.db.utils import timestamp
@@ -46,8 +46,9 @@ def get_params(cloud, bucket, filename, rename, expiration, content_encoding, ca
     if content_encoding == 'gzip':
         policy_object['conditions'].append(['starts-with', '$Content-Encoding', content_encoding])
     policy = b64encode(json.dumps(policy_object).replace('\n', '').replace('\r', '').encode())
-    if settings.CLOUD_SS_SECRET:  # 如果有SECRET
-        signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode(), policy, hashlib.sha1).digest())
+    if not settings.CLOUD_SS_SECRET:
+        raise APIException('CLOUD_SS_SECRET 不存在')
+    signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode(), policy, hashlib.sha1).digest())
     # 返回params
     params = {'key': path, 'Content-Type': content_type, 'policy': policy.decode(), 'signature': signature.decode()}
     if cloud in ['aliyun', 'oss']:
@@ -84,22 +85,22 @@ class DownloadUrlView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         url = request.GET.get(
             'url')  # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
-        if url:
-            url_components = urlparse(url)
-            bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')
-            expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
-            string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
-            if settings.CLOUD_SS_SECRET:  # 如果有SECRET
-                signature = b64encode(
-                    hmac.new(settings.CLOUD_SS_SECRET.encode(), string_to_sign.encode(), hashlib.sha1).digest())
-            params = {
-                'url':
-                '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires,
-                                                                      quote_plus(signature))
-            }
-            return Response(params)
-        else:
-            raise APIException('url不能为空')
+        if not url:
+            raise ValidationError('url不能为空')
+        url_components = urlparse(url)
+        bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')
+        expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
+        string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
+        if not settings.CLOUD_SS_SECRET:
+            raise APIException('CLOUD_SS_SECRET 不存在')
+        signature = b64encode(
+            hmac.new(settings.CLOUD_SS_SECRET.encode(), string_to_sign.encode(), hashlib.sha1).digest())
+        params = {
+            'url':
+            '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires,
+                                                                  quote_plus(signature))
+        }
+        return Response(params)
 
 
 class UploadParamsView(generics.RetrieveAPIView):
@@ -118,7 +119,7 @@ class UploadParamsView(generics.RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         filename = request.GET.get('filename')
         if not filename:
-            raise APIException('filename不能为空')
+            raise ValidationError('filename不能为空')
         bucket = request.GET.get('bucket', settings.BUCKET_MEDIA)
         if bucket == settings.BUCKET_MEDIA:  # 传到static下的不修改大小写
             filename = filename.lower()

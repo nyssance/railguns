@@ -1,6 +1,14 @@
 // https://cn.vuejs.org/v2/style-guide/#Prop-名大小写-强烈推荐
 // https://cn.vuejs.org/v2/style-guide/#指令缩写-强烈推荐
 
+function showAlert(title, message) {
+    weui.alert(message, {title: title})
+}
+
+function showActionSheet(menus = [], actions = [], options = {}) {
+    weui.actionSheet(menus, actions, options)
+}
+
 // 💙 组件
 Vue.component('app-footer', {
     template: `
@@ -44,26 +52,6 @@ Vue.component('tabbar-item', {
 Vue.component('menu-item', {
     props: ['icon', 'title', 'link'],
     template: `<a :href="link" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
-})
-
-// 对话框
-Vue.component('alert', {
-    props: ['icon', 'title', 'message'],
-    template: `<div id="dialog" style="display: none;">
-                   <div class="weui-mask"></div>
-                   <div class="weui-dialog">
-                       <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>
-                       <div class="weui-dialog__bd" id="bd"></div>
-                       <div class="weui-dialog__ft">
-                           <div class="weui-dialog__btn weui-dialog__btn_primary" @click="cancel($event)">确定</div>
-                       </div>
-                   </div>
-               </div>`,
-    methods: {
-        cancel: function (event) { // 不能用close(), 和系统方法重名
-            dialog.style.display = 'none'
-        }
-    }
 })
 
 // 基本模版
@@ -349,7 +337,7 @@ Vue.component('swiper-item', {
         <div v-else class="swiper-slide">{{ title }}</div>`,
     mounted: function () {
         if (this.image) {
-            this.$el.style.backgroundImage = 'url(' + this.image + ')'
+            this.$el.style.backgroundImage = `url(${this.image})`
             this.$el.style.backgroundPosition = 'center'
             this.$el.style.backgroundSize = 'cover'
         } else {

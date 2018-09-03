@@ -12,16 +12,16 @@
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
-function get(endpoint, params, success, fail, complete) {
-    request('get', endpoint, params, {}, success, fail, complete)
+function get(endpoint, params, success, failure, complete) {
+    request('get', endpoint, params, {}, success, failure, complete)
 }
 
-function post(endpoint, data, success, fail, complete) {
-    request('post', endpoint, {}, data, success, fail, complete)
+function post(endpoint, data, success, failure, complete) {
+    request('post', endpoint, {}, data, success, failure, complete)
 }
 
-function patch(endpoint, data, success, fail, complete) {
-    request('patch', endpoint, {}, data, success, fail, complete)
+function patch(endpoint, data, success, failure, complete) {
+    request('patch', endpoint, {}, data, success, failure, complete)
 }
 
 function request(method, endpoint, params, data, success, failure, complete) {
@@ -44,15 +44,11 @@ function request(method, endpoint, params, data, success, failure, complete) {
                 failure && failure(error)
             }
             console.log(error.response.data)
-            console.log(error.response.status)
-            console.log(error.response.statusText)
-            console.log(error.response.headers)
         } else if (error.request) { // 请求已经发出，没有响应
             console.log(error.request)
         } else { // 一些错误是在设置请求的时候触发
             console.error('Error:', error.message)
         }
-        console.error(error.config)
     }).then(() => {
         complete && complete()
     })
@@ -70,7 +66,7 @@ function getEndpoint(element) {
 }
 
 function getQueryString(name) {
-    let regx = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i")
-    let r = location.search.substr(1).match(regx)
+    let regexp = new RegExp(`(^|&)${name}=([^&]*)(&|$)`, 'i')
+    let r = location.search.substr(1).match(regexp)
     return !!r ? decodeURIComponent(r[2]) : null
 }

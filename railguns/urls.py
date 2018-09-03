@@ -37,7 +37,7 @@ API_DESCRIPTION = '...'
 schema_view = get_schema_view(
     openapi.Info(title=API_TITLE, default_version='v1', description=API_DESCRIPTION),
     validators=['flex', 'ssv'],
-    permission_classes=[permissions.IsAdminUser])
+    permission_classes=(permissions.IsAdminUser,))
 
 urlpatterns += [
     path('docs/',

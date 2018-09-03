@@ -21,12 +21,12 @@ Only My Railgun
 
 前端库
 - [axios](https://github.com/axios/axios)
-- [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
 - [jQuery](https://jquery.com)
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
 - [Material Components for the Web](https://material.io/components/web/)
 - [Vue.js](https://vuejs.org)
 - [WeUI](https://github.com/Tencent/weui)
+- [weui.js](https://github.com/Tencent/weui.js)
 
 前端可选库
 - [clipboard.js](https://clipboardjs.com)

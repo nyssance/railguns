@@ -18,7 +18,7 @@ class CloudFileWidget(widgets.TextInput):
             '</div>')
 
     class Media:
-        js = ('cloudfile/js/scripts.js')
+        js = 'cloudfile/js/scripts.js'
         css = {
             'all': (
                 's3direct/css/bootstrap-progress.min.css',
@@ -29,12 +29,11 @@ class CloudFileWidget(widgets.TextInput):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         output = self.html.format(
             policy_url=reverse('upload-params', args=['oss']) + '?bucket={}'.format(settings.BUCKET_MEDIA),
             element_id=self.build_attrs(attrs).get('id'),
             file_name=os.path.basename(value or ''),
             file_url=value or '',
             name=name)
-
         return mark_safe(output)

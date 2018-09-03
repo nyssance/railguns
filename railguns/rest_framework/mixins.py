@@ -10,7 +10,14 @@ from rest_framework_jwt.settings import api_settings
 from .utils import get_nested_list
 
 
-class PasswordMixin(Serializer):
+# Serializer Mixin
+class ModelMixin(object):
+
+    def get_model(self):
+        return self.serializer_class.Meta.model
+
+
+class PasswordFieldMixin(Serializer):
     password = CharField(style={'input_type': 'password'}, min_length=6, max_length=128, write_only=True)
 
     # SO: https://stackoverflow.com/questions/29746584/django-rest-framework-create-user-with-password
@@ -18,7 +25,7 @@ class PasswordMixin(Serializer):
         return make_password(value)
 
 
-class TokenMixin(Serializer):
+class TokenFieldMixin(Serializer):
     token = SerializerMethodField()
 
     def get_token(self, obj):
@@ -33,13 +40,7 @@ class TokenMixin(Serializer):
         return jwt_encode_handler(jwt_payload_handler(obj))
 
 
-class ModelMixin(object):
-
-    def get_model(self):
-        return self.serializer_class.Meta.model
-
-
-class ImagesMixin(Serializer):
+class ImagesFieldMixin(Serializer):
     images = SerializerMethodField()
 
     def get_images(self, obj):
@@ -49,7 +50,7 @@ class ImagesMixin(Serializer):
             return '👈⚠️️字段不存在，请去除。'
 
 
-class TagsMixin(Serializer):
+class TagsFieldMixin(Serializer):
     tags = SerializerMethodField()
 
     def get_tags(self, obj):
@@ -59,20 +60,14 @@ class TagsMixin(Serializer):
             return '👈⚠️️字段不存在，请去除。'
 
 
-class OwnerMixin(object):
-
-    def pre_save(self, obj):
-        obj.user_id = self.request.user.id
-
-
-class StartDateMixin(Serializer):
+class StartDateFieldMixin(Serializer):
     start_date = SerializerMethodField()
 
     def get_start_date(self, obj):
         return localtime(obj.start_time).strftime('%Y-%m-%d')
 
 
-class EndDateMixin(Serializer):
+class EndDateFieldMixin(Serializer):
     end_date = SerializerMethodField()
 
     def get_end_date(self, obj):
@@ -87,3 +82,10 @@ class EndDateMixin(Serializer):
             days = period - 1
         date_time = date + datetime.timedelta(days=days)
         return date_time.strftime('%Y-%m-%d')
+
+
+# View Mixin
+class OwnerMixin(object):
+
+    def pre_save(self, obj):
+        obj.user_id = self.request.user.id

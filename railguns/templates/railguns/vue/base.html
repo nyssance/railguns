@@ -7,7 +7,7 @@
 {% block css %}{{ block.super }}
     <!-- 💙 vue/base -->
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!-- 💛 自定义 css -->{% endblock %}
 
@@ -17,10 +17,11 @@
     <!-- main 区域 -->
     <main data-endpoint="{{ endpoint }}" id="content">
         {% block content %}{% endblock %}
-        <alert title="提示"></alert>
     </main>
 {% endblock %}
 
 {% block js %}{{ block.super }}<!-- 💙 vue/base -->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
     <script src="{% static 'railguns/js/service.js' %}"></script>
     <script src="{% static 'railguns/js/vue/weui-components.js' %}"></script>{% endblock %}
