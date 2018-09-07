@@ -32,10 +32,11 @@ urlpatterns += [
 ]
 # Docs
 API_TITLE = '{} API'.format(gettext('app_name'))
+API_VERSION = settings.REST_FRAMEWORK['DEFAULT_VERSION']
 API_DESCRIPTION = '...'
 
 schema_view = get_schema_view(
-    openapi.Info(title=API_TITLE, default_version='v1', description=API_DESCRIPTION),
+    openapi.Info(title=API_TITLE, default_version=API_VERSION, description=API_DESCRIPTION),
     validators=['flex', 'ssv'],
     permission_classes=(permissions.IsAdminUser,))
 

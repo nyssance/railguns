@@ -26,7 +26,7 @@ class PasswordFieldMixin(Serializer):
 
 
 class TokenFieldMixin(Serializer):
-    token = CharField(read_only=True)
+    token = SerializerMethodField()  # 用CharField(read_only=True)会导致token为空
 
     def get_token(self, obj):
         request = self.context.get('request')
