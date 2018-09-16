@@ -49,7 +49,7 @@ urlpatterns += [
 ]
 # Railgun S
 urlpatterns += [
-    re_path(r'^download_url/(?P<cloud>(aliyun|oss))/$', DownloadUrlView.as_view(), name='download-url'),
+    re_path(r'^download_url/(?P<cloud>(aliyun|oss|aws|s3))/$', DownloadUrlView.as_view(), name='download-url'),
     re_path(r'^upload_params/(?P<cloud>(aliyun|oss|aws|s3))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
 ]

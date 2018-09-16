@@ -7,6 +7,8 @@ class DownloadUrlSerializer(Serializer):
 
 
 class UploadParamsSerializer(Serializer):
+    bucket = CharField(write_only=True)
+    filename = CharField(write_only=True, required=True)
     key = CharField(read_only=True)
     AWSAccessKeyId = CharField(read_only=True)
     OSSAccessKeyId = CharField(read_only=True)
