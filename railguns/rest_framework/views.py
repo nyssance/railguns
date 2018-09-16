@@ -118,9 +118,9 @@ class UploadParamsView(APIView):
             filename = filename.lower()
         elif bucket == settings.BUCKET_MEDIA:
             rename = True
-        expiration = int(request.GET.get('expiration', 24 * 365 * 50))  # 过期时间
-        content_encoding = request.GET.get('content_encoding', '')
-        cache_control = request.GET.get('cache_control')
+        expiration = int(request.data.get('expiration', 24 * 365 * 50))  # 过期时间
+        content_encoding = request.data.get('content_encoding', '')
+        cache_control = request.data.get('cache_control')
         params = get_params(
             kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
         return Response(params)
