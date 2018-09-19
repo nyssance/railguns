@@ -54,7 +54,7 @@ Vue.component('list-item-default', {
   props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'iconColor'],
   template: "\n        <a v-if=\"link\" :href=\"link\" class=\"mdc-list-item\" data-mdc-auto-init=\"MDCRipple\" :datavalue=\"datavalue\">\n            ".concat(list_item_default, "\n        </a>\n        <li v-else class=\"mdc-list-item\" :datavalue=\"datavalue\">\n            ").concat(list_item_default, "\n        </li>"),
   computed: {
-    // SO: https://stackoverflow.com/a/42872117
+    // SO: https://stackoverflow.com/questions/42872002/in-vue-js-component-how-to-use-props-in-css#42872117
     style: function style() {
       return 'color: ' + this.iconColor;
     }

@@ -80,7 +80,6 @@ Vue.component('list-item-default', {
   props: ['icon', 'title', 'accessory', 'badges', 'link', 'datavalue', 'iconColor'],
   template: "\n        <a v-if=\"link\" :href=\"link\" class=\"weui-cell weui-cell_access\" :datavalue=\"datavalue\">\n            ".concat(list_item_default, "\n            <div class=\"weui-cell__ft\"></div>\n        </a>\n        <div v-else class=\"weui-cell\" :datavalue=\"datavalue\">\n            ").concat(list_item_default, "\n        </div>"),
   computed: {
-    // SO: https://stackoverflow.com/a/42872117
     style: function style() {
       return 'color: ' + this.iconColor;
     }

@@ -150,7 +150,7 @@ Vue.component('list-item-default', {
         <div v-else class="weui-cell" :datavalue="datavalue">
             ${list_item_default}
         </div>`,
-    computed: { // SO: https://stackoverflow.com/a/42872117
+    computed: {
         style() {
             return 'color: ' + this.iconColor
         }

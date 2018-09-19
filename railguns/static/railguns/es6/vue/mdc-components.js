@@ -105,7 +105,7 @@ Vue.component('list-item-default', {
         <li v-else class="mdc-list-item" :datavalue="datavalue">
             ${list_item_default}
         </li>`,
-    computed: { // SO: https://stackoverflow.com/a/42872117
+    computed: { // SO: https://stackoverflow.com/questions/42872002/in-vue-js-component-how-to-use-props-in-css#42872117
         style() {
             return 'color: ' + this.iconColor
         }

@@ -18,7 +18,7 @@ from .rest_framework.views import DownloadUrlView, UploadParamsView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
-    # https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
+    # DJ: https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')
 ]
 # Vendor
