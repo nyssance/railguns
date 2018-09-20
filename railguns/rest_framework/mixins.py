@@ -26,7 +26,7 @@ class PasswordFieldMixin(Serializer):
 
 
 class TokenFieldMixin(Serializer):
-    token = SerializerMethodField()  # 用CharField(read_only=True)会导致token为空
+    token = SerializerMethodField()
 
     def get_token(self, obj):
         request = self.context.get('request')
@@ -61,14 +61,14 @@ class TagsFieldMixin(Serializer):
 
 
 class StartDateFieldMixin(Serializer):
-    start_date = CharField(read_only=True)
+    start_date = SerializerMethodField(read_only=True)
 
     def get_start_date(self, obj):
         return localtime(obj.start_time).strftime('%Y-%m-%d')
 
 
 class EndDateFieldMixin(Serializer):
-    end_date = CharField(read_only=True)
+    end_date = SerializerMethodField(read_only=True)
 
     def get_end_date(self, obj):
         if obj.period <= 0:
