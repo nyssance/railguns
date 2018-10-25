@@ -4,7 +4,7 @@ import hmac
 import mimetypes
 import uuid
 from base64 import b64encode
-from urllib.parse import quote_plus, urlparse
+from urllib.parse import urlparse
 
 from django.conf import settings
 from rest_framework.decorators import permission_classes
@@ -23,52 +23,87 @@ def create_filename(filename):
     return '{}.{}'.format(uuid.uuid4().hex, ext)
 
 
-def get_signature(msg):
+def sign(key, msg):
+    return hmac.new(key, msg.encode('utf-8'), hashlib.sha256).digest()
+
+
+def get_signing_key(key, date_stamp, region, service):
+    kDate = sign(('AWS4' + key).encode('utf-8'), date_stamp)
+    kRegion = sign(kDate, region)
+    kService = sign(kRegion, service)
+    kSigning = sign(kService, 'aws4_request')
+    return kSigning
+
+
+def get_signature(msg, digestmod):
     if not settings.CLOUD_SS_SECRET:
         raise APIException('CLOUD_SS_SECRET 不存在')
     key = settings.CLOUD_SS_SECRET.encode()
-    return b64encode(hmac.new(key, msg.encode(), hashlib.sha1).digest()).decode()
+    return b64encode(hmac.new(key, msg.encode('utf-8'), digestmod).digest()).decode()
 
 
-def get_params(cloud, bucket, filename, rename, expiration, content_encoding, cache_control):
+def get_params(cloud, region, bucket, filename, rename, expiration, content_encoding, cache_control):
     content_type = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
     path = 'upload/{}'.format(create_filename(filename)) if rename else filename  # 是否重命名
     # 计算policy
-    policy_object = {
+    conditions = [{
+        'bucket': bucket
+    }, ['starts-with', '$key', path.split('/')[0]], ['starts-with', '$Content-Type', content_type]]
+    policy_dict = {
         'expiration':
         (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
-        'conditions': [
-            {
-                'bucket': bucket
-            },
-            ['starts-with', '$key',
-             path.split('/')[0]],  # https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
-            ['starts-with', '$Content-Type', content_type]
-        ]
+        'conditions':
+        conditions
     }
-    if cloud in ['aws', 's3']:
-        policy_object['conditions'].append({'acl': 'public-read'})
-        policy_object['conditions'].append({'success_action_status': '201'})  # 官方文档漏掉了, 这个在这里和html里一定不能少
-        policy_object['conditions'].append(['content-length-range', 1, 1024 * 1024 * 4])
+    # 时间相关
+    t = datetime.datetime.utcnow()
+    expire = t + datetime.timedelta(days=1)
+    amz_date = t.strftime('%Y%m%dT%H%M%SZ')
+    date_stamp = t.strftime('%Y%m%d')
+    if cloud == 'aws':
+        conditions += [{
+            'acl': 'public-read'
+        }, {
+            'success_action_status': '204'
+        }, {
+            'x-amz-meta-uuid': '14365123651274'
+        }, {
+            'x-amz-server-side-encryption': 'AES256'
+        }, ['starts-with', '$x-amz-meta-tag', ''],
+                       {
+                           'x-amz-credential': '{}/{}/{}/s3/aws4_request'.format(settings.CLOUD_SS_ID, date_stamp,
+                                                                                 region)
+                       }, {
+                           'x-amz-algorithm': 'AWS4-HMAC-SHA256'
+                       }, {
+                           'x-amz-date': amz_date
+                       }]
+        policy_dict['conditions'] = conditions
+        # policy_dict['conditions'].append(['content-length-range', 1, 1024 * 1024 * 4])
     if content_encoding == 'gzip':
-        policy_object['conditions'].append(['starts-with', '$Content-Encoding', content_encoding])
-    policy = b64encode(json.dumps(policy_object).replace('\n', '').replace('\r', '').encode()).decode()
-    signature = get_signature(policy)
-    params = {'key': path, 'Content-Type': content_type, 'policy': policy, 'signature': signature}
-    if cloud in ['aliyun', 'oss']:
-        params['OSSAccessKeyId'] = settings.CLOUD_SS_ID
-    elif cloud in ['aws', 's3']:
-        params.update({'AWSAccessKeyId': settings.CLOUD_SS_ID, 'acl': 'public-read', 'success_action_status': '201'})
+        policy_dict['conditions'].append(['starts-with', '$Content-Encoding', content_encoding])
+    string_to_sign = b64encode(json.dumps(policy_dict).encode('utf-8'))
+    #
+    params = {'key': path, 'Content-Type': content_type, 'policy': string_to_sign}
+    if cloud == 'aliyun':  # 阿里云
+        signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode('utf-8'), string_to_sign, hashlib.sha1).digest())
+        params.update({'OSSAccessKeyId': settings.CLOUD_SS_ID, 'signature': signature})
+    elif cloud == 'aws':  # AWS https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
+        for condition in conditions:
+            if isinstance(condition, dict):
+                params.update(condition)
+        params.pop('bucket')
+        signing_key = get_signing_key(settings.CLOUD_SS_SECRET, date_stamp, region, 's3')
+        signature = hmac.new(signing_key, string_to_sign, hashlib.sha256).hexdigest()  # 16进制
+        params.update({
+            'x-amz-meta-tag': '',
+            'x-amz-signature': signature,
+        })
+    # 其他 Content-Encoding, Cache-Control
     if content_encoding == 'gzip':
         params['Content-Encoding'] = content_encoding
     if cache_control:
         params['Cache-Control'] = cache_control
-    if bucket == settings.BUCKET_MEDIA:
-        params['domain'] = settings.MEDIA_URL
-    elif bucket == settings.BUCKET_STATIC:
-        params['domain'] = settings.STATIC_URL
-    elif bucket == settings.BUCKET_CLOUD:
-        params['domain'] = settings.CLOUD_URL
     return params
 
 
@@ -89,7 +124,7 @@ class DownloadUrlView(APIView):
         bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')
         expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
         string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
-        signature = get_signature(string_to_sign)
+        signature = get_signature(string_to_sign, hashlib.sha1)
         params = {
             'url': '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires, signature)
         }
@@ -121,6 +156,14 @@ class UploadParamsView(APIView):
         expiration = int(request.data.get('expiration', 24 * 365 * 50))  # 过期时间
         content_encoding = request.data.get('content_encoding', '')
         cache_control = request.data.get('cache_control')
+        endpoint = ''
+        if bucket == settings.BUCKET_MEDIA:
+            endpoint = settings.MEDIA_URL
+        elif bucket == settings.BUCKET_STATIC:
+            endpoint = settings.STATIC_URL
+        elif bucket == settings.BUCKET_CLOUD:
+            endpoint = settings.CLOUD_URL
         params = get_params(
-            kwargs.get(self.lookup_field), bucket, filename, rename, expiration, content_encoding, cache_control)
-        return Response(params)
+            kwargs.get(self.lookup_field), settings.CLOUD_SS_REGION, bucket, filename, rename, expiration,
+            content_encoding, cache_control)
+        return Response({'endpoint': endpoint, 'params': params})
