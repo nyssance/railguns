@@ -147,12 +147,7 @@ class UploadParamsView(APIView):
         filename = request.data.get('filename')
         if not filename:
             raise ValidationError('filename不能为空')
-        rename = False
         bucket = request.data.get('bucket', settings.BUCKET_MEDIA)
-        if bucket == settings.BUCKET_STATIC:  # 传到static下的不修改大小写
-            filename = filename.lower()
-        elif bucket == settings.BUCKET_MEDIA:
-            rename = True
         expiration = int(request.data.get('expiration', 24 * 365 * 50))  # 过期时间
         content_encoding = request.data.get('content_encoding', '')
         cache_control = request.data.get('cache_control')
@@ -164,6 +159,6 @@ class UploadParamsView(APIView):
         elif bucket == settings.BUCKET_CLOUD:
             endpoint = settings.CLOUD_URL
         params = get_params(
-            kwargs.get(self.lookup_field), settings.CLOUD_SS_REGION, bucket, filename, rename, expiration,
-            content_encoding, cache_control)
+            kwargs.get(self.lookup_field), settings.CLOUD_SS_REGION, bucket, filename, bucket == settings.BUCKET_MEDIA,
+            expiration, content_encoding, cache_control)
         return Response({'endpoint': endpoint, 'params': params})

@@ -9,6 +9,11 @@
 // 通用方法
 // Vue 傻逼, 不区分html注释和正式代码
 
+// https://github.com/axios/axios/issues/983
+// const JSONbig = require('json-bigint')
+// axios.defaults.transformResponse = [function (data) {
+//     return JSONbig.parse(data)
+// }]
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
