@@ -38,9 +38,11 @@ API_DESCRIPTION = '...'
 schema_view = get_schema_view(
     openapi.Info(title=API_TITLE, default_version=API_VERSION, description=API_DESCRIPTION),
     validators=['flex', 'ssv'],
-    permission_classes=[permissions.IsAdminUser])
+    permission_classes=(permissions.IsAdminUser,))
 
 urlpatterns += [
+    path('docs/',
+         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
     re_path(r'^swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
     path('swagger/', schema_view.with_ui(), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')
