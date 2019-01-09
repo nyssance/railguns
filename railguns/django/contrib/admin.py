@@ -30,8 +30,7 @@ class CurrencyMixin(object):
         value = amount / 100
         formatted = locale_currency(currency, value)
         if value < min_value:
-            formatted = '{}<span style="color: red;"> (低于{})</span>'.format(formatted,
-                                                                            locale.currency(min_value, False, True))
+            formatted = f'{formatted}<span style="color: red;"> (低于{locale.currency(min_value, False, True)})</span>'
         return format_html(formatted)
 
 
@@ -56,5 +55,5 @@ class SuperAdmin(CurrencyMixin, PreviewMixin, admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def log_change(self, request, obj, message):
-        new_message = 'json: {}'.format(serializers.serialize('json', [obj]))
+        new_message = f'json: {serializers.serialize("json", [obj])}'
         super().log_change(request, obj, new_message)

@@ -18,9 +18,9 @@ from .permissions import IsAuthenticatedOrWhitelist
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
 
-def create_filename(filename):
+def create_filename(filename: str) -> str:
     ext = filename.split('.')[-1]
-    return '{}.{}'.format(uuid.uuid4().hex, ext)
+    return f'{uuid.uuid4().hex}.{ext}'
 
 
 def sign(key, msg):
@@ -44,7 +44,7 @@ def get_signature(msg, digestmod):
 
 def get_params(cloud, region, bucket, filename, rename, expiration, content_encoding, cache_control):
     content_type = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
-    path = 'upload/{}'.format(create_filename(filename)) if rename else filename  # 是否重命名
+    path = f'upload/{create_filename(filename)}' if rename else filename  # 是否重命名
     # 计算policy
     conditions = [{
         'bucket': bucket
@@ -71,8 +71,7 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
             'x-amz-server-side-encryption': 'AES256'
         }, ['starts-with', '$x-amz-meta-tag', ''],
                        {
-                           'x-amz-credential': '{}/{}/{}/s3/aws4_request'.format(settings.CLOUD_SS_ID, date_stamp,
-                                                                                 region)
+                           'x-amz-credential': f'{settings.CLOUD_SS_ID}/{date_stamp}/{region}/s3/aws4_request'
                        }, {
                            'x-amz-algorithm': 'AWS4-HMAC-SHA256'
                        }, {
@@ -121,13 +120,11 @@ class DownloadUrlView(APIView):
         if not url:
             raise ValidationError('url不能为空')
         url_components = urlparse(url)
-        bucket = url_components.netloc.replace('.{}'.format(settings.CLOUD_SS_BASE_DOMAIN_NAME), '')
+        bucket = url_components.netloc.replace(f'.{settings.CLOUD_SS_BASE_DOMAIN_NAME}', '')
         expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
-        string_to_sign = 'GET\n\n\n{}\n/{}{}'.format(expires, bucket, url_components.path)  # 字符串
+        string_to_sign = f'GET\n\n\n{expires}\n/{bucket}{url_components.path}'  # 字符串
         signature = get_signature(string_to_sign, hashlib.sha1)
-        params = {
-            'url': '{}?OSSAccessKeyId={}&Expires={}&Signature={}'.format(url, settings.CLOUD_SS_ID, expires, signature)
-        }
+        params = {'url': f'{url}?OSSAccessKeyId={settings.CLOUD_SS_ID}&Expires={expires}&Signature={signature}'}
         return Response(params)
 
 

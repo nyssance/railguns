@@ -9,7 +9,7 @@ def timestamp(date):
     return time.mktime(date.timetuple())
 
 
-def generate_shard_id(user_id):
+def generate_shard_id(user_id) -> int:
     time_offset = int(timestamp(datetime.datetime.now()) - 1510358400)  # 2017-11-11 00:00:00 中国时间
     return user_id | time_offset << 32
 
@@ -21,14 +21,14 @@ def get_object(model, using='default', default=None, **kwargs):
         return default
 
 
-def get_user_id(pk):
+def get_user_id(pk: int) -> int:
     """
     需要保证传入的pk都是int
     """
     return pk & 0xFFFFFFFF
 
 
-def db_master(user_id=None):
+def db_master(user_id: int = None) -> str:
     """
     需要保证传入的user_id都是int
     """
@@ -38,15 +38,15 @@ def db_master(user_id=None):
         if user_id < 100001:
             return 'default'
         else:
-            return 'db_{}'.format(user_id % settings.SHARD_COUNT)
+            return f'db_{user_id % settings.SHARD_COUNT}'
 
 
-def db_slave(user_id=None):
+def db_slave(user_id: int = None) -> str:
     suffix = ''
-    return '{}{}'.format(db_master(user_id), suffix)  # replica_
+    return f'{db_master(user_id)}{suffix}'  # replica_
 
 
-def redis_master(user_id=None):
+def redis_master(user_id: int = None) -> int:
     if not user_id:
         return 0
     else:
@@ -56,7 +56,7 @@ def redis_master(user_id=None):
             return int(user_id / 1000)
 
 
-def datetime_to_unixtime(date_time):
+def datetime_to_unixtime(date_time) -> int:
     date_string = date_time.strftime('%Y-%m-%d %H:%M:%S')
     date_time = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
     return int(time.mktime(date_time.timetuple()))
@@ -76,6 +76,6 @@ def datetime_timezone_zero():
     return datetime.datetime(timezone.now().year, timezone.now().month, timezone.now().day, 0, 0, 0)
 
 
-def string_to_unixtime(string):
+def string_to_unixtime(string) -> int:
     date_time = datetime.datetime.strptime(string, '%Y-%m-%d %H:%M:%S')
     return int(time.mktime(date_time.timetuple()))

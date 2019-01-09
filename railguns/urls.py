@@ -31,7 +31,7 @@ urlpatterns += [
     # path('search/', include('haystack.urls'))
 ]
 # Docs
-API_TITLE = '{} API'.format(gettext('app_name'))
+API_TITLE = f'{gettext("app_name")} API'
 API_VERSION = settings.REST_FRAMEWORK['DEFAULT_VERSION']
 API_DESCRIPTION = '...'
 
@@ -51,7 +51,7 @@ urlpatterns += [
 urlpatterns += [
     re_path(r'^download_url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
     re_path(r'^upload_params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
-    path('favicon.ico', RedirectView.as_view(url='{}favicon.ico'.format(settings.STATIC_URL), permanent=True))
+    path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

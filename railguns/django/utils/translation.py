@@ -19,5 +19,5 @@ def get_untranslated_text(text):
     try:
         untranslated_text = text._proxy____args[0]  # 虽然不建议使用, 但是不用的话得到的是英语翻译的(首字母会大写)
     except Exception as e:
-        print('Exception: {} {}'.format(text, e))
+        print(f'Exception: {text} {e}')
     return untranslated_text

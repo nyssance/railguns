@@ -17,7 +17,7 @@ function showActionSheet() {
 
 
 Vue.component('app-footer', {
-  template: "\n        <!--<div class=\"weui-footer weui-footer_fixed-bottom\">-->\n        <div class=\"weui-footer\">\n            <br>\n            <br>\n            <p class=\"weui-footer__links\">\n                <!--<a href=\"javascript:home();\" class=\"weui-footer__link\">\u9996\u9875</a>-->\n            </p>\n            <p class=\"weui-footer__text\">Copyright &copy; 2018 www.uutou.cn</p>\n        </div>"
+  template: "\n        <!--<div class=\"weui-footer weui-footer_fixed-bottom\">-->\n        <div class=\"weui-footer\">\n            <br>\n            <br>\n            <p class=\"weui-footer__links\">\n                <!--<a href=\"javascript:home();\" class=\"weui-footer__link\">\u9996\u9875</a>-->\n            </p>\n            <p class=\"weui-footer__text\">Copyright &copy; 2019 www.yourdomain.com</p>\n        </div>"
 }); // TabBar 底部导航
 
 Vue.component('main-tabbar', {
