@@ -11,7 +11,7 @@ from .utils import get_nested_list
 
 
 # Serializer Mixin
-class ModelMixin(object):
+class ModelMixin:
 
     def get_model(self):
         return self.serializer_class.Meta.model
@@ -85,7 +85,7 @@ class EndDateFieldMixin(Serializer):
 
 
 # View Mixin
-class OwnerMixin(object):
+class OwnerMixin:
 
     def pre_save(self, obj):
         obj.user_id = self.request.user.id

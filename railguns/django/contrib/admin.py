@@ -9,7 +9,7 @@ from ...tools.utils import locale_currency
 from ..db.models import OwnerModel
 
 
-class PreviewMixin(object):
+class PreviewMixin:
     image_width = 100
     image_height = 100
 
@@ -24,7 +24,7 @@ class PreviewMixin(object):
     get_preview.short_description = _('preview')
 
 
-class CurrencyMixin(object):
+class CurrencyMixin:
 
     def format_currency(self, amount, min_value, currency='CNY'):
         value = amount / 100
