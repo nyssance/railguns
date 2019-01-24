@@ -49,6 +49,7 @@ urlpatterns += [
 ]
 # Railgun S
 urlpatterns += [
+    path('developer/', include('railguns.developer.urls', namespace='developer')),
     re_path(r'^download_url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
     re_path(r'^upload_params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True))
