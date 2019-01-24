@@ -1,16 +1,18 @@
+from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.http import HttpRequest
 from django.shortcuts import render
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
-def get_headers(request, keys) -> dict:
+def get_headers(request, keys):
     return dict((key, value) for (key, value) in request.META.items() if key in keys)
 
 
-def generate_link(urlstring: str, request) -> str:
+def generate_link(urlstring: str, request: Optional[HttpRequest]) -> str:
     """注意前端传入格式应为 App-Scheme 首字母大写加中划线这样"""
     if not urlstring or urlparse(urlstring).scheme:  # 如果为空或有scheme
         return urlstring
@@ -25,9 +27,9 @@ def generate_link(urlstring: str, request) -> str:
 
 
 class WebView(TemplateView):
-    name = None
-    title = None
-    endpoint = None
+    name: Optional[str] = None
+    title: Optional[str] = None
+    endpoint: Optional[str] = None
 
     def get(self, request, *args, **kwargs):
         if self.name.endswith('_create'):  # 创建页

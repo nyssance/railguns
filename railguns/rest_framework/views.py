@@ -18,7 +18,7 @@ from .permissions import IsAuthenticatedOrWhitelist
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
 
-def create_filename(filename: str) -> str:
+def create_filename(filename):
     ext = filename.split('.')[-1]
     return f'{uuid.uuid4().hex}.{ext}'
 

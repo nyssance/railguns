@@ -1,5 +1,6 @@
 import datetime
 import time
+from typing import Optional
 
 from django.conf import settings
 from django.utils import timezone
@@ -9,7 +10,7 @@ def timestamp(date):
     return time.mktime(date.timetuple())
 
 
-def generate_shard_id(user_id) -> int:
+def generate_shard_id(user_id: int) -> int:
     time_offset = int(timestamp(datetime.datetime.now()) - 1510358400)  # 2017-11-11 00:00:00 中国时间
     return user_id | time_offset << 32
 
@@ -28,7 +29,7 @@ def get_user_id(pk: int) -> int:
     return pk & 0xFFFFFFFF
 
 
-def db_master(user_id: int = None) -> str:
+def db_master(user_id: Optional[int] = None) -> str:
     """
     需要保证传入的user_id都是int
     """
@@ -41,12 +42,12 @@ def db_master(user_id: int = None) -> str:
             return f'db_{user_id % settings.SHARD_COUNT}'
 
 
-def db_slave(user_id: int = None) -> str:
+def db_slave(user_id: Optional[int] = None) -> str:
     suffix = ''
     return f'{db_master(user_id)}{suffix}'  # replica_
 
 
-def redis_master(user_id: int = None) -> int:
+def redis_master(user_id: Optional[int] = None) -> int:
     if not user_id:
         return 0
     else:
