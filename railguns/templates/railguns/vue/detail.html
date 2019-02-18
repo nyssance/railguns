@@ -1,9 +1,0 @@
-{% extends './base.html' %}
-{% load static %}
-{% block structure %}{{ block.super }}<!--       vue/detail -->
-{% endblock %}
-
-{% block js %}{{ block.super }}
-    <!-- 💙 vue/detail -->
-    <script src="{% static 'railguns/js/vue/detail.js' %}"></script>
-    <!-- 💛 自定义 js -->{% endblock %}

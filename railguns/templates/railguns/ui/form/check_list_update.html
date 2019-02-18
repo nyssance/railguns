@@ -1,6 +1,6 @@
-{% extends '../detail.html' %}
+{% extends '../base.html' %}
 {% load static %}
-{% block structure %}{{ block.super }}<!--           mdc/form/check_list_update -->
+{% block structure %}{{ block.super }}<!--           ui/form/check_list_update -->
 {% endblock %}
 
 {% block menu %}<!-- <menu-item icon="done" title="done"></menu-item> -->{% endblock %}
@@ -16,6 +16,7 @@
                 <input @click="patch" type="submit" value="提交">
             </list-section>{% endblock %}
 
-{% block framework_js %}<!-- 💙 mdc/form/check_list_update -->
+{% block js %}{{ block.super }}
+    <!-- 💙 ui/form/check_list_update -->
     <script src="{% static 'railguns/es2015/ui/update.js' %}"></script>
-{% endblock %}
+    <!-- 💛 自定义 js -->{% endblock %}
