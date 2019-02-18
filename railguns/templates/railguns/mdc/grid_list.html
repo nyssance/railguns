@@ -1,0 +1,17 @@
+{% extends './list.html' %}
+{% block structure %}{{ block.super }}<!--         mdc/grid_list -->
+{% endblock %}
+
+{% block framework_js %}{{ block.super }}    <!-- 💙 mdc/grid_list -->
+    <script>
+        function initGridList() { // 居中网格
+            var nodes = document.querySelectorAll('.mdc-grid-list')
+            for (var node of nodes) {
+                mdc.gridList.MDCGridList.attachTo(node)
+            }
+        }
+        setTimeout(function() {
+            initGridList()
+        }, 100)
+    </script>
+{% endblock %}
