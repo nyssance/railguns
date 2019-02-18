@@ -52,7 +52,8 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     policy_dict = {
         'expiration':
         (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
-        'conditions': conditions
+        'conditions':
+        conditions
     }
     # 时间相关
     t = datetime.datetime.utcnow()

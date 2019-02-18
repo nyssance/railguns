@@ -10,7 +10,7 @@
     <meta name="renderer" content="webkit">
     <!-- analytics -->
 {% include 'includes/analytics.html' %}
-    <title>{% block title %}{{ title }}{% endblock %}</title>
+    {% block title %}<title>{{ title }}</title>{% endblock %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
     <!-- 🌐 web 开始 -->
 {% block web %}{% endblock %}

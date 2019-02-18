@@ -1,0 +1,9 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block structure %}{{ block.super }}<!--           vue/form/create -->
+{% endblock %}
+
+{% block js %}{{ block.super }}
+    <!-- 💙 vue/form/create -->
+    <script src="{% static 'railguns/js/vue/create.js' %}"></script>
+    <!-- 💛 自定义 js -->{% endblock %}

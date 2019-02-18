@@ -1,9 +1,0 @@
-{% extends './base.html' %}
-{% load static %}
-{% block structure %}{{ block.super }}<!--       ui/detail -->
-{% endblock %}
-
-{% block js %}{{ block.super }}
-    <!-- 💙 u/detail -->
-    <script src="{% static 'railguns/es2015/ui/detail.js' %}"></script>
-    <!-- 💛 自定义 js -->{% endblock %}
