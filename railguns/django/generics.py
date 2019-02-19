@@ -8,19 +8,12 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
-def get_headers(request, keys):
-    return dict((key, value) for (key, value) in request.META.items() if key in keys)
-
-
 def generate_link(urlstring: str, request: Optional[HttpRequest]) -> str:
-    """注意前端传入格式应为 App-Scheme 首字母大写加中划线这样"""
     if not urlstring or urlparse(urlstring).scheme:  # 如果为空或有scheme
         return urlstring
     else:
         if request:
-            headers = get_headers(request, ['HTTP_APP_SCHEME', 'HTTP_USER_AGENT', 'HTTP_HOST'])
-            # print(headers)
-            app_scheme = headers.get('HTTP_APP_SCHEME')
+            app_scheme = request.headers.get('App-Scheme')
             if app_scheme:
                 return f'{app_scheme}://{urlstring}'
         return f'/{urlstring}/' if urlstring != "/" else "/"
@@ -40,5 +33,5 @@ class WebView(TemplateView):
         endpoint = self.endpoint if self.endpoint is not None else f'/api/{settings.REST_FRAMEWORK["DEFAULT_VERSION"]}{request.get_full_path()}'
         template_name = self.template_name if self.template_name else f'web/{self.name}.html'
         extras = kwargs
-        is_weixin = 'MicroMessenger' in request.META['HTTP_USER_AGENT']
+        is_weixin = 'MicroMessenger' in request.headers['User-Agent']
         return render(request, template_name, locals())
