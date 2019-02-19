@@ -4,16 +4,18 @@ const content = new Vue({
     data: {
         // endpoint: '',
         count: 0,
-        previous: null,
-        next: null,
+        previous: undefined,
+        next: undefined,
         items: []
     },
     methods: {
         onLoadSuccess(code, data) {
-            this.count = data.count
-            this.previous = data.previous
-            this.next = data.next
-            this.items = data.results
+            if (code >= 200 && code < 300) { // 200, 201 才重绘
+                this.count = data.count
+                this.previous = data.previous
+                this.next = data.next
+                this.items = data.results
+            }
         }
     }
 })

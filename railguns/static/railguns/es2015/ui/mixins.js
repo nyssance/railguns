@@ -17,9 +17,9 @@ const base = {
         refresh(params) {
             if (this.endpoint.trim()) {
                 this.isLoading = true
-                httpUtilenqueue('get', this.endpoint, params, ((code, data) => {
+                httpUtilenqueue('GET', this.endpoint, params, (code, data) => {
                     this.onLoadSuccess(code, data)
-                }).bind(this), (code, message) => {
+                }, (code, message) => {
                     this.onLoadFailure(code, message)
                 })
             }

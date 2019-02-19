@@ -1,20 +1,27 @@
+// https://cn.vuejs.org/v2/guide/components.html#注册
+// 对于自定义标签名，Vue.js 不强制要求遵循 W3C 规则 (小写，并且包含一个短杠)，尽管遵循这个规则比较好。
+
+// https://cn.vuejs.org/v2/guide/components.html#组件命名约定
+// 这意味着 PascalCase 是最通用的 声明约定 而 kebab-case 是最通用的 使用约定。
+
+// 综上，使用 kebab-case 最不容易引起不必要的bug
 // https://cn.vuejs.org/v2/style-guide/#Prop-名大小写-强烈推荐
 // https://cn.vuejs.org/v2/style-guide/#指令缩写-强烈推荐
 
+// Vue 太蠢, 不区分html注释和正式代码
+
+const showActionSheet = (menus = [], actions = [], options = {}) => {
+    weui.actionSheet(menus, actions, options)
+}
 const showAlert = (title, message, action) => {
     if (action) {
-        weui.confirm(message, () => {
-            action()
-        }, undefined, {title})
+        weui.confirm(message, action, undefined, {title})
     } else {
         weui.alert(message, {title})
     }
 }
-const showActionSheet = (menus = [], actions = [], options = {}) => {
-    weui.actionSheet(menus, actions, options)
-}
 const showSnackbar = (message, duration = 2000) => {
-    weui.topTips(message, {duration: duration})
+    weui.topTips(message, {duration})
 }
 
 // 💙 组件

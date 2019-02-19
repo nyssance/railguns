@@ -17,7 +17,7 @@ const content = new Vue({
     data: {
         items: [],
         data: {},
-        currentValue: null // 更新用
+        currentValue: undefined // 更新用
     },
     mounted() {
         const element = this.$el
@@ -58,7 +58,7 @@ const content = new Vue({
                 this.data = JSON.parse(json_string)
                 console.warn('Endpoint:', endpoint)
                 console.warn('请求 更新', json_string)
-                httpUtilenqueue('patch', endpoint, this.data, (code, data) => {
+                httpUtilenqueue('PATCH', endpoint, this.data, (code, data) => {
                     console.log('Data:', data)
                     history.back()
                     location.replace(endpoint.replace('/api/v1/', '/'))

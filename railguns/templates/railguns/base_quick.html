@@ -25,10 +25,9 @@
     <script src="https://cdn.bootcss.com/moment.js/2.23.0/moment-with-locales.min.js"></script>
     <script src="https://cdn.bootcss.com/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="https://cdn.bootcss.com/numeral.js/2.0.6/locales.min.js"></script>
-{% if debug %}    <script src="{% static 'vendor/vue.js' %}"></script>
-    <script src="{% static 'vendor/axios.js' %}"></script>{% else %}
-    <script src="{% static 'vendor/vue.min.js' %}"></script>
-    <script src="{% static 'vendor/axios.min.js' %}"></script>{% endif %}
+    <script src="{% static 'vendor/axios.min.js' %}"></script>
+{% if debug %}    <script src="{% static 'vendor/vue.js' %}"></script>{% else %}
+    <script src="{% static 'vendor/vue.min.js' %}"></script>{% endif %}
     <script src="{% static 'railguns/es2015/vendor.js' %}"></script>
     <script src="{% static 'railguns/es2015/ui/mixins.js' %}"></script>
     <script src="{% static 'js/components.js' %}"></script>

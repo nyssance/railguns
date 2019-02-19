@@ -35,7 +35,7 @@ var content = new Vue({
       var obj = JSON.stringify(this.data); // JSON.stringify() 方法用于将 JavaScript 值转换为 JSON 字符串. 为了清除不想要的东西
 
       console.log(obj);
-      httpUtilenqueue('post', this.endpoint, this.data, function (code, data) {
+      httpUtilenqueue('POST', this.endpoint, this.data, function (code, data) {
         _this.onLoadSuccess(code, data);
       }, function (code, message) {
         _this.onLoadFailure(code, message);

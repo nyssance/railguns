@@ -21,9 +21,9 @@ var base = {
 
       if (this.endpoint.trim()) {
         this.isLoading = true;
-        httpUtilenqueue('get', this.endpoint, params, function (code, data) {
+        httpUtilenqueue('GET', this.endpoint, params, function (code, data) {
           _this.onLoadSuccess(code, data);
-        }.bind(this), function (code, message) {
+        }, function (code, message) {
           _this.onLoadFailure(code, message);
         });
       }
