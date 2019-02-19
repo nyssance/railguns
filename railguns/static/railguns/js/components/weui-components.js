@@ -8,11 +8,14 @@
 // https://cn.vuejs.org/v2/style-guide/#Prop-名大小写-强烈推荐
 // https://cn.vuejs.org/v2/style-guide/#指令缩写-强烈推荐
 // Vue 太蠢, 不区分html注释和正式代码
-var showActionSheet = function showActionSheet() {
-  var menus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var actions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  weui.actionSheet(menus, actions, options);
+var showActionSheet = function showActionSheet(title, actions) {
+  weui.actionSheet(actions, [{
+    label: '取消',
+    onClick: function onClick() {}
+  }], {
+    title: title,
+    onClose: function onClose() {}
+  });
 };
 
 var showAlert = function showAlert(title, message, action) {
@@ -391,7 +394,7 @@ Vue.component('text-field', {
       type: String,
       default: 'text',
       validator: function validator(value) {
-        return ['text', 'number', 'tel', 'date', 'datetime-local'].includes(value);
+        return ['text', 'number', 'tel', 'date', 'datetime-local', 'password'].includes(value);
       }
     }
   },

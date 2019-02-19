@@ -1,8 +1,7 @@
 const content = new Vue({
-    mixins: [base],
+    mixins: [base, get],
     el: '#content',
     data: {
-        // endpoint: '',
         data: ''
     },
     updated() { // 组件挂载之后

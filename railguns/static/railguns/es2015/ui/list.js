@@ -1,12 +1,8 @@
 const content = new Vue({
-    mixins: [base],
+    mixins: [base, get],
     el: '#content',
     data: {
-        // endpoint: '',
-        count: 0,
-        previous: undefined,
-        next: undefined,
-        items: []
+        count: 0, previous: undefined, next: undefined, items: []
     },
     methods: {
         onLoadSuccess(code, data) {

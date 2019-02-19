@@ -1,10 +1,9 @@
 "use strict";
 
 var content = new Vue({
-  mixins: [base],
+  mixins: [base, get],
   el: '#content',
   data: {
-    // endpoint: '',
     data: ''
   },
   updated: function updated() {// 组件挂载之后

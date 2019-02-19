@@ -21,7 +21,10 @@ var httpUtilenqueue = function httpUtilenqueue() {
     data: isGet ? {} : params
   }).then(function (res) {
     var code = res.status;
-    console.debug('✅', code, method, "".concat(location.origin).concat(endpoint), 'params:', params);
+    console.debug('✅', code, method, "".concat(location.origin).concat(endpoint));
+    params && params.password && (params.password = '******'); // log不输出密码
+
+    console.debug('⬆️ 参数:', JSON.stringify(params));
     success && success(code, res.data);
   }).catch(function (error) {
     var message;

@@ -40,7 +40,7 @@ var content = new Vue({
   el: '#content',
   data: {
     items: [],
-    data: {},
+    params: {},
     currentValue: undefined // 更新用
 
   },
@@ -112,10 +112,10 @@ var content = new Vue({
         var endpoint = getQueryString('endpoint');
         var json_string = "{\"".concat(getQueryString('field'), "\": \"").concat(this.currentValue, "\"}"); // console.warn(json_string)
 
-        this.data = JSON.parse(json_string);
+        this.params = JSON.parse(json_string);
         console.warn('Endpoint:', endpoint);
         console.warn('请求 更新', json_string);
-        httpUtilenqueue('PATCH', endpoint, this.data, function (code, data) {
+        httpUtilenqueue('PATCH', endpoint, this.params, function (code, data) {
           console.log('Data:', data);
           history.back();
           location.replace(endpoint.replace('/api/v1/', '/'));

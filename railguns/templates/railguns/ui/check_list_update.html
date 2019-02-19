@@ -1,6 +1,6 @@
-{% extends '../base.html' %}
+{% extends './base.html' %}
 {% load static %}
-{% block structure %}{{ block.super }}<!--           ui/form/check_list_update -->
+{% block structure %}{{ block.super }}<!--           ui/check_list_update -->
 {% endblock %}
 
 {% block menu %}<!-- <menu-item icon="done" title="done"></menu-item> -->{% endblock %}
@@ -17,6 +17,6 @@
             </list-section>{% endblock %}
 
 {% block js %}{{ block.super }}
-    <!-- 💙 ui/form/check_list_update -->
+    <!-- 💙 ui/check_list_update -->
     <script src="{% static 'railguns/es2015/ui/update.js' %}"></script>
     <!-- 💛 自定义 js -->{% endblock %}

@@ -10,9 +10,16 @@
 
 // Vue 太蠢, 不区分html注释和正式代码
 
-const showActionSheet = (menus = [], actions = [], options = {}) => {
-    weui.actionSheet(menus, actions, options)
+const showActionSheet = (title, actions) => {
+    weui.actionSheet(actions, [{
+        label: '取消', onClick: () => {
+        }
+    }], {
+        title: title, onClose: () => {
+        }
+    })
 }
+
 const showAlert = (title, message, action) => {
     if (action) {
         weui.confirm(message, action, undefined, {title})
@@ -374,7 +381,7 @@ Vue.component('text-field', {
         type: {
             type: String,
             default: 'text',
-            validator: value => ['text', 'number', 'tel', 'date', 'datetime-local'].includes(value)
+            validator: value => ['text', 'number', 'tel', 'date', 'datetime-local', 'password'].includes(value)
         }
     },
     template: `

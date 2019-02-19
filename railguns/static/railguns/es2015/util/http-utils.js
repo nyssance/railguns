@@ -13,7 +13,9 @@ const httpUtilenqueue = (method = 'GET', endpoint, params, success, failure, com
         data: isGet ? {} : params
     }).then(res => {
         const code = res.status
-        console.debug('✅', code, method, `${location.origin}${endpoint}`, 'params:', params)
+        console.debug('✅', code, method, `${location.origin}${endpoint}`)
+        params && params.password && (params.password = '******') // log不输出密码
+        console.debug('⬆️ 参数:', JSON.stringify(params))
         success && success(code, res.data)
     }).catch(error => {
         let message

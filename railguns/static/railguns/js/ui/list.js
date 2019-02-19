@@ -1,10 +1,9 @@
 "use strict";
 
 var content = new Vue({
-  mixins: [base],
+  mixins: [base, get],
   el: '#content',
   data: {
-    // endpoint: '',
     count: 0,
     previous: undefined,
     next: undefined,

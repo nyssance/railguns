@@ -16,7 +16,7 @@ const content = new Vue({
     el: '#content',
     data: {
         items: [],
-        data: {},
+        params: {},
         currentValue: undefined // 更新用
     },
     mounted() {
@@ -55,10 +55,10 @@ const content = new Vue({
                 const endpoint = getQueryString('endpoint')
                 const json_string = `{"${getQueryString('field')}": "${this.currentValue}"}`
                 // console.warn(json_string)
-                this.data = JSON.parse(json_string)
+                this.params = JSON.parse(json_string)
                 console.warn('Endpoint:', endpoint)
                 console.warn('请求 更新', json_string)
-                httpUtilenqueue('PATCH', endpoint, this.data, (code, data) => {
+                httpUtilenqueue('PATCH', endpoint, this.params, (code, data) => {
                     console.log('Data:', data)
                     history.back()
                     location.replace(endpoint.replace('/api/v1/', '/'))
