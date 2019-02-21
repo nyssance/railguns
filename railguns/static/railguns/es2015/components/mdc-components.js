@@ -96,12 +96,12 @@ Vue.component('list-section-header', {
 // 列表 : 项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: ['icon', 'title', 'accessory', 'link', 'datavalue', 'iconColor'],
+    props: ['icon', 'title', 'accessory', 'link', 'iconColor'],
     template: `
-        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
+        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
             ${list_item_default}
         </a>
-        <li v-else class="mdc-list-item" :datavalue="datavalue">
+        <li v-else class="mdc-list-item">
             ${list_item_default}
         </li>`,
     computed: { // SO: https://stackoverflow.com/questions/42872002/in-vue-js-component-how-to-use-props-in-css#42872117
@@ -125,9 +125,9 @@ Vue.component('list-item-subtitle', {
 
 // - 左右
 Vue.component('list-item-value1', {
-    props: ['icon', 'title', 'subtitle', 'accessory', 'link', 'datavalue'],
+    props: ['icon', 'title', 'subtitle', 'accessory', 'link'],
     template: `
-        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple" :datavalue="datavalue">
+        <a v-if="link" :href="link" class="mdc-list-item" data-mdc-auto-init="MDCRipple">
             ${list_item_value1}
         </a>
         <li v-else class="mdc-list-item">

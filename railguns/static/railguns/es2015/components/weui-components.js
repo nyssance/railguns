@@ -247,15 +247,14 @@ Vue.component('list-item-default', {
         accessory: {type: String},
         badges: {type: Array},
         link: {type: String},
-        datavalue: {type: String},
         iconColor: {type: String}
     },
     template: `
-        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">
+        <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_default}
             <div class="weui-cell__ft"></div>
         </a>
-        <div v-else class="weui-cell" :datavalue="datavalue">
+        <div v-else class="weui-cell">
             ${list_item_default}
         </div>`,
     computed: {
@@ -293,14 +292,13 @@ Vue.component('list-item-value1', {
         subtitle: {type: [String, Number], required: true, default: ''},
         accessory: {type: String},
         badges: {type: Array},
-        link: {type: String},
-        datavalue: {type: String}
+        link: {type: String}
     },
     template: `
-        <a v-if="link" :href="link" class="weui-cell weui-cell_access" :datavalue="datavalue">
+        <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_value1}
         </a>
-        <div v-else class="weui-cell" :datavalue="datavalue">
+        <div v-else class="weui-cell">
             ${list_item_value1}
         </div>`
 })
@@ -371,7 +369,47 @@ Vue.component('article-html', {
     template: `<article class="weui-article" v-html="text"></article>`
 })
 
-// 表单
+// - 按钮
+Vue.component('button-area', {
+    template: `
+        <div class="weui-btn-area">
+            <slot></slot>
+        </div>`
+})
+
+Vue.component('button-primary', {
+    props: {
+        title: {type: String, required: true}
+    },
+    template: `<button class="weui-btn weui-btn_primary">{{ title }}</button>`
+})
+
+Vue.component('button-default', {
+    props: {
+        title: {type: String, required: true}
+    },
+    template: `<button class="weui-btn weui-btn_plain-default">{{ title }}</button>`
+})
+
+// - 表单
+// 单选
+Vue.component('option-item', {
+    props: {
+        title: {type: String, required: true, default: ''},
+        name: {type: String, required: true},
+        value: {type: [String, Number]},
+        id: {type: String, required: true}
+    },
+    template: `
+        <label class="weui-cell weui-check__label" :for="id">
+            <div class="weui-cell__bd">{{ title }}</div>
+            <div class="weui-cell__ft">
+                <input type="radio" class="weui-check" :name="name" :value="value" :id="id" required>
+                <span class="weui-icon-checked"></span>
+            </div>
+        </label>`
+})
+
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
     props: {

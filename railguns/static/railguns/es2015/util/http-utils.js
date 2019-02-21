@@ -4,16 +4,16 @@
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
-const httpUtilenqueue = (method = 'GET', endpoint, params, success, failure, complete) => {
+const httpUtilenqueue = (method = 'GET', url, params, success, failure, complete) => {
     const isGet = method === 'GET'
     axios({
         method,
-        url: endpoint,
+        url,
         params: isGet ? params : {},
         data: isGet ? {} : params
     }).then(res => {
         const code = res.status
-        console.debug('✅', code, method, `${location.origin}${endpoint}`)
+        console.debug('✅', code, method, `${location.origin}${url}`)
         params && params.password && (params.password = '******') // log不输出密码
         console.debug('⬆️ 参数:', JSON.stringify(params))
         success && success(code, res.data)
@@ -32,12 +32,6 @@ const httpUtilenqueue = (method = 'GET', endpoint, params, success, failure, com
     }).then(() => {
         complete && complete()
     })
-}
-
-const getQueryString = name => {
-    const regexp = new RegExp(`(^|&)${name}=([^&]*)(&|$)`, 'i')
-    let r = location.search.substr(1).match(regexp)
-    return !!r ? decodeURIComponent(r[2]) : undefined
 }
 
 const regexp = {

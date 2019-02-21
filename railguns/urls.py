@@ -2,12 +2,15 @@ from django.apps.registry import apps
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import include, path, re_path
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from railguns.django.generics import WebView
+from railguns.django.utils.translation import dj_gettext
 from rest_framework import permissions
 from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
@@ -51,7 +54,16 @@ urlpatterns += [
 urlpatterns += [
     re_path(r'^download_url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
     re_path(r'^upload_params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
-    path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True))
+    path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True)),
+    #
+    path(
+        'checklistupdate/',
+        login_required(
+            WebView.as_view(
+                name='check_list_update',
+                title=dj_gettext('Update'),
+                endpoint='',
+                template_name='railguns/ui/check_list_update.html')))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

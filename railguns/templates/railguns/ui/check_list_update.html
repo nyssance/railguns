@@ -1,20 +1,20 @@
 {% extends './base.html' %}
-{% load static %}
-{% block structure %}{{ block.super }}<!--           ui/check_list_update -->
+{% load i18n static %}
+{% block structure %}{{ block.super }}<!--       ui/check_list_update -->
 {% endblock %}
 
-{% block menu %}<!-- <menu-item icon="done" title="done"></menu-item> -->{% endblock %}
-
 {% block content %}
-            <list-section>
-                <list-item-default v-for="item in items" :key="item.value"
-                    :title="item.label"
-                    accessory="radio_button_unchecked"
-                    :datavalue="item.value"></list-item-default>
-            </list-section>
-            <list-section>
-                <input @click="patch" type="submit" value="提交">
-            </list-section>{% endblock %}
+    <div class="weui-cells weui-cells_radio">
+        <option-item v-for="item in items" :key="item.value"
+                     :title="item.label"
+                     name="gender"
+                     :value="item.value"
+                     :id="item.value"></option-item>
+    </div>
+    <button-area>
+        <button-primary title="{% trans '确定' %}" @click.native="submit"></button-primary>
+    </button-area>
+{% endblock %}
 
 {% block js %}{{ block.super }}
     <!-- 💙 ui/check_list_update -->
