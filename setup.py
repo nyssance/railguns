@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.9.9',
+    version='0.10.0',
     install_requires=[
         'django[argon2]==2.2b1',
         'djangorestframework',

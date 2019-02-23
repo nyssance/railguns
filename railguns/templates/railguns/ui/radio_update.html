@@ -45,7 +45,7 @@
                     const url = new URL(document.URL)
                     const resource = url.searchParams.get('resource')
                     const property = url.searchParams.get('property')
-                    document.title += ` ${url.searchParams.get('title')}`
+                    document.title += ` ${gettext(property)}`
                     if (!resource || !property) {
                         showAlert('请传入 resource 和 property')
                         return
