@@ -6,6 +6,7 @@
 
 {% block css %}{{ block.super }}
     <!-- 💙 ui/base -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/4.4.6/css/swiper.min.css">
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
 {#    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">#}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -15,13 +16,13 @@
     <!-- app bar 区域 -->
 {#    <!-- drawer 区域 -->{% block drawer %}<!-- 无侧导航栏 -->{% endblock %}#}
     <!-- main 区域 -->
-    <main{{ dataset_method|safe }} data-endpoint="{{ endpoint }}" id="content">
+    <main id="content"{{ dataset_method|safe }}{{ dataset_endpoint|safe }}>
         {% block content %}{% endblock %}
     </main>
 {% endblock %}
 
 {% block js %}{{ block.super }}<!-- 💙 ui/base -->
+    <script src="https://cdn.bootcss.com/Swiper/4.4.6/js/swiper.min.js"></script>
     <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
 {#    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>#}
-    <script src="{% static 'railguns/es2015/util/http-utils.js' %}"></script>
     <script src="{% static 'railguns/es2015/components/weui-components.js' %}"></script>{% endblock %}

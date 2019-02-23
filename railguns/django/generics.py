@@ -23,7 +23,7 @@ class WebView(TemplateView):
     name: Optional[str] = None
     title: Optional[str] = None
     method: Optional[str] = None
-    endpoint: Optional[str] = None
+    endpoint: Optional[str] = ''
 
     def get(self, request, *args, **kwargs):
         if self.name.endswith('_create'):  # 创建页
@@ -32,7 +32,9 @@ class WebView(TemplateView):
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
         dataset_method = f' data-method="{self.method}"' if self.method else ''
-        endpoint = self.endpoint if self.endpoint is not None else f'/api/{settings.REST_FRAMEWORK["DEFAULT_VERSION"]}{request.get_full_path()}'
+        if self.endpoint is not None:
+            endpoint = self.endpoint if self.endpoint else f'/api/{settings.REST_FRAMEWORK["DEFAULT_VERSION"]}{request.get_full_path()}'
+            dataset_endpoint = f' data-endpoint="{endpoint}"' if endpoint else ''
         template_name = self.template_name if self.template_name else f'web/{self.name}.html'
         extras = kwargs
         is_weixin = 'MicroMessenger' in request.headers['User-Agent']

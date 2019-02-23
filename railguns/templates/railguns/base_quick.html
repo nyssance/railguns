@@ -28,8 +28,10 @@
     <script src="{% static 'vendor/axios/axios.min.js' %}"></script>
 {% if debug %}    <script src="{% static 'vendor/vue/vue.js' %}"></script>{% else %}
     <script src="{% static 'vendor/vue/vue.min.js' %}"></script>{% endif %}
+    <!-- Railgun S -->
+    <script src="{% static 'railguns/es2015/util/http-utils.js' %}"></script>
+    <script src="{% static 'railguns/es2015/mixins.js' %}"></script>
     <script src="{% static 'railguns/es2015/vendor.js' %}"></script>
-    <script src="{% static 'railguns/es2015/ui/mixins.js' %}"></script>
     <script src="{% static 'js/components.js' %}"></script>
     {% endblock %}
     <!-- 🍻 js 结束 -->

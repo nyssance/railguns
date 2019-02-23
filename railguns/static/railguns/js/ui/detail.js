@@ -1,1 +1,0 @@
-"use strict";var content=new Vue({mixins:[base,get],el:"#content",data:{object:""},methods:{onLoadSuccess:function(t,e){this.object=e}}});

@@ -1,22 +1,76 @@
 {% extends './base.html' %}
-{% load i18n static %}
+{% load i18n %}
 {% block structure %}{{ block.super }}<!--       ui/check_list_update -->
 {% endblock %}
 
 {% block content %}
     <options>
-        <option-item v-for="item, index in items" :key="item.value"
-                     :title="item.label"
-                     name="gender"
-                     :value="item.value"
+        <option-item v-for="choice, index in choices" :key="choice.value"
+                     :title="choice[1]"
+                     :name="property"
+                     :value="choice[0]"
                      :id="index"></option-item>
     </options>
-    <button-area>
-        <button-primary title="{% trans '确定' %}" @click.native="submit"></button-primary>
-    </button-area>
 {% endblock %}
 
 {% block js %}{{ block.super }}
     <!-- 💙 ui/check_list_update -->
-    <script src="{% static 'railguns/es2015/ui/update.js' %}"></script>
+    <script>
+        const vm = new Vue({
+            mixins: [base, patch],
+            el: '#content',
+            data: {
+                property: undefined, value: undefined, newValue: undefined, choices: []
+            },
+            updated() { // 组件挂载之后
+                document.querySelectorAll('input').forEach(it => {
+                    if (it.attributes['type'].value === 'radio') {
+                        // SO: https://stackoverflow.com/questions/11973678/difference-between-element-value-and-element-getattributevalue
+                        if (this.value.toString() === it.value) {
+                            it.setAttribute('checked', 'checked')
+                        }
+                        it.onclick = event => {
+                            this.newValue = it.value
+                            if (this.value.toString() === this.newValue) { // === 无法判断数字
+                                console.warn('与之前相同, 不提交服务器更新')
+                                // history.back() // 只返回不刷新
+                            } else {
+                                this.submit()
+                            }
+                        }
+                    }
+                })
+            },
+            methods: {
+                onPrepare() {
+                    const url = new URL(document.URL)
+                    const resource = url.searchParams.get('resource')
+                    const property = url.searchParams.get('property')
+                    if (!resource || !property) {
+                        showAlert('请传入 resource 和 property')
+                        return
+                    }
+                    // 动态获取参数
+                    httpUtilrequest('GET', '/api/v1/choices/', {
+                        'resource': resource,
+                        'property': property
+                    }, (code, data) => {
+                        this.call.method = data.method
+                        this.call.endpoint = data.endpoint
+                        this.property = data.property.name
+                        this.value = data.property.value
+                        this.choices = data.property.choices
+                    })
+                },
+                onSubmit() {
+                    this.params = {[this.property]: this.newValue}
+                },
+                onLoadSuccess(code, data) { // 默认模式是返回
+                    this.value = this.newValue
+                    // history.back()
+                    // location.replace(endpoint.replace('/api/v1/', '/'))
+                }
+            }
+        })
+    </script>
     <!-- 💛 自定义 js -->{% endblock %}

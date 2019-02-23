@@ -13,7 +13,7 @@ const base = {
             showAlert(code, message)
         },
         request(params) {
-            httpUtilenqueue(this.call.method, this.call.endpoint, params, (code, data) => {
+            httpUtilrequest(this.call.method, this.call.endpoint, params, (code, data) => {
                 this.onLoadSuccess(code, data)
             }, (code, message) => {
                 this.onLoadFailure(code, message)
@@ -25,14 +25,13 @@ const base = {
 const get = {
     mounted() {
         this.call.method = 'GET'
-        this.call.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
         this.onPrepare()
         this.refresh()
     },
     methods: {
         // 💛 Action
         refresh(params) {
-            if (this.call.endpoint.trim()) {
+            if (this.call.endpoint && this.call.endpoint.trim()) {
                 this.isLoading = true
                 this.request()
             }
@@ -46,7 +45,6 @@ const post = {
     },
     mounted() {
         this.call.method = this.$el.dataset.method
-        this.call.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
         this.onPrepare()
     },
     methods: {
@@ -71,7 +69,6 @@ const patch = {
     },
     mounted() {
         this.call.method = this.$el.dataset.method
-        this.call.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
         this.onPrepare()
     },
     methods: {
