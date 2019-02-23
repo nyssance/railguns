@@ -1,26 +1,25 @@
 {% extends './base.html' %}
-{% load i18n %}
-{% block structure %}{{ block.super }}<!--       ui/check_list_update -->
+{% block structure %}{{ block.super }}<!--       ui/radio_update -->
 {% endblock %}
 
 {% block content %}
-    <options>
-        <option-item v-for="choice, index in choices" :key="choice.value"
-                     :title="choice[1]"
+    <option-set>
+        <option-radio v-for="option, index in options" :key="index"
+                     :title="option[1]"
                      :name="property"
-                     :value="choice[0]"
-                     :id="index"></option-item>
-    </options>
+                     :value="option[0]"
+                     :id="index"></option-radio>
+    </option-set>
 {% endblock %}
 
 {% block js %}{{ block.super }}
-    <!-- 💙 ui/check_list_update -->
+    <!-- 💙 ui/radio_update -->
     <script>
         const vm = new Vue({
             mixins: [base, patch],
             el: '#content',
             data: {
-                property: undefined, value: undefined, newValue: undefined, choices: []
+                property: undefined, value: undefined, newValue: undefined, options: []
             },
             updated() { // 组件挂载之后
                 document.querySelectorAll('input').forEach(it => {
@@ -46,6 +45,7 @@
                     const url = new URL(document.URL)
                     const resource = url.searchParams.get('resource')
                     const property = url.searchParams.get('property')
+                    document.title += ` ${url.searchParams.get('title')}`
                     if (!resource || !property) {
                         showAlert('请传入 resource 和 property')
                         return
@@ -59,7 +59,7 @@
                         this.call.endpoint = data.endpoint
                         this.property = data.property.name
                         this.value = data.property.value
-                        this.choices = data.property.choices
+                        this.options = data.property.choices
                     })
                 },
                 onSubmit() {

@@ -57,13 +57,13 @@ urlpatterns += [
     path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True)),
     #
     path(
-        'checklistupdate/',
+        'radio_update/',
         login_required(
             WebView.as_view(
-                name='check_list_update',
+                name='radio_update',
                 title=dj_gettext('Update'),
                 endpoint=None,
-                template_name='railguns/ui/check_list_update.html')))
+                template_name='railguns/ui/radio_update.html')))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

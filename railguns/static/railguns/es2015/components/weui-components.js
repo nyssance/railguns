@@ -393,14 +393,14 @@ Vue.component('button-default', {
 
 // - 表单
 // 单选
-Vue.component('options', {
+Vue.component('option-set', {
     template: `
         <div class="weui-cells weui-cells_radio">
             <slot></slot>
         </div>`
 })
 
-Vue.component('option-item', {
+Vue.component('option-radio', {
     props: {
         title: {type: String, required: true, default: ''},
         name: {type: String, required: true},

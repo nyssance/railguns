@@ -1,10 +1,12 @@
 const base = {
     data: {
-        call: {method: null, endpoint: null}
+        call: {method: undefined, endpoint: undefined}
     },
     methods: {
         onPrepare() {
+            console.groupCollapsed('onPrepare')
             console.warn(JSON.stringify(this.$data))
+            console.groupEnd()
         },
         onLoadSuccess(code, data) {
             console.warn('请覆写 onLoadSuccess')
@@ -44,7 +46,7 @@ const post = {
         params: {}, next: ''
     },
     mounted() {
-        this.call.method = this.$el.dataset.method
+        this.call.method = 'POST'
         this.onPrepare()
     },
     methods: {
@@ -68,7 +70,7 @@ const patch = {
         params: {}
     },
     mounted() {
-        this.call.method = this.$el.dataset.method
+        this.call.method = 'PATCH'
         this.onPrepare()
     },
     methods: {

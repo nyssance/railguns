@@ -36,6 +36,7 @@ const httpUtilrequest = (method, url, params, success, failure, complete) => {
         complete && complete()
     })
 
+    // SO: https://stackoverflow.com/questions/7505623/colors-in-javascript-console
     const getCss = method => {
         let bgcolor
         switch (method) {
