@@ -15,7 +15,7 @@
     <!-- app bar 区域 -->
 {#    <!-- drawer 区域 -->{% block drawer %}<!-- 无侧导航栏 -->{% endblock %}#}
     <!-- main 区域 -->
-    <main data-endpoint="{{ endpoint }}" id="content">
+    <main{{ dataset_method|safe }} data-endpoint="{{ endpoint }}" id="content">
         {% block content %}{% endblock %}
     </main>
 {% endblock %}

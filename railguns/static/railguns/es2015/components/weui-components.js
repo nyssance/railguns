@@ -393,12 +393,19 @@ Vue.component('button-default', {
 
 // - 表单
 // 单选
+Vue.component('options', {
+    template: `
+        <div class="weui-cells weui-cells_radio">
+            <slot></slot>
+        </div>`
+})
+
 Vue.component('option-item', {
     props: {
         title: {type: String, required: true, default: ''},
         name: {type: String, required: true},
         value: {type: [String, Number]},
-        id: {type: String, required: true}
+        id: {type: [String, Number], required: true}
     },
     template: `
         <label class="weui-cell weui-check__label" :for="id">

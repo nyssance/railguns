@@ -4,13 +4,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="weui-cells weui-cells_radio">
-        <option-item v-for="item in items" :key="item.value"
+    <options>
+        <option-item v-for="item, index in items" :key="item.value"
                      :title="item.label"
                      name="gender"
                      :value="item.value"
-                     :id="item.value"></option-item>
-    </div>
+                     :id="index"></option-item>
+    </options>
     <button-area>
         <button-primary title="{% trans '确定' %}" @click.native="submit"></button-primary>
     </button-area>

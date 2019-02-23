@@ -62,6 +62,7 @@ urlpatterns += [
             WebView.as_view(
                 name='check_list_update',
                 title=dj_gettext('Update'),
+                method='PATCH',
                 endpoint='',
                 template_name='railguns/ui/check_list_update.html')))
 ]

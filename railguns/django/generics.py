@@ -22,6 +22,7 @@ def generate_link(urlstring: str, request: Optional[HttpRequest]) -> str:
 class WebView(TemplateView):
     name: Optional[str] = None
     title: Optional[str] = None
+    method: Optional[str] = None
     endpoint: Optional[str] = None
 
     def get(self, request, *args, **kwargs):
@@ -30,6 +31,7 @@ class WebView(TemplateView):
         else:
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
+        dataset_method = f' data-method="{self.method}"' if self.method else ''
         endpoint = self.endpoint if self.endpoint is not None else f'/api/{settings.REST_FRAMEWORK["DEFAULT_VERSION"]}{request.get_full_path()}'
         template_name = self.template_name if self.template_name else f'web/{self.name}.html'
         extras = kwargs

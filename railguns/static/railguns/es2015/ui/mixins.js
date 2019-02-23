@@ -1,6 +1,6 @@
 const base = {
     data: {
-        endpoint: null
+        call: {method: null, endpoint: null}
     },
     methods: {
         onPrepare() {
@@ -11,26 +11,30 @@ const base = {
         },
         onLoadFailure(code, message) {
             showAlert(code, message)
+        },
+        request(params) {
+            httpUtilenqueue(this.call.method, this.call.endpoint, params, (code, data) => {
+                this.onLoadSuccess(code, data)
+            }, (code, message) => {
+                this.onLoadFailure(code, message)
+            })
         }
     }
 }
 
 const get = {
     mounted() {
-        this.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
+        this.call.method = 'GET'
+        this.call.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
         this.onPrepare()
         this.refresh()
     },
     methods: {
         // 💛 Action
         refresh(params) {
-            if (this.endpoint.trim()) {
+            if (this.call.endpoint.trim()) {
                 this.isLoading = true
-                httpUtilenqueue('GET', this.endpoint, params, (code, data) => {
-                    this.onLoadSuccess(code, data)
-                }, (code, message) => {
-                    this.onLoadFailure(code, message)
-                })
+                this.request()
             }
         }
     }
@@ -41,7 +45,8 @@ const post = {
         params: {}, next: ''
     },
     mounted() {
-        this.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
+        this.call.method = this.$el.dataset.method
+        this.call.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
         this.onPrepare()
     },
     methods: {
@@ -52,14 +57,30 @@ const post = {
             const next = url.searchParams.get('next')
             next && (location = next)
         },
-        // 💛 Action`
+        // 💛 Action
         submit(event) {
             this.onSubmit()
-            httpUtilenqueue('POST', this.endpoint, this.params, (code, data) => {
-                this.onLoadSuccess(code, data)
-            }, (code, message) => {
-                this.onLoadFailure(code, message)
-            })
+            this.request(this.params)
+        }
+    }
+}
+
+const patch = {
+    data: {
+        params: {}
+    },
+    mounted() {
+        this.call.method = this.$el.dataset.method
+        this.call.endpoint = this.$el.dataset.endpoint || '' // 从页面获取 Endpoint
+        this.onPrepare()
+    },
+    methods: {
+        onSubmit() {
+        },
+        // 💛 Action
+        submit(event) {
+            this.onSubmit()
+            this.request(this.params)
         }
     }
 }

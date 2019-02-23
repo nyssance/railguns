@@ -4,7 +4,8 @@
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
-const httpUtilenqueue = (method = 'GET', url, params, success, failure, complete) => {
+const httpUtilenqueue = (method, url, params, success, failure, complete) => {
+    method = method.toUpperCase()
     const isGet = method === 'GET'
     axios({
         method,
@@ -13,9 +14,9 @@ const httpUtilenqueue = (method = 'GET', url, params, success, failure, complete
         data: isGet ? {} : params
     }).then(res => {
         const code = res.status
-        console.debug('✅', code, method, `${location.origin}${url}`)
+        console.debug(`%c${method}`, getCss(method), `${location.origin}${url}`, code, res.statusText)
         params && params.password && (params.password = '******') // log不输出密码
-        console.debug('⬆️ 参数:', JSON.stringify(params))
+        console.debug('⬆️ 参数', JSON.stringify(params))
         success && success(code, res.data)
     }).catch(error => {
         let message
@@ -32,11 +33,26 @@ const httpUtilenqueue = (method = 'GET', url, params, success, failure, complete
     }).then(() => {
         complete && complete()
     })
-}
 
-const regexp = {
-    regexp: {
-        IDNUM: /(?:^\d{15}$)|(?:^\d{18}$)|^\d{17}[\dXx]$/,
-        VCODE: /^.{4}$/
+    const getCss = method => {
+        let bgcolor
+        switch (method) {
+            case 'OPTIONS':
+            case 'GET':
+                bgcolor = '#248fb2'
+                break
+            case'POST':
+                bgcolor = '#6bbd5b'
+                break
+            case 'PATCH':
+                bgcolor = '#e09d43'
+                break
+            case 'DELETE':
+                bgcolor = '#e27a7a'
+                break
+            default:
+                bgcolor = '#9b708b'
+        }
+        return `background-color: ${bgcolor}; color: #fff; padding: 1px 9px; border-radius: 2px;`
     }
 }
