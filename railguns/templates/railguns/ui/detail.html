@@ -9,14 +9,14 @@
             mixins: [base, get],
             el: '#content',
             data: {
-                object: undefined
+                object: '' // 1.不能用{}, 这样会认为有值; 2.设为undefine或null每个页面要object && object.{property}, 太麻烦
             },
             methods: {
                 onPrepare: function () {
                     this.call.endpoint = this.$el.dataset.endpoint; // 从页面获取 Endpoint
                 },
                 onLoadSuccess: function onLoadSuccess(code, data) {
-                    this.object = data;
+                    this.object = data || '';
                 }
             }
         });

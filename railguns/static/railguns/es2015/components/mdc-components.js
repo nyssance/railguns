@@ -159,17 +159,12 @@ Vue.component('text-field', {
             <div class="mdc-text-field mdc-text-field--fullwidth">
                 <input type="text" class="mdc-text-field__input"
                     v-bind:value="value"
-                    v-on:input="updateValue($event.target.value)">
+                    v-on:input="$emit('input', $event.target.value)">
                 <span class="mdc-text-field__label">{{ name }}</span>
                 <div class="mdc-text-field__bottom-line"></div>
             </div>
             <p v-if="helper_text" class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">
                 {{ helper_text }}
             </p>
-        </div>`,
-    methods: {
-        updateValue(value) {
-            this.$emit('input', value)
-        }
-    }
+        </div>`
 })

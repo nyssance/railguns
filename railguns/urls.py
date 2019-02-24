@@ -21,8 +21,8 @@ from .rest_framework.views import DownloadUrlView, UploadParamsView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
-    # DJ: https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog')
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'
+        )  # DJ: https://docs.djangoproject.com/en/dev/topics/i18n/translation/#note-on-performance
 ]
 # Vendor
 urlpatterns += [
@@ -55,7 +55,7 @@ urlpatterns += [
     re_path(r'^download_url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
     re_path(r'^upload_params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True)),
-    #
+    # update
     path(
         'radio_update/',
         login_required(
@@ -63,7 +63,15 @@ urlpatterns += [
                 name='radio_update',
                 title=dj_gettext('Update'),
                 endpoint=None,
-                template_name='railguns/ui/radio_update.html')))
+                template_name='railguns/ui/radio_update.html'))),
+    path(
+        'text_field_update/',
+        login_required(
+            WebView.as_view(
+                name='text_field_update',
+                title=dj_gettext('Update'),
+                endpoint=None,
+                template_name='railguns/ui/text_field_update.html')))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

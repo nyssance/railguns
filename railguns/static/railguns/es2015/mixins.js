@@ -14,6 +14,10 @@ const base = {
         onLoadFailure(code, message) {
             showAlert(code, message)
         },
+        // 💛 快捷方法
+        back() {
+            history.back()
+        },
         request(params) {
             httpUtilrequest(this.call.method, this.call.endpoint, params, (code, data) => {
                 this.onLoadSuccess(code, data)

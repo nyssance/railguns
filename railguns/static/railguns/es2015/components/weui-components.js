@@ -393,6 +393,14 @@ Vue.component('button-default', {
 
 // - 表单
 // 单选
+Vue.component('form-area', {
+    template: `
+        <div class="weui-cells weui-cells_form">
+            <slot></slot>
+        </div>`
+})
+
+// 单选
 Vue.component('option-set', {
     template: `
         <div class="weui-cells weui-cells_radio">
@@ -420,35 +428,27 @@ Vue.component('option-radio', {
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
     props: {
-        name: {type: String, required: true},
+        name: {type: String},
         placeholder: {type: String},
-        value: {type: String},
+        value: {type: [String, Number]},
         type: {
             type: String,
             default: 'text',
             validator: value => ['text', 'number', 'tel', 'date', 'datetime-local', 'password'].includes(value)
-        }
+        },
+        required: {type: String}
     },
     template: `
         <div class="weui-cell">
-            <div class="weui-cell__hd">
+            <div v-if="name" class="weui-cell__hd">
                 <label class="weui-label">{{ name }}</label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" :placeholder="placeholder" :type="type" :value="currentValue" @input="updateValue">
+                <input class="weui-input" :placeholder="placeholder" :type="type" :required="required"
+                       :value="value"
+                       @input="$emit('input', $event.target.value)">
             </div>
-        </div>`,
-    data() { // SF https://segmentfault.com/q/1010000016557863/a-1020000016558329
-        return {
-            currentValue: this.value //将prop属性绑定到data属性上，以便修改prop属性（Vue不允许直接修改prop属性的值）
-        }
-    },
-    methods: {
-        updateValue(event) {
-            const value = event.target.value
-            this.$emit('input', value)
-        }
-    }
+        </div>`
 })
 
 // Swiper
