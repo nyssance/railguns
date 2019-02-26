@@ -1,9 +1,10 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from ..utils.translation import dj_gettext, format_gettext_lazy as _f
 from .utils import db_master, generate_shard_id, get_user_id
+from ..utils.translation import dj_gettext, format_gettext_lazy as _f
 
 
 class DateTimeModelMixin(models.Model):
@@ -32,7 +33,8 @@ class BaseModel(AbstractBaseModel):
 
 
 class OwnerModel(BaseModel):
-    user_id = models.IntegerField(_f('user', 'id'), default=0, editable=False)  # TODO: default=1
+    user_id = models.PositiveIntegerField(
+        _f('user', 'id'), validators=[MinValueValidator(1)], default=1, editable=False)
     username = models.CharField(
         dj_gettext('username'), max_length=150, validators=[AbstractUser.username_validator],
         editable=False)  # 长度和Django的User保持一致

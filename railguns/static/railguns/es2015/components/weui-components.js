@@ -76,16 +76,6 @@ Vue.component('tabbar-item', {
     }
 })
 
-// 菜单
-Vue.component('menu-item', {
-    props: {
-        icon: {type: String, required: true},
-        title: {type: String, required: true},
-        link: {type: String, required: true}
-    },
-    template: `<a :href="link" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
-})
-
 // Pager
 Vue.component('pager', {
     template: `

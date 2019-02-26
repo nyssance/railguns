@@ -5,8 +5,8 @@ from django.core import serializers
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from ...tools.utils import locale_currency
 from ..db.models import OwnerModel
+from ...tools.utils import locale_currency
 
 
 class PreviewMixin:

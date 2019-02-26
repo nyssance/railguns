@@ -12,12 +12,6 @@ Vue.component('app-footer', {
     template: `<div style="text-align: center; padding: 20px 0;">{{ title }}</div>`
 })
 
-// 菜单
-Vue.component('menu-item', {
-    props: ['icon', 'title', 'link'],
-    template: `<a :href="link" class="material-icons mdc-top-app-bar__action-item" :aria-label="title" :alt="title">{{ icon }}</a>`
-})
-
 // 基本模版
 const icon = `<img v-if="icon" class="mdc-list-item__graphic" :src="icon">`
 
