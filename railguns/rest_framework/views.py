@@ -93,10 +93,7 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
         params.pop('bucket')
         signing_key = get_signing_key(settings.CLOUD_SS_SECRET, date_stamp, region, 's3')
         signature = hmac.new(signing_key, string_to_sign, hashlib.sha256).hexdigest()  # 16进制
-        params.update({
-            'x-amz-meta-tag': '',
-            'x-amz-signature': signature
-        })
+        params.update({'x-amz-meta-tag': '', 'x-amz-signature': signature})
     # 其他 Content-Encoding, Cache-Control
     if content_encoding == 'gzip':
         params['Content-Encoding'] = content_encoding

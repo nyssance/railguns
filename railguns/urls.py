@@ -63,7 +63,8 @@ urlpatterns += [
                 name='radio_update',
                 title=dj_gettext('Update'),
                 endpoint=None,
-                template_name='railguns/ui/radio_update.html')), name='radio-update'),
+                template_name='railguns/ui/radio_update.html')),
+        name='radio-update'),
     path(
         'text-field-update/',
         login_required(
@@ -71,7 +72,8 @@ urlpatterns += [
                 name='text_field_update',
                 title=dj_gettext('Update'),
                 endpoint=None,
-                template_name='railguns/ui/text_field_update.html')), name='text-field-update')
+                template_name='railguns/ui/text_field_update.html')),
+        name='text-field-update')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

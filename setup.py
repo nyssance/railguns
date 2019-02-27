@@ -27,7 +27,7 @@ setup(
         'mysqlclient'
     ],
     extras_require={
-        'dev': ['django-haystack-panel', 'django-rosetta', 'markdown'],
+        'dev': ['django-haystack-panel', 'django-rosetta', 'markdown', 'pygments'],
         'prod': []
     },
     packages=find_packages(),
