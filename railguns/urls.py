@@ -30,13 +30,13 @@ urlpatterns += [
     path('api-token-auth/', obtain_jwt_token),
     path('api-token-refresh/', refresh_jwt_token),
     path('api-token-verify/', verify_jwt_token),
-    # path('rest-auth/', include('rest_auth.urls'))
+    # path('rest-auth/', include('rest_auth.urls')),
     # path('search/', include('haystack.urls'))
 ]
 # Docs
 API_TITLE = f'{gettext("app_name")} API'
 API_VERSION = settings.REST_FRAMEWORK.get('DEFAULT_VERSION', '')
-API_DESCRIPTION = '...'
+API_DESCRIPTION = 'API documentation'
 
 schema_view = get_schema_view(
     openapi.Info(title=API_TITLE, default_version=API_VERSION, description=API_DESCRIPTION),
@@ -46,32 +46,32 @@ schema_view = get_schema_view(
 urlpatterns += [
     path('docs/',
          include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
-    re_path(r'^swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
-    path('swagger/', schema_view.with_ui(), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')
+    # re_path(r'^swagger(?P<format>.json|.yaml)', schema_view.without_ui(), name='schema-json'),
+    # path('swagger/', schema_view.with_ui(), name='schema-swagger-ui')
 ]
 # Railgun S
 urlpatterns += [
-    re_path(r'^download_url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
-    re_path(r'^upload_params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
+    re_path(r'^download-url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
+    re_path(r'^upload-params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True)),
     # update
     path(
-        'radio_update/',
+        'radio-update/',
         login_required(
             WebView.as_view(
                 name='radio_update',
                 title=dj_gettext('Update'),
                 endpoint=None,
-                template_name='railguns/ui/radio_update.html'))),
+                template_name='railguns/ui/radio_update.html')), name='radio-update'),
     path(
-        'text_field_update/',
+        'text-field-update/',
         login_required(
             WebView.as_view(
                 name='text_field_update',
                 title=dj_gettext('Update'),
                 endpoint=None,
-                template_name='railguns/ui/text_field_update.html')))
+                template_name='railguns/ui/text_field_update.html')), name='text-field-update')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

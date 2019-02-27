@@ -35,7 +35,7 @@ class CloudFileWidget(widgets.TextInput):
                 'file_url': value or '',
                 'name': name,
                 'style': self.build_attrs(attrs).get('style', '') if attrs else '',
-                'csrf_cookie_name': getattr(settings, 'CSRF_COOKIE_NAME', 'csrftoken'),
+                'csrf_cookie_name': getattr(settings, 'CSRF_COOKIE_NAME', 'csrftoken')
             })
 
         return mark_safe(output)

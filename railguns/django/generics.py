@@ -31,7 +31,8 @@ class WebView(TemplateView):
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
         if self.endpoint is not None:
-            endpoint = self.endpoint if self.endpoint else f'/api/{settings.REST_FRAMEWORK["DEFAULT_VERSION"]}{request.get_full_path()}'
+            version = settings.REST_FRAMEWORK.get('DEFAULT_VERSION', '')
+            endpoint = self.endpoint if self.endpoint else f'/api/{version}{request.get_full_path()}'
             dataset_endpoint = f' data-endpoint="{endpoint}"' if endpoint else ''
         template_name = self.template_name if self.template_name else f'web/{self.name}.html'
         extras = kwargs
