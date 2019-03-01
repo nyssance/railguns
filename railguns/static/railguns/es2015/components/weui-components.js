@@ -132,6 +132,48 @@ Vue.component('pager-content', {
         </div>`
 })
 
+Vue.component('msg-page', {
+    props: {
+        icon: {
+            type: String,
+            required: true,
+            validator: value => [
+                'success', 'success-no-circle',
+                'info', 'info-circle',
+                'warn',
+                'waiting', 'circle', 'download', 'cancel', 'search'].includes(value)
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        message: {
+            type: String,
+        },
+        type: {
+            type: String,
+            default: '',
+            validator: value => ['', '-primary'].includes(value)
+        }
+    },
+    template: `
+        <div class="weui-msg">
+            <div class="weui-msg__icon-area"><i :class="'weui-icon-' + icon + ' weui-icon_msg' + type"></i></div>
+            <div class="weui-msg__text-area">
+                <h2 class="weui-msg__title">{{ title }}</h2>
+                <p class="weui-msg__desc">{{ message }}</p>
+            </div>
+            <div class="weui-msg__opr-area">
+                <p class="weui-btn-area">
+                    <slot></slot>
+                </p>
+            </div>
+            <div class="weui-msg__extra-area">
+                <slot name="extra"></slot>
+            </div>
+    </div>`
+})
+
 // 基本模版
 const icon = `<div v-if="icon" class="weui-cell__hd"><img :src="icon" style="width: 40px;border-radius: 50%;margin-right: 15px;display: block" alt=""></div>`
 
@@ -379,7 +421,7 @@ Vue.component('button-default', {
     props: {
         title: {type: String, required: true}
     },
-    template: `<button class="weui-btn weui-btn_plain-default">{{ title }}</button>`
+    template: `<button class="weui-btn weui-btn_default">{{ title }}</button>`
 })
 
 // - 表单
