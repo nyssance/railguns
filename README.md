@@ -5,7 +5,7 @@ Only My Railgun
 框架用到的库
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](https://www.django-rest-framework.org)
-- [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
+- [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
 - [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
 
