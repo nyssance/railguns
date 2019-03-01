@@ -10,9 +10,10 @@
 
 // Vue 太蠢, 不区分html注释和正式代码
 
-const showActionSheet = (title, actions) => {
+const showActionSheet = (title, actions, cancelAction) => {
     weui.actionSheet(actions, [{
         label: '取消', onClick: () => {
+            cancelAction && cancelAction()
         }
     }], {
         title: title, onClose: () => {

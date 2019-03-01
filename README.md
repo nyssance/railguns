@@ -19,6 +19,12 @@ Only My Railgun
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 
+可选库
+- [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io)
+- [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
+- [Django Haystack Panel](https://github.com/streeter/django-haystack-panel)
+- [Rosetta](https://django-rosetta.readthedocs.io)
+
 前端库
 - [axios](https://github.com/axios/axios)
 - [jQuery](https://jquery.com)
