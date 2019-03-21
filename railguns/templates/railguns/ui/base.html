@@ -6,9 +6,9 @@
 
 {% block css %}{{ block.super }}
     <!-- 💙 ui/base -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@4.5.0/dist/css/swiper.min.css">
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
-{#    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">#}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <!-- 💛 自定义 css -->{% endblock %}
 
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block js %}{{ block.super }}<!-- 💙 ui/base -->
-    <script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@4.5.0/dist/js/swiper.min.js"></script>
     <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
-{#    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>#}
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.0/js/fontawesome.min.js"></script>
     <script src="{% static 'railguns/es2015/components/weui-components.js' %}"></script>{% endblock %}
