@@ -3,8 +3,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .utils import db_master, generate_shard_id, get_user_id
 from ..utils.translation import dj_gettext, format_gettext_lazy as _f
+from .utils import db_master, generate_shard_id, get_user_id
 
 
 class DateTimeModelMixin(models.Model):

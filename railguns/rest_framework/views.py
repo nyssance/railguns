@@ -13,9 +13,9 @@ from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework.views import APIView
 
+from ..django.db.utils import timestamp
 from .permissions import IsAuthenticatedOrWhitelist
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
-from ..django.db.utils import timestamp
 
 
 def create_filename(filename):
