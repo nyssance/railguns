@@ -1,0 +1,1 @@
+"use strict";var element=document.querySelector(".mdc-drawer--temporary");if(element){var drawer=new mdc.drawer.MDCTemporaryDrawer(element),navigationIcon=document.querySelector(".mdc-top-app-bar__navigation-icon");navigationIcon&&navigationIcon.addEventListener("click",function(){return drawer.open=!0})}else console.log("没有 Drawer");

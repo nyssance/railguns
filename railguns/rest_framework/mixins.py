@@ -1,84 +1,71 @@
 import datetime
 
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.hashers import make_password
 from django.utils.timezone import localtime
-from rest_framework.fields import SerializerMethodField
-from rest_framework.response import Response
+from rest_framework.fields import CharField, SerializerMethodField
 from rest_framework.serializers import Serializer
+from rest_framework_simplejwt.tokens import SlidingToken
 
-from .utils import get_list
+from .utils import get_nested_list
 
 
-class ModelMixin(object):
+# Serializer Mixin
+class ModelMixin:
 
     def get_model(self):
         return self.serializer_class.Meta.model
 
 
-class IdStrMixin(Serializer):
-    id_str = SerializerMethodField()
+class PasswordFieldMixin(Serializer):
+    password = CharField(style={'input_type': 'password'}, min_length=6, max_length=128, write_only=True)
 
-    def get_id_str(self, obj):
-        return str(obj.id)
+    # SO: https://stackoverflow.com/questions/29746584/django-rest-framework-create-user-with-password
+    def validate_password(self, value):
+        return make_password(value)
 
 
-class ImagesMixin(Serializer):
+class TokenFieldMixin(Serializer):
+    token = SerializerMethodField()
+
+    def get_token(self, obj):
+        request = self.context.get('request')
+        if request:
+            auth_login(request, obj)  # 主要为了记录last_login的, 其他的作用待研究
+        else:
+            print('request is None, 请在代码手动传入, 否则无法自动登录')
+        return str(SlidingToken.for_user(request.user))
+
+
+class ImagesFieldMixin(Serializer):
     images = SerializerMethodField()
 
     def get_images(self, obj):
-        data = []
         if hasattr(obj, 'images'):
-            data = [{'uri': item.strip()} for item in obj.images.strip().split('\n')]
+            return get_nested_list([{'uri': item.strip()} for item in obj.images.split('\n') if item.strip()])
         else:
-            pass
-        return get_list(data)
+            return '👈⚠️️字段不存在，请去除。'
 
 
-class TagsMixin(Serializer):
+class TagsFieldMixin(Serializer):
     tags = SerializerMethodField()
 
     def get_tags(self, obj):
-        data = []
         if hasattr(obj, 'tags'):
-            for item in obj.tags.strip().split('#'):
-                if item.strip():
-                    data.append({'name': item.strip()})
+            return [item.strip() for item in obj.tags.split('#') if item.strip()]
         else:
-            pass
-        return get_list(data)
+            return '👈⚠️️字段不存在，请去除。'
 
 
-class OwnerMixin(object):
-
-    def pre_save(self, obj):
-        obj.user_id = self.request.user.id
-
-
-class PutToPatchMixin(object):
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', True)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-
-class PutToPatchApiViewMixin(object):
-
-    def put(self, request, *args, **kwargs):
-        return self.patch(request, *args, **kwargs)
-
-
-class StartDateMixin(Serializer):
-    start_date = SerializerMethodField()
+class StartDateFieldMixin(Serializer):
+    start_date = SerializerMethodField(read_only=True)
 
     def get_start_date(self, obj):
         return localtime(obj.start_time).strftime('%Y-%m-%d')
 
 
-class EndDateMixin(Serializer):
-    end_date = SerializerMethodField()
+class EndDateFieldMixin(Serializer):
+    end_date = SerializerMethodField(read_only=True)
 
     def get_end_date(self, obj):
         if obj.period <= 0:
@@ -92,3 +79,10 @@ class EndDateMixin(Serializer):
             days = period - 1
         date_time = date + datetime.timedelta(days=days)
         return date_time.strftime('%Y-%m-%d')
+
+
+# View Mixin
+class OwnerMixin:
+
+    def pre_save(self, obj):
+        obj.user_id = self.request.user.id

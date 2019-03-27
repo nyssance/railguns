@@ -1,0 +1,57 @@
+{% extends './base.html' %}
+{% load i18n %}
+{% block structure %}{{ block.super }}<!--       ui/text_field_update -->
+{% endblock %}
+
+{% block content %}
+    <form-area>
+        <text-field v-model="params[Object.keys(params)[0]]" type="text"></text-field>
+        <button-area>
+            <button-primary title="{% trans 'Submit' %}" @click.native="smartsubmit"></button-primary>
+        </button-area>
+    </form-area>
+{% endblock %}
+
+{% block js %}{{ block.super }}
+    <!-- 💙 ui/text_field_update -->
+    <script>
+        const vm = new Vue({
+            mixins: [base, patch],
+            el: '#content',
+            data: {
+                originalValue: undefined
+            },
+            methods: {
+                onPrepare() {
+                    const url = new URL(document.URL)
+                    const endpoint = url.searchParams.get('endpoint')
+                    const name = url.searchParams.get('name')
+                    const value = url.searchParams.get('value')
+                    if (!endpoint || !name || !value) {
+                        showAlert('请传入 endpoint, name 和 value')
+                        return
+                    }
+                    document.title += ` ${gettext(name)}`
+                    this.call.endpoint = endpoint
+                    this.params = {[name]: value}
+                    this.originalValue = value
+                },
+                onLoadSuccess(code, data) { // 默认模式是返回
+                    this.back()
+                },
+                // 💛 私有方法
+                getValue() {
+                    return this.params[Object.keys(this.params)[0]]
+                },
+                smartsubmit(event) {
+                    if (this.getValue() !== this.originalValue) {
+                        this.submit(event)
+                    } else {
+                        console.warn(JSON.stringify(this.params), '与之前相同, 不提交服务器更新')
+                        this.back()
+                    }
+                }
+            }
+        })
+    </script>
+    <!-- 💛 自定义 js -->{% endblock %}

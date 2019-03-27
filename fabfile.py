@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 
 import os
 import shutil
@@ -9,17 +9,17 @@ from fabric.operations import local
 from fabric.state import env
 from fabric.utils import puts
 
-# ===========
-# = GLOBALS =
-# ===========
+###########
+# GLOBALS #
+###########
 env.project_name = os.path.basename(os.path.dirname(__file__))
 env.colorize_errors = True
 env.proxy = '127.0.0.1:1087'
 
 
-# ============
-# =  Hello   =
-# ============
+#########
+# TASKS #
+#########
 @task(default=True, alias='别名测试')
 def hello():
     puts('*' * 50)
@@ -39,15 +39,19 @@ def update_project():
 @task
 def local_format():
     local('isort -rc .')
-    local('yapf -irp . -e setup.py')
+    local('yapf -irp .')
 
 
 @task
 def local_update_vendor():
     """更新前端库"""
-    filenames = ['axios.js', 'axios.min.js', 'vue.js', 'vue.min.js', 'material-components-web.min.css', 'material-components-web.min.js']
+    filenames = [
+        'axios.js', 'axios.min.js', 'vue.js', 'vue.min.js', 'material-components-web.min.css',
+        'material-components-web.min.js'
+    ]
     for filename in filenames:
-        curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(filename.split('.')[0], filename, env.project_name))
+        curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(
+            filename.split('.')[0], filename, env.project_name))
 
 
 # ========

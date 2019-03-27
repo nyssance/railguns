@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+{% block structure %}{{ block.super }}<!--       ui/list -->
+{% endblock %}
+
+{% block js %}{{ block.super }}
+    <!-- 💙 ui/list -->
+    <script>
+        var vm = new Vue({
+            mixins: [base, get],
+            el: '#content',
+            data: {
+                count: 0, previous: undefined, next: undefined, items: []
+            },
+            methods: {
+                onPrepare: function () {
+                    this.call.endpoint = this.$el.dataset.endpoint; // 从页面获取 Endpoint
+                },
+                onLoadSuccess: function onLoadSuccess(code, data) {
+                    this.count = data.count;
+                    this.previous = data.previous;
+                    this.next = data.next;
+                    this.items = data.results;
+                }
+            }
+        });
+    </script>
+    <!-- 💛 自定义 js -->{% endblock %}

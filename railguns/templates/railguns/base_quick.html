@@ -1,39 +1,40 @@
 {% extends './base.html' %}
 <!-- 加载 -->
-{% load i18n static %}
+{% load static %}
 <!-- 结构 -->
 {% block structure %}{{ block.super }}<!--   base_quick -->
 {% endblock %}
 
 {% block web %}
-    <!-- 🍺 css 开始 -->{% block css %}{% endblock %}
+    <!-- 🍺 css 开始 -->{% block css %}
+    <!-- 💙 base_quick -->
+    <link rel="stylesheet" href="https://s2.pstatp.com/cdn/expire-1-M/normalize/8.0.1/normalize.min.css">{% endblock %}
     <!-- 🍻 css 结束 -->
 </head>
 
-<body class="mdc-typography">
+<body>
     <!-- 🍺 内容 开始 -->{% block body %}{% endblock %}
     <!-- 🍻 内容 结束 -->
 
     <!-- 🍺 js 开始 -->{% block js %}
     <!-- 💙 base_quick -->
     <!-- Django -->
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/js-cookie/latest/js.cookie.min.js"></script>
-    <script src="{% static 'railguns/js/django.js' %}"></script>
+    <script src="{% url 'javascript-catalog' %}"></script>
     <!-- Vendor -->
-    {% if debug %}
-        <script src="{% static 'vendor/vue.js' %}"></script>
-        <script src="{% static 'vendor/axios.js' %}"></script>
-    {% else %}
-        <script src="{% static 'vendor/vue.min.js' %}"></script>
-        <script src="{% static 'vendor/axios.min.js' %}"></script>
-    {% endif %}
-    <!--  -->
-    <script src="https://cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
-    <script src="https://cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery.lazy/1.7.6/jquery.lazy.min.js"></script>
-    <!--  -->
-    <script src="{% static 'railguns/js/vendor.js' %}"></script>
+    <script src="https://s3.pstatp.com/cdn/expire-1-M/babel-polyfill/7.2.5/polyfill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-lazy@1.7.10/jquery.lazy.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment-with-locales.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/min/numeral.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/min/locales.min.js"></script>
+    <script src="{% static 'vendor/axios/axios.min.js' %}"></script>
+{% if debug %}    <script src="{% static 'vendor/vue/vue.js' %}"></script>{% else %}
+    <script src="{% static 'vendor/vue/vue.min.js' %}"></script>{% endif %}
+    <!-- Railgun S -->
+    <script src="{% static 'railguns/es2015/util/http-utils.js' %}"></script>
+    <script src="{% static 'railguns/es2015/mixins.js' %}"></script>
+    <script src="{% static 'railguns/es2015/vendor.js' %}"></script>
+    <script src="{% static 'js/components.js' %}"></script>
     {% endblock %}
     <!-- 🍻 js 结束 -->
 {% endblock %}

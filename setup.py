@@ -9,29 +9,25 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='RailgunS',
-    version='0.8.4',
+    version='0.10.2',
     install_requires=[
-        'Django',
-        'Django[argon2]',
+        'django[argon2]==2.2rc1',
         'djangorestframework',
-        'djangorestframework-jwt',
-        'djangorestframework-xml',
-        'drf-yasg',
+        'djangorestframework_simplejwt',
         'drf-yasg[validation]',
         'stringcase',
         #
         'django-ckeditor',
         'django-crispy-forms',
         'django-extensions',
-        'django-filter==2.0.0.dev1',
+        'django-filter',
         'django-htmlmin',
+        'django-redis',
         'itunes-iap',
-        'mysqlclient',
-        'pylibmc',
-        'redis',
+        'mysqlclient'
     ],
     extras_require={
-        'dev': ['django-cors-headers', 'django-haystack-panel', 'django-rosetta'],
+        'dev': ['django-debug-toolbar-force', 'django-rosetta', 'markdown', 'pygments'],
         'prod': []
     },
     packages=find_packages(),
@@ -43,15 +39,16 @@ setup(
     author='NY',
     author_email='nyssance@icloud.com',
     classifiers=[
+        #
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
-    ]
-)
+    ])

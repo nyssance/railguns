@@ -1,12 +1,11 @@
 # Railgun S
 Only My Railgun
 
-## Vendor
+### Vendor
 框架用到的库
 - [Django](https://www.djangoproject.com)
-- [Django REST framework](http://www.django-rest-framework.org)
-- [REST framework JWT Auth](https://getblimp.github.io/django-rest-framework-jwt/)
-- [REST Framework XML](https://jpadilla.github.io/django-rest-framework-xml/)
+- [Django REST framework](https://www.django-rest-framework.org)
+- [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
 - [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
 
@@ -16,22 +15,29 @@ Only My Railgun
 - [Django Extensions](https://django-extensions.readthedocs.io)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
+- [django-redis](https://niwinz.github.io/django-redis/latest/)
 - [itunes-iap v2](https://github.com/youknowone/itunes-iap)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
-- [pylibmc](https://github.com/lericson/pylibmc)
-- [redis-py](https://github.com/andymccurdy/redis-py)
+
+可选库
+- [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io)
+- [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
+- [Django Haystack Panel](https://github.com/streeter/django-haystack-panel)
+- [Rosetta](https://django-rosetta.readthedocs.io)
 
 前端库
 - [axios](https://github.com/axios/axios)
-- [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
 - [jQuery](https://jquery.com)
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
-- [Vue.js](https://vuejs.org/)
 - [Material Components for the Web](https://material.io/components/web/)
+- [Vue.js](https://vuejs.org)
+- [WeUI](https://github.com/Tencent/weui)
+- [weui.js](https://github.com/Tencent/weui.js)
 
 前端可选库
-- [clipboard.js](https://clipboardjs.com/)
-- [GeoPattern](http://btmills.github.io/geopattern/)
+- [clipboard.js](https://clipboardjs.com)
+- [GeoPattern](https://btmills.github.io/geopattern/)
 - [localForage](https://localforage.github.io/localForage/)
-- [Lodash](https://lodash.com/)
-- [Moment](http://momentjs.com/)
+- [Lodash](https://lodash.com)
+- [Moment](https://momentjs.com)
+- [Numeral.js](https://numeraljs.com/)

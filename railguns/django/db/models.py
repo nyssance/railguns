@@ -1,11 +1,13 @@
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from ..utils.translation import dj_gettext, format_gettext_lazy as _f
 from .utils import db_master, generate_shard_id, get_user_id
 
 
 class DateTimeModelMixin(models.Model):
-    id = models.PositiveIntegerField(primary_key=True, editable=False)
     created_time = models.DateTimeField(_('created_time'), auto_now_add=True)
     updated_time = models.DateTimeField(_('updated_time'), auto_now=True)
 
@@ -13,19 +15,30 @@ class DateTimeModelMixin(models.Model):
         abstract = True
 
 
-class BaseModel(DateTimeModelMixin):
-    is_active = models.BooleanField(_('active'), default=True)
-    objects = models.Manager()  # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member/45150811#45150811
+class AbstractBaseModel(DateTimeModelMixin):
+    is_active = models.BooleanField(dj_gettext('active'), default=True)
+
+    # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member#45150811
+    objects = models.Manager()
 
     class Meta:
         abstract = True
         ordering = ['-pk']
 
 
+class BaseModel(AbstractBaseModel):
+
+    class Meta(AbstractBaseModel.Meta):
+        abstract = True
+
+
 class OwnerModel(BaseModel):
-    user_id = models.PositiveIntegerField(default=0, editable=False)
-    username = models.CharField(max_length=150, editable=False)  # 长度和Django的User保持一致
-    user_images = models.CharField(_('images'), max_length=2000, blank=True, editable=False)
+    user_id = models.PositiveIntegerField(
+        _f('user', 'id'), validators=[MinValueValidator(1)], default=1, editable=False)
+    username = models.CharField(
+        dj_gettext('username'), max_length=150, validators=[AbstractUser.username_validator],
+        editable=False)  # 长度和Django的User保持一致
+    user_avatar = models.URLField(_('avatar'), max_length=255, blank=True, editable=False)
 
     class Meta(BaseModel.Meta):
         abstract = True
@@ -46,7 +59,7 @@ class PostModel(OwnerModel):
 
 
 class ShardModel(OwnerModel):
-    id = models.BigAutoField()
+    id = models.BigAutoField(primary_key=True)
 
     class Meta(OwnerModel.Meta):
         abstract = True
@@ -59,7 +72,7 @@ class ShardModel(OwnerModel):
 
 
 class ShardLCModel(OwnerModel):
-    id = models.BigAutoField()
+    id = models.BigAutoField(primary_key=True)
     is_origin = models.BooleanField(default=True)
 
     class Meta(OwnerModel.Meta):

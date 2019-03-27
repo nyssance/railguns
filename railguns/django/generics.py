@@ -1,42 +1,40 @@
+from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.http import HttpRequest
 from django.shortcuts import render
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
-def get_headers(request, keys=[]):
-    return dict((key, value) for (key, value) in request.META.items() if key in keys)
-
-
-def generate_uri(urlstring, request):
+def generate_link(urlstring: str, request: Optional[HttpRequest]) -> str:
     if not urlstring or urlparse(urlstring).scheme:  # 如果为空或有scheme
         return urlstring
     else:
-        # headers = get_headers(request, ['HTTP_APP_SCHEME', 'HTTP_USER_AGENT', 'HTTP_HOST'])
-        # print(headers)
-        app_scheme = get_headers(request, ['HTTP_APP_SCHEME']).get('HTTP_APP_SCHEME')
-        if app_scheme:
-            return '{}:/{}'.format(app_scheme, urlstring)
-        else:
-            return '{}{}/'.format(settings.BASE_URL, urlstring)
+        if request:
+            app_scheme = request.headers.get('App-Scheme')
+            if app_scheme:
+                return f'{app_scheme}://{urlstring}'
+        return f'/{urlstring}/' if urlstring != "/" else "/"
 
 
 class WebView(TemplateView):
-    name = None
-    title = None
-    endpoint = None
+    name: Optional[str] = None
+    title: Optional[str] = None
+    endpoint: Optional[str] = ''
 
     def get(self, request, *args, **kwargs):
-        verbose = ''
         if self.name.endswith('_create'):  # 创建页
-            verbose_name = (' ').join(gettext(item) for item in self.name.split('_')[::-1])  # NY: 用gettext_lazy会报错
+            verbose_name = ' '.join(gettext(item) for item in self.name.split('_')[::-1])  # NY: 用gettext_lazy会报错
         else:
             verbose_name = _(self.name.replace('y_list', 'ies').replace('_list', 's').replace('_detail', ''))
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
-        # '{} - {}'.format(verbose_name, _('app_name')) // TODO: PC版用这个
-        endpoint = self.endpoint if self.endpoint is not None else '/{}{}'.format(settings.API_VERSION, request.get_full_path())
-        template_name = self.template_name if self.template_name else '{}.html'.format(self.name)
+        if self.endpoint is not None:
+            version = settings.REST_FRAMEWORK.get('DEFAULT_VERSION', '')
+            endpoint = self.endpoint if self.endpoint else f'/api/{version}{request.get_full_path()}'
+            dataset_endpoint = f' data-endpoint="{endpoint}"' if endpoint else ''
+        template_name = self.template_name if self.template_name else f'web/{self.name}.html'
+        extras = kwargs
+        is_weixin = 'MicroMessenger' in request.headers['User-Agent']
         return render(request, template_name, locals())

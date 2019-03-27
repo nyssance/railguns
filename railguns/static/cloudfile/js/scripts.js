@@ -117,9 +117,9 @@
         var el       = e.target.parentElement,
             file     = el.querySelector('.file-input').files[0],
             url      = el.getAttribute('data-policy-url'),
-            headers  = {'X-CSRFToken': getCookie('csrftoken')},
-        url = url + '&filename=' + file.name
-        request('GET', url, null, headers, el, false, function(status, json){
+            headers  = {'X-CSRFToken': getCookie('csrftoken'), 'Content-Type': 'application/json'},
+            data     = JSON.stringify({'filename': file.name})
+        request('POST', url, data, headers, el, false, function(status, json){
             var data = parseJson(json)
 
             switch(status) {
