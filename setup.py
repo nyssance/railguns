@@ -11,7 +11,7 @@ setup(
     name='RailgunS',
     version='0.11',
     install_requires=[
-        'django[argon2]==2.2',
+        'django[argon2]',
         'djangorestframework',
         'djangorestframework_simplejwt',
         'drf-yasg[validation]',
