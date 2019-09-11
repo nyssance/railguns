@@ -8,6 +8,7 @@ Only My Railgun
 - [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
 - [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
+- [uvicorn](https://www.uvicorn.org)
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
@@ -24,6 +25,7 @@ Only My Railgun
 - [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
 - [Django Haystack Panel](https://github.com/streeter/django-haystack-panel)
 - [Rosetta](https://django-rosetta.readthedocs.io)
+- [Gunicorn](https://www.gunicorn.org)
 
 前端库
 - [axios](https://github.com/axios/axios)
