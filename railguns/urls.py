@@ -6,20 +6,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import include, path, re_path
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
-from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import token_obtain_sliding, token_refresh_sliding
 
 from .django.generics import WebView
 from .django.utils.translation import dj_gettext
 from .rest_framework.views import DownloadUrlView, UploadParamsView
-
-API_TITLE = f'{gettext("app_name")} API'
-API_VERSION = settings.REST_FRAMEWORK.get('DEFAULT_VERSION', '')
-API_DESCRIPTION = 'API documentation'
 
 # Django
 urlpatterns = [
@@ -38,16 +33,6 @@ urlpatterns += [
     # path('rest-auth/', include('rest_auth.urls')),
     # path('search/', include('haystack.urls'))
 ]
-# Docs
-urlpatterns += [
-    path('openapi', get_schema_view(title=API_TITLE, description=API_DESCRIPTION), name='openapi-schema'),
-    path('swagger-ui/',
-         TemplateView.as_view(template_name='swagger-ui.html', extra_context={'schema_url': 'openapi-schema'}),
-         name='swagger-ui'),
-    path('redoc/',
-         TemplateView.as_view(template_name='redoc.html', extra_context={'schema_url': 'openapi-schema'}),
-         name='redoc')
-]
 # Railgun S
 urlpatterns += [
     re_path(r'^download-url/(?P<cloud>(aliyun|aws))/$', DownloadUrlView.as_view(), name='download-url'),
@@ -56,7 +41,7 @@ urlpatterns += [
     # update
     path('radio-update/',
          login_required(
-             WebView.as_view(name='radio_update',
+             WebView.as_view(name='radio-update',
                              title=dj_gettext('Update'),
                              endpoint=None,
                              template_name='railguns/ui/radio_update.html')),
