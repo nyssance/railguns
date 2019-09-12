@@ -10,6 +10,8 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.views.decorators.cache import cache_page
 from django.views.generic.base import RedirectView
 from django.views.i18n import JavaScriptCatalog
+from rest_framework import permissions
+from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import token_obtain_sliding, token_refresh_sliding
 
@@ -30,12 +32,17 @@ urlpatterns = [
                     key_prefix=f'js18n-{datetime.datetime.now().strftime("%Y%m%d")}')(JavaScriptCatalog.as_view()),
          name='javascript-catalog')
 ]
-# Vendor
+# Vendor :: Django REST framework
 urlpatterns += [
+    path('docs/',
+         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
     path('openapi',
          get_schema_view(title=f'{API_TITLE} {API_VERSION}', description=API_DESCRIPTION),
          name='openapi-schema'),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls'))
+]
+# Vendor :: Others
+urlpatterns += [
     path('api/token/', token_obtain_sliding, name='token_obtain'),
     path('api/token/refresh/', token_refresh_sliding, name='token_refresh'),
     # path('rest-auth/', include('rest_auth.urls')),
