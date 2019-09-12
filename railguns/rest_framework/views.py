@@ -51,8 +51,9 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     }, ['starts-with', '$key', path.split('/')[0]], ['starts-with', '$Content-Type', content_type]]
     policy_dict = {
         'expiration':
-        (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
-        'conditions': conditions
+            (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+        'conditions':
+            conditions
     }
     # 时间相关
     t = datetime.datetime.utcnow()
@@ -68,14 +69,13 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
             'x-amz-meta-uuid': '14365123651274'
         }, {
             'x-amz-server-side-encryption': 'AES256'
-        }, ['starts-with', '$x-amz-meta-tag', ''],
-                       {
-                           'x-amz-credential': f'{settings.CLOUD_SS_ID}/{date_stamp}/{region}/s3/aws4_request'
-                       }, {
-                           'x-amz-algorithm': 'AWS4-HMAC-SHA256'
-                       }, {
-                           'x-amz-date': amz_date
-                       }]
+        }, ['starts-with', '$x-amz-meta-tag', ''], {
+            'x-amz-credential': f'{settings.CLOUD_SS_ID}/{date_stamp}/{region}/s3/aws4_request'
+        }, {
+            'x-amz-algorithm': 'AWS4-HMAC-SHA256'
+        }, {
+            'x-amz-date': amz_date
+        }]
         policy_dict['conditions'] = conditions
         # policy_dict['conditions'].append(['content-length-range', 1, 1024 * 1024 * 4])
     if content_encoding == 'gzip':
@@ -157,7 +157,6 @@ class UploadParamsView(APIView):
             endpoint = settings.STATIC_URL
         elif bucket == settings.BUCKET_CLOUD:
             endpoint = settings.CLOUD_URL
-        params = get_params(
-            kwargs.get(self.lookup_field), settings.CLOUD_SS_REGION, bucket, filename, rename, expiration,
-            content_encoding, cache_control)
+        params = get_params(kwargs.get(self.lookup_field), settings.CLOUD_SS_REGION, bucket, filename, rename,
+                            expiration, content_encoding, cache_control)
         return Response({'endpoint': endpoint, 'params': params})

@@ -33,11 +33,14 @@ class BaseModel(AbstractBaseModel):
 
 
 class OwnerModel(BaseModel):
-    user_id = models.PositiveIntegerField(
-        _f('user', 'id'), validators=[MinValueValidator(1)], default=1, editable=False)
-    username = models.CharField(
-        dj_gettext('username'), max_length=150, validators=[AbstractUser.username_validator],
-        editable=False)  # 长度和Django的User保持一致
+    user_id = models.PositiveIntegerField(_f('user', 'id'),
+                                          validators=[MinValueValidator(1)],
+                                          default=1,
+                                          editable=False)
+    username = models.CharField(dj_gettext('username'),
+                                max_length=150,
+                                validators=[AbstractUser.username_validator],
+                                editable=False)  # 长度和Django的User保持一致
     user_avatar = models.URLField(_('avatar'), max_length=255, blank=True, editable=False)
 
     class Meta(BaseModel.Meta):

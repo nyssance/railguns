@@ -24,7 +24,6 @@ setup(
         'django[argon2]',
         'djangorestframework',
         'djangorestframework_simplejwt',
-        'drf-yasg[validation]',
         'stringcase',
         'uvicorn',
         #

@@ -10,8 +10,9 @@ class CreateAPI(mixins.ModelMixin, generics.CreateAPIView):
         return self.get_model().objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(
-            user_id=self.request.user.id, username=self.request.user.username, user_avatar=self.request.user.avatar)
+        serializer.save(user_id=self.request.user.id,
+                        username=self.request.user.username,
+                        user_avatar=self.request.user.avatar)
 
 
 class ListAPI(mixins.ModelMixin, generics.ListAPIView):
@@ -30,8 +31,9 @@ class ListCreateAPI(mixins.ModelMixin, generics.ListCreateAPIView):
         return self.get_model().objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(
-            user_id=self.request.user.id, username=self.request.user.username, user_avatar=self.request.user.avatar)
+        serializer.save(user_id=self.request.user.id,
+                        username=self.request.user.username,
+                        user_avatar=self.request.user.avatar)
 
 
 class RetrieveAPI(mixins.ModelMixin, generics.RetrieveAPIView):

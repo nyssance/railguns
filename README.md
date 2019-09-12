@@ -6,7 +6,6 @@ Only My Railgun
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](https://www.django-rest-framework.org)
 - [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
-- [drf-yasg](https://drf-yasg.readthedocs.io/en/latest/)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
 - [uvicorn](https://www.uvicorn.org)
 

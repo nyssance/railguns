@@ -8,12 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path, re_path
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.decorators.cache import cache_page
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 from django.views.i18n import JavaScriptCatalog
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-from rest_framework import permissions
-from rest_framework.documentation import include_docs_urls
+from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import token_obtain_sliding, token_refresh_sliding
 
 from .django.generics import WebView
@@ -28,11 +25,10 @@ API_DESCRIPTION = 'API documentation'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
-    path(
-        'jsi18n/',
-        cache_page(86400,
-                   key_prefix=f'js18n-{datetime.datetime.now().strftime("%Y%m%d")}')(JavaScriptCatalog.as_view()),
-        name='javascript-catalog')
+    path('jsi18n/',
+         cache_page(86400,
+                    key_prefix=f'js18n-{datetime.datetime.now().strftime("%Y%m%d")}')(JavaScriptCatalog.as_view()),
+         name='javascript-catalog')
 ]
 # Vendor
 urlpatterns += [
@@ -43,14 +39,14 @@ urlpatterns += [
     # path('search/', include('haystack.urls'))
 ]
 # Docs
-schema_view = get_schema_view(
-    openapi.Info(title=API_TITLE, default_version=API_VERSION, description=API_DESCRIPTION),
-    validators=['flex', 'ssv'],
-    permission_classes=(permissions.IsAdminUser,))
 urlpatterns += [
-    path('docs/',
-         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
-    path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc')
+    path('openapi', get_schema_view(title=API_TITLE, description=API_DESCRIPTION), name='openapi-schema'),
+    path('swagger-ui/',
+         TemplateView.as_view(template_name='swagger-ui.html', extra_context={'schema_url': 'openapi-schema'}),
+         name='swagger-ui'),
+    path('redoc/',
+         TemplateView.as_view(template_name='redoc.html', extra_context={'schema_url': 'openapi-schema'}),
+         name='redoc')
 ]
 # Railgun S
 urlpatterns += [
@@ -58,24 +54,20 @@ urlpatterns += [
     re_path(r'^upload-params/(?P<cloud>(aliyun|aws))/$', UploadParamsView.as_view(), name='upload-params'),
     path('favicon.ico', RedirectView.as_view(url=f'{settings.STATIC_URL}favicon.ico', permanent=True)),
     # update
-    path(
-        'radio-update/',
-        login_required(
-            WebView.as_view(
-                name='radio_update',
-                title=dj_gettext('Update'),
-                endpoint=None,
-                template_name='railguns/ui/radio_update.html')),
-        name='radio-update'),
-    path(
-        'text-field-update/',
-        login_required(
-            WebView.as_view(
-                name='text_field_update',
-                title=dj_gettext('Update'),
-                endpoint=None,
-                template_name='railguns/ui/text_field_update.html')),
-        name='text-field-update')
+    path('radio-update/',
+         login_required(
+             WebView.as_view(name='radio_update',
+                             title=dj_gettext('Update'),
+                             endpoint=None,
+                             template_name='railguns/ui/radio_update.html')),
+         name='radio-update'),
+    path('text-field-update/',
+         login_required(
+             WebView.as_view(name='text_field_update',
+                             title=dj_gettext('Update'),
+                             endpoint=None,
+                             template_name='railguns/ui/text_field_update.html')),
+         name='text-field-update')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
