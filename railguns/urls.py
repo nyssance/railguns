@@ -34,12 +34,12 @@ urlpatterns = [
 ]
 # Vendor :: Django REST framework
 urlpatterns += [
+    path('api-auth/', include('rest_framework.urls')),
     path('docs/',
          include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
     path('openapi',
          get_schema_view(title=f'{API_TITLE} {API_VERSION}', description=API_DESCRIPTION),
-         name='openapi-schema'),
-    path('api-auth/', include('rest_framework.urls'))
+         name='openapi-schema')
 ]
 # Vendor :: Others
 urlpatterns += [
