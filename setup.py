@@ -26,6 +26,7 @@ setup(
         'djangorestframework_simplejwt',
         'stringcase',
         'uvicorn',
+        'coreapi',
         #
         'django-ckeditor',
         'django-crispy-forms',
