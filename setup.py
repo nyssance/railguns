@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.3',
+    version='0.13',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',

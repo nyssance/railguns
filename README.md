@@ -1,7 +1,12 @@
 # Railgun S
 Only My Railgun
 
-### Vendor
+## Installation
+```bash
+sudo pip install railguns
+```
+
+## Vendor
 框架用到的库
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](https://www.django-rest-framework.org)
