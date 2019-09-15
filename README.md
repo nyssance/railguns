@@ -12,6 +12,9 @@ sudo pip install railguns
 - [Django REST framework](https://www.django-rest-framework.org)
 - [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
 - [stringcase](https://github.com/okunishinishi/python-stringcase)
+
+部署
+- [Gunicorn](https://www.gunicorn.org)
 - [uvicorn](https://www.uvicorn.org)
 
 常用库
@@ -29,7 +32,6 @@ sudo pip install railguns
 - [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
 - [Django Haystack Panel](https://github.com/streeter/django-haystack-panel)
 - [Rosetta](https://django-rosetta.readthedocs.io)
-- [Gunicorn](https://www.gunicorn.org)
 
 前端库
 - [axios](https://github.com/axios/axios)
