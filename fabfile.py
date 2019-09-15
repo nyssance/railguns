@@ -55,7 +55,7 @@ def local_update_vendor():
 
 
 # ========
-# = pypi =
+# = PyPI =
 # ========
 @task
 def upload_to_pypi():
