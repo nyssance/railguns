@@ -1,77 +1,77 @@
-# coding=utf-8
-
 import os
 import shutil
+from os.path import exists
 
-from fabric.colors import blue, cyan, green, magenta, red, yellow
-from fabric.decorators import task
-from fabric.operations import local
-from fabric.state import env
-from fabric.utils import puts
+from colorama import Fore, init
+from fabric import task
+from fabric.util import get_local_user
+from invoke import env
 
 ###########
 # GLOBALS #
 ###########
-env.project_name = os.path.basename(os.path.dirname(__file__))
+OS_ENVIRON = {e: os.environ.get(e) for e in os.environ}
+PROJECT_NAME = os.path.basename(os.path.dirname(__file__))
+PROXY = '127.0.0.1:1087'
 env.colorize_errors = True
-env.proxy = '127.0.0.1:1087'
 
 
 #########
 # TASKS #
 #########
-@task(default=True, alias='别名测试')
-def hello():
-    puts('*' * 50)
-    puts(cyan('  Fabric 使用指南\n'))
-    puts(green('  查看所有命令: fab -l'))
-    puts(green('  查看命令: fab -d 命令'))
-    puts(yellow('  带参数命令请输入: fab 命令:参数'))
-    puts('  Project Name: {.project_name}'.format(env))  # 这种写法直观
-    puts('*' * 50)
+@task(default=True, aliases=['别名测试'])
+def hello(c, path='参数值'):
+    init(autoreset=True)
+    print('*' * 50)
+    print(Fore.CYAN + '  Fabric 使用指南\n')
+    print(Fore.GREEN + '  查看所有命令: fab -l')
+    print(Fore.GREEN + '      查看命令: fab -d 命令')
+    print(Fore.YELLOW + '    带参数命令: fab 命令 --参数 值\n')
+    print(Fore.GREEN + '  Hello ~ ' + get_local_user())
+    print('*' * 50)
 
 
 @task
-def update_project():
-    curl('https://raw.githubusercontent.com/nyssance/Free/master/gitignore/Python.gitignore > .gitignore')
+def format(c):
+    """格式化代码"""
+    c.run('isort -rc .')
+    c.run('yapf -irp .')
 
 
 @task
-def local_format():
-    local('isort -rc .')
-    local('yapf -irp .')
+def pypi(c):
+    """自动打包上传到 PyPI"""
+    if exists('dist'):
+        shutil.rmtree('dist')
+    c.local('python setup.py sdist')
+    c.local('twine upload dist/*')
 
 
 @task
-def local_update_vendor():
+def update(c):
+    curl(c, '-o .gitignore https://raw.githubusercontent.com/nyssance/Free/master/gitignore/Python.gitignore')
+    curl(c, '-O https://raw.githubusercontent.com/nyssance/Free/master/setup.cfg')
+    c.run(f'sed -i "" "s|<project_name>|{PROJECT_NAME}|g" setup.cfg')
+    curl(c, '-O https://raw.githubusercontent.com/nyssance/Free/master/fabric.yaml')
+
+
+@task
+def update_vendor(c):
     """更新前端库"""
     filenames = [
-        'axios.js', 'axios.min.js', 'vue.js', 'vue.min.js', 'material-components-web.min.css',
-        'material-components-web.min.js'
+        'axios/axios.min.js', 'vue/vue.js', 'vue/vue.min.js', 'material-components-web/material-components-web.min.css',
+        'material-components-web/material-components-web.min.js'
     ]
     for filename in filenames:
-        curl('https://unpkg.com/{0}@latest/dist/{1} > {2}/static/vendor/{1}'.format(
-            filename.split('.')[0], filename, env.project_name))
-
-
-# ========
-# = PyPI =
-# ========
-@task
-def upload_to_pypi():
-    """自动打包上传到 PyPI"""
-    safe_local_delete('dist')
-    local('python setup.py sdist')
-    local('twine upload dist/*')
+        curl(
+            c,
+            f'https://unpkg.com/{filename.split("/")[0]}@latest/dist/{filename.split("/")[1]} > {PROJECT_NAME}/static/vendor/{filename}'
+        )
 
 
 # ============
 # = 工具方法  =
 # ============
-def curl(command=''):
-    local('curl -fsSL{} {}'.format(' -x {}'.format(env.proxy) if env.proxy else '', command))
-
-
-def safe_local_delete(path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
+def curl(c, command):
+    proxy = f' -x {PROXY}' if PROXY else ''
+    c.run(f'curl -fsSL{proxy} {command}')

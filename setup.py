@@ -36,7 +36,9 @@ setup(
         'mysqlclient'
     ],
     extras_require={
-        'dev': ['coreapi', 'django-debug-toolbar', 'django-debug-toolbar-force', 'django-rosetta', 'markdown', 'pygments'],
+        'dev': [
+            'coreapi', 'django-debug-toolbar', 'django-debug-toolbar-force', 'django-rosetta', 'markdown', 'pygments'
+        ],
         'prod': []
     },
     python_requires='>=3.6',
@@ -57,6 +59,4 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Internet :: WWW/HTTP'
     ],
-    project_urls={
-        'Source': 'https://github.com/nyssance/railguns'
-    })
+    project_urls={'Source': 'https://github.com/nyssance/railguns'})
