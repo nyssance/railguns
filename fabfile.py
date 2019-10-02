@@ -43,8 +43,8 @@ def pypi(c):
     """自动打包上传到 PyPI"""
     if exists('dist'):
         shutil.rmtree('dist')
-    c.local('python setup.py sdist')
-    c.local('twine upload dist/*')
+    c.run('python setup.py sdist')
+    c.run('twine upload dist/*')
 
 
 @task
