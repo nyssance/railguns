@@ -32,6 +32,7 @@ setup(
         'django-filter',
         'django-htmlmin',
         'django-redis-cache',
+        'hiredis',
         'mysqlclient'
     ],
     extras_require={
