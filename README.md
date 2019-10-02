@@ -11,7 +11,6 @@ sudo pip install railguns
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](https://www.django-rest-framework.org)
 - [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
-- [stringcase](https://github.com/okunishinishi/python-stringcase)
 
 部署
 - [Gunicorn](https://www.gunicorn.org)
@@ -19,18 +18,14 @@ sudo pip install railguns
 
 常用库
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
-- [django-crispy-forms](https://django-crispy-forms.readthedocs.io)
-- [Django Extensions](https://django-extensions.readthedocs.io)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
-- [django-redis](https://niwinz.github.io/django-redis/latest/)
-- [itunes-iap v2](https://github.com/youknowone/itunes-iap)
+- [django-redis-cache](https://django-redis-cache.readthedocs.io)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 
-可选库
+开发调试库
 - [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io)
 - [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
-- [Django Haystack Panel](https://github.com/streeter/django-haystack-panel)
 - [Rosetta](https://django-rosetta.readthedocs.io)
 
 前端库
