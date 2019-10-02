@@ -16,6 +16,11 @@ PROXY = '127.0.0.1:1087'
 env.colorize_errors = True
 
 
+def curl(c, command):
+    proxy = f' -x {PROXY}' if PROXY else ''
+    c.run(f'curl -fsSL{proxy} {command}')
+
+
 #########
 # TASKS #
 #########
@@ -67,11 +72,3 @@ def update_vendor(c):
             c,
             f'https://unpkg.com/{filename.split("/")[0]}@latest/dist/{filename.split("/")[1]} > {PROJECT_NAME}/static/vendor/{filename}'
         )
-
-
-# ============
-# = 工具方法  =
-# ============
-def curl(c, command):
-    proxy = f' -x {PROXY}' if PROXY else ''
-    c.run(f'curl -fsSL{proxy} {command}')
