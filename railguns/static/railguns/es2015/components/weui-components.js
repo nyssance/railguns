@@ -198,7 +198,7 @@ const list_item_subtitle = `
         <p style="font-size: 13px;color: #888888;">{{ subtitle }}</p>
     </div>`
 
-// SO: https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+// SO https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 const list_item_value1 = `
     ${icon}
     <div class="weui-cell__bd">

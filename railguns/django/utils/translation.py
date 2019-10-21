@@ -12,7 +12,7 @@ def format_gettext_lazy(message1, message2):
 
 
 def get_untranslated_text(text):
-    # SO: https://stackoverflow.com/questions/5143822/access-untranslated-content-of-djangos-ugettext-lazy
+    # SO https://stackoverflow.com/questions/5143822/access-untranslated-content-of-djangos-ugettext-lazy
     # with translation.override('en'):
     #     return force_text(text)
     untranslated_text = text

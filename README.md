@@ -1,12 +1,15 @@
 # Railgun S
+
 Only My Railgun
 
 ## Installation
+
 ```bash
 sudo pip install railguns
 ```
 
 ## Vendor
+
 框架用到的库
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](https://www.django-rest-framework.org)
@@ -21,6 +24,7 @@ sudo pip install railguns
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [django-redis-cache](https://django-redis-cache.readthedocs.io)
+- [hiredis](https://github.com/redis/hiredis)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 
 开发调试库

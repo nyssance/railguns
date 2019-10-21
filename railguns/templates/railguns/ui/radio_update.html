@@ -24,7 +24,7 @@
             updated() { // 组件挂载之后
                 document.querySelectorAll('input').forEach(it => {
                     if (it.attributes['type'].value === 'radio') {
-                        // SO: https://stackoverflow.com/questions/11973678/difference-between-element-value-and-element-getattributevalue
+                        // SO https://stackoverflow.com/questions/11973678/difference-between-element-value-and-element-getattributevalue
                         const value = this.params[Object.keys(this.params)[0]]
                         if (value.toString() === it.value) {
                             it.setAttribute('checked', 'checked')

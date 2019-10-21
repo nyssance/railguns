@@ -18,7 +18,7 @@ class DateTimeModelMixin(models.Model):
 class AbstractBaseModel(DateTimeModelMixin):
     is_active = models.BooleanField(dj_gettext('active'), default=True)
 
-    # 只是为了PyLint不警告, SO: https://stackoverflow.com/questions/45135263/class-has-no-objects-member#45150811
+    # 只是为了PyLint不警告, SO https://stackoverflow.com/questions/45135263/class-has-no-objects-member#45150811
     objects = models.Manager()
 
     class Meta:

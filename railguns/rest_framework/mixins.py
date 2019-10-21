@@ -20,7 +20,7 @@ class ModelMixin:
 class PasswordFieldMixin(Serializer):
     password = CharField(style={'input_type': 'password'}, min_length=6, max_length=128, write_only=True)
 
-    # SO: https://stackoverflow.com/questions/29746584/django-rest-framework-create-user-with-password
+    # SO https://stackoverflow.com/questions/29746584/django-rest-framework-create-user-with-password
     def validate_password(self, value):
         return make_password(value)
 

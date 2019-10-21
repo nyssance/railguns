@@ -40,7 +40,7 @@ const list_item_subtitle = `
     </span>
     ${accessory}`
 
-// SO: https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+// SO https://stackoverflow.com/questions/8122042/text-overflow-ellipsis-on-one-of-two-spans-inside-a-wrapper?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 const list_item_value1 = `
     ${icon}
     {{ title }}
@@ -98,7 +98,7 @@ Vue.component('list-item-default', {
         <li v-else class="mdc-list-item">
             ${list_item_default}
         </li>`,
-    computed: { // SO: https://stackoverflow.com/questions/42872002/in-vue-js-component-how-to-use-props-in-css#42872117
+    computed: { // SO https://stackoverflow.com/questions/42872002/in-vue-js-component-how-to-use-props-in-css#42872117
         style() {
             return `color: ${this.iconColor}`
         }
