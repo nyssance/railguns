@@ -1,6 +1,13 @@
 # Railgun S
 
+[![pypi-version]][pypi]
+
 Only My Railgun
+
+## Requirements
+
+- Python (3.6,3.7,3.8)
+- Django (3.0b1)
 
 ## Installation
 
