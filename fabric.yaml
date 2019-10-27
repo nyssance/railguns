@@ -1,4 +1,0 @@
-debug: true
-run:
-  echo: true
-  pty: True

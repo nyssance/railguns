@@ -1,6 +1,6 @@
 # Railgun S
 
-[![pypi-version]][pypi]
+[![https://img.shields.io/pypi/v/railguns.svg]](https://pypi.org/project/RailgunS/)
 
 Only My Railgun
 

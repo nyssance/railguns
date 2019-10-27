@@ -237,7 +237,7 @@ Vue.component('list-section', {
         </div>`
 })
 
-// 列表 : 区域头
+// 列表::区域头
 Vue.component('list-section-header', {
     props: {
         title: {type: String, required: true}
@@ -271,7 +271,7 @@ Vue.component('grid-item', {
     }
 })
 
-// 列表 : 项 List Item
+// 列表::项 List Item
 // - 默认
 Vue.component('list-item-default', {
     props: {

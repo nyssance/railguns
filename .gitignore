@@ -1,4 +1,4 @@
-# https://github.com/github/gitignore/blob/master/Python.gitignore
+# [Python](https://github.com/github/gitignore/blob/master/Python.gitignore)
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -48,6 +48,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+*.py,cover
 .hypothesis/
 .pytest_cache/
 
@@ -124,7 +125,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+# [macOS](https://github.com/github/gitignore/blob/master/Global/macOS.gitignore)
 # General
 .DS_Store
 .AppleDouble
@@ -152,7 +153,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+# [JetBrains](https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore)
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -160,7 +161,7 @@ Temporary Items
 .idea/**/dictionaries
 .idea/**/shelf
 
-# __Development__
+# [Development]
 **/migrations/**
 !**/migrations/__init__.py
 /static/

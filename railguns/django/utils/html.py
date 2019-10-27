@@ -7,4 +7,4 @@ def format_html_field_join(field, format_string='{}', join_string='<br>'):
 
 
 def format_html_string_join(string, format_string='{}', join_string='<br>'):
-    return format_html(join_string.join(format_string.format(item) for item in string.split()))
+    return format_html(join_string.join(format_string.format(item) for item in filter(None, string.split(','))))

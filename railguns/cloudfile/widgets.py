@@ -1,4 +1,4 @@
-import os
+from os.path import join
 
 from django.conf import settings
 from django.forms import widgets
@@ -24,7 +24,7 @@ class CloudFileWidget(widgets.TextInput):
         else:
             file_name = ''
 
-        tpl = os.path.join('s3direct', 's3direct-widget.tpl')
+        tpl = join('s3direct', 's3direct-widget.tpl')
         output = render_to_string(
             tpl, {
                 'policy_url': reverse('upload-params', args=['aliyun']),

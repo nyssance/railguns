@@ -16,11 +16,6 @@ PROXY = '127.0.0.1:1087'
 env.colorize_errors = True
 
 
-def curl(c, command):
-    proxy = f' -x {PROXY}' if PROXY else ''
-    c.run(f'curl -fsSL{proxy} {command}')
-
-
 #########
 # TASKS #
 #########
@@ -54,10 +49,9 @@ def pypi(c):
 
 @task
 def update(c):
-    curl(c, '-o .gitignore https://raw.githubusercontent.com/nyssance/Free/master/gitignore/Python.gitignore')
-    curl(c, '-O https://raw.githubusercontent.com/nyssance/Free/master/setup.cfg')
+    download(c, 'https://raw.githubusercontent.com/nyssance/Free/master/gitignore/Python.gitignore', '.gitignore')
+    download(c, 'https://raw.githubusercontent.com/nyssance/Free/master/setup.cfg')
     c.run(f'sed -i "" "s|<project_name>|{PROJECT_NAME}|g" setup.cfg')
-    curl(c, '-O https://raw.githubusercontent.com/nyssance/Free/master/fabric.yaml')
 
 
 @task
@@ -68,7 +62,11 @@ def update_vendor(c):
         'material-components-web/material-components-web.min.js'
     ]
     for filename in filenames:
-        curl(
-            c,
-            f'https://unpkg.com/{filename.split("/")[0]}@latest/dist/{filename.split("/")[1]} > {PROJECT_NAME}/static/vendor/{filename}'
-        )
+        download(c, f'https://unpkg.com/{filename.split("/")[0]}@latest/dist/{filename.split("/")[1]}',
+                 f'{PROJECT_NAME}/static/vendor/{filename}')
+
+
+def download(c, url, name=None):
+    proxy = f' -x {PROXY}' if PROXY else ''
+    command = f'{url} > {name}' if name else f'-O {url}'
+    c.run(f'curl -fsSL{proxy} {command}')
