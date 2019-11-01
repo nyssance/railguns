@@ -1,19 +1,15 @@
-import os
 import shutil
-from os.path import exists
+from os.path import basename, dirname, exists
 
 from colorama import Fore, init
 from fabric import task
 from fabric.util import get_local_user
-from invoke import env
 
 ###########
 # GLOBALS #
 ###########
-OS_ENVIRON = {e: os.environ.get(e) for e in os.environ}
-PROJECT_NAME = os.path.basename(os.path.dirname(__file__))
+PROJECT_NAME = basename(dirname(__file__))
 PROXY = '127.0.0.1:1087'
-env.colorize_errors = True
 
 
 #########

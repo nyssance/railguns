@@ -1,13 +1,14 @@
-# Railgun S
+# RailgunS
 
-[![https://img.shields.io/pypi/v/railguns.svg]](https://pypi.org/project/RailgunS/)
+[![Downloads](https://pepy.tech/badge/railguns)](https://pepy.tech/project/railguns)
+[![PyPI](https://img.shields.io/pypi/v/railguns)](https://pypi.org/project/RailgunS/)
+[![Python](https://img.shields.io/pypi/pyversions/railguns)](https://www.python.org)
+[![Django](https://img.shields.io/pypi/djversions/railguns)](https://www.djangoproject.com)
+[![License](https://img.shields.io/pypi/l/railguns)](https://opensource.org/licenses/MIT)
 
 Only My Railgun
 
-## Requirements
-
-- Python (3.6,3.7,3.8)
-- Django (3.0b1)
+---
 
 ## Installation
 
@@ -18,15 +19,18 @@ sudo pip install railguns
 ## Vendor
 
 框架用到的库
+
 - [Django](https://www.djangoproject.com)
 - [Django REST framework](https://www.django-rest-framework.org)
 - [Simple JWT](https://github.com/davesque/django-rest-framework-simplejwt)
 
 部署
+
 - [Gunicorn](https://www.gunicorn.org)
 - [uvicorn](https://www.uvicorn.org)
 
 常用库
+
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
@@ -35,11 +39,13 @@ sudo pip install railguns
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 
 开发调试库
+
 - [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io)
 - [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
 - [Rosetta](https://django-rosetta.readthedocs.io)
 
 前端库
+
 - [axios](https://github.com/axios/axios)
 - [jQuery](https://jquery.com)
 - [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
@@ -49,9 +55,14 @@ sudo pip install railguns
 - [weui.js](https://github.com/Tencent/weui.js)
 
 前端可选库
+
 - [clipboard.js](https://clipboardjs.com)
 - [GeoPattern](https://btmills.github.io/geopattern/)
 - [localForage](https://localforage.github.io/localForage/)
 - [Lodash](https://lodash.com)
 - [Moment](https://momentjs.com)
 - [Numeral.js](https://numeraljs.com/)
+
+## License
+
+RailgunS is released under the MIT license. [See LICENSE](https://github.com/nyssance/railguns/blob/master/LICENSE) for details.
