@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.20',
+    version='0.21',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',
@@ -25,15 +25,15 @@ setup(
         'djangorestframework==3.10.3',
         'djangorestframework_simplejwt==4.3.0',
         # Deployment
-        'gunicorn==19.9.0',
-        'uvicorn==0.9.1',
+        'gunicorn==20.0.0',
+        'uvicorn==0.10.8',
         #
-        'django-ckeditor==5.7.1',
+        'django-ckeditor==5.8.0',
         'django-filter==2.2.0',
         'django-htmlmin==0.11.0',
         'django-redis-cache==2.1.0',
-        'hiredis==1.0.0',
-        'mysqlclient==1.4.4'
+        'hiredis==1.0.1',
+        'mysqlclient==1.4.5'
     ],
     extras_require={
         'dev': [
