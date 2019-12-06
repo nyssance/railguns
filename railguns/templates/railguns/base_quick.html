@@ -6,35 +6,34 @@
 {% endblock %}
 
 {% block web %}
-    <!-- 🍺 css 开始 -->{% block css %}
+    <!-- 🍺 style 开始 -->{% block style %}
     <!-- 💙 base_quick -->
     <link rel="stylesheet" href="https://s2.pstatp.com/cdn/expire-1-M/normalize/8.0.1/normalize.min.css">{% endblock %}
-    <!-- 🍻 css 结束 -->
+    <!-- 🍻 style 结束 -->
 </head>
 
 <body>
     <!-- 🍺 内容 开始 -->{% block body %}{% endblock %}
     <!-- 🍻 内容 结束 -->
 
-    <!-- 🍺 js 开始 -->{% block js %}
+    <!-- 🍺 script 开始 -->{% block script %}
     <!-- 💙 base_quick -->
     <!-- Django -->
     <script src="{% url 'javascript-catalog' %}"></script>
     <!-- Vendor -->
     <script src="https://s3.pstatp.com/cdn/expire-1-M/babel-polyfill/7.4.4/polyfill.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/polyfill@3.4.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-lazy@1.7.10/jquery.lazy.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment-with-locales.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/min/numeral.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/min/locales.min.js"></script>
-    <script src="{% static 'vendor/axios/axios.min.js' %}"></script>
-{% if debug %}    <script src="{% static 'vendor/vue/vue.js' %}"></script>{% else %}
-    <script src="{% static 'vendor/vue/vue.min.js' %}"></script>{% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
     <!-- Railgun S -->
     <script src="{% static 'railguns/es2015/util/http-utils.js' %}"></script>
     <script src="{% static 'railguns/es2015/mixins.js' %}"></script>
     <script src="{% static 'railguns/es2015/vendor.js' %}"></script>
     <script src="{% static 'js/components.js' %}"></script>
     {% endblock %}
-    <!-- 🍻 js 结束 -->
+    <!-- 🍻 script 结束 -->
 {% endblock %}

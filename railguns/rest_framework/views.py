@@ -36,9 +36,9 @@ def get_signing_key(key, date_stamp, region, service):
 
 
 def get_signature(msg, digestmod):
-    if not settings.CLOUD_SS_SECRET:
-        raise APIException('CLOUD_SS_SECRET 不存在')
-    key = settings.CLOUD_SS_SECRET.encode()
+    if not settings.CLOUD_STORAGE_SECRET:
+        raise APIException('CLOUD_STORAGE_SECRET 不存在')
+    key = settings.CLOUD_STORAGE_SECRET.encode()
     return b64encode(hmac.new(key, msg.encode('utf-8'), digestmod).digest()).decode()
 
 
@@ -70,7 +70,7 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
         }, {
             'x-amz-server-side-encryption': 'AES256'
         }, ['starts-with', '$x-amz-meta-tag', ''], {
-            'x-amz-credential': f'{settings.CLOUD_SS_ID}/{date_stamp}/{region}/s3/aws4_request'
+            'x-amz-credential': f'{settings.CLOUD_STORAGE_ID}/{date_stamp}/{region}/s3/aws4_request'
         }, {
             'x-amz-algorithm': 'AWS4-HMAC-SHA256'
         }, {
@@ -84,14 +84,15 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     #
     params = {'key': path, 'Content-Type': content_type, 'policy': string_to_sign}
     if cloud == 'aliyun':  # 阿里云
-        signature = b64encode(hmac.new(settings.CLOUD_SS_SECRET.encode('utf-8'), string_to_sign, hashlib.sha1).digest())
-        params.update({'OSSAccessKeyId': settings.CLOUD_SS_ID, 'signature': signature})
+        signature = b64encode(
+            hmac.new(settings.CLOUD_STORAGE_SECRET.encode('utf-8'), string_to_sign, hashlib.sha1).digest())
+        params.update({'OSSAccessKeyId': settings.CLOUD_STORAGE_ID, 'signature': signature})
     elif cloud == 'aws':  # AWS https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
         for condition in conditions:
             if isinstance(condition, dict):
                 params.update(condition)
         params.pop('bucket')
-        signing_key = get_signing_key(settings.CLOUD_SS_SECRET, date_stamp, region, 's3')
+        signing_key = get_signing_key(settings.CLOUD_STORAGE_SECRET, date_stamp, region, 's3')
         signature = hmac.new(signing_key, string_to_sign, hashlib.sha256).hexdigest()  # 16进制
         params.update({'x-amz-meta-tag': '', 'x-amz-signature': signature})
     # 其他 Content-Encoding, Cache-Control
@@ -116,11 +117,11 @@ class DownloadUrlView(APIView):
         if not url:
             raise ValidationError('url不能为空')
         url_components = urlparse(url)
-        bucket = url_components.netloc.replace(f'.{settings.CLOUD_SS_BASE_DOMAIN_NAME}', '')
+        bucket = url_components.netloc.replace(f'.{settings.CLOUD_STORAGE_DOMAIN_NAME}', '')
         expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
         string_to_sign = f'GET\n\n\n{expires}\n/{bucket}{url_components.path}'  # 字符串
         signature = get_signature(string_to_sign, hashlib.sha1)
-        params = {'url': f'{url}?OSSAccessKeyId={settings.CLOUD_SS_ID}&Expires={expires}&Signature={signature}'}
+        params = {'url': f'{url}?OSSAccessKeyId={settings.CLOUD_STORAGE_ID}&Expires={expires}&Signature={signature}'}
         return Response(params)
 
 
@@ -157,6 +158,6 @@ class UploadParamsView(APIView):
             endpoint = settings.STATIC_URL
         elif bucket == settings.BUCKET_CLOUD:
             endpoint = settings.CLOUD_URL
-        params = get_params(kwargs.get(self.lookup_field), settings.CLOUD_SS_REGION, bucket, filename, rename,
+        params = get_params(kwargs.get(self.lookup_field), settings.CLOUD_STORAGE_REGION, bucket, filename, rename,
                             expiration, content_encoding, cache_control)
         return Response({'endpoint': endpoint, 'params': params})

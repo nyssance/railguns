@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.21',
+    version='0.30',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',
@@ -21,11 +21,10 @@ setup(
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     install_requires=[
-        'django[argon2]==3.0b1',
+        'django[argon2]==3.0',
         'djangorestframework==3.10.3',
         'djangorestframework_simplejwt==4.3.0',
-        # Deployment
-        'gunicorn==20.0.0',
+        'gunicorn==20.0.4',
         'uvicorn==0.10.8',
         #
         'django-ckeditor==5.8.0',
@@ -33,12 +32,10 @@ setup(
         'django-htmlmin==0.11.0',
         'django-redis-cache==2.1.0',
         'hiredis==1.0.1',
-        'mysqlclient==1.4.5'
+        'mysqlclient==1.4.6'
     ],
     extras_require={
-        'dev': [
-            'coreapi', 'django-debug-toolbar', 'django-debug-toolbar-force', 'django-rosetta', 'markdown', 'pygments'
-        ],
+        'dev': [],
         'prod': []
     },
     python_requires='>=3.6',
@@ -47,7 +44,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        # 'Framework :: Django :: 3.0',
+        'Framework :: Django :: 3.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
