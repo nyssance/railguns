@@ -11,30 +11,30 @@
 // Vue 太蠢, 不区分html注释和正式代码
 
 const showActionSheet = (title, actions, cancelAction) => {
-    weui.actionSheet(actions, [{
-        label: '取消', onClick: () => {
-            cancelAction && cancelAction()
-        }
-    }], {
-        title: title, onClose: () => {
-        }
-    })
+  weui.actionSheet(actions, [{
+    label: '取消', onClick: () => {
+      cancelAction && cancelAction()
+    }
+  }], {
+    title: title, onClose: () => {
+    }
+  })
 }
 
 const showAlert = (title, message, action) => {
-    if (action) {
-        weui.confirm(message, action, undefined, {title})
-    } else {
-        weui.alert(message, {title})
-    }
+  if (action) {
+    weui.confirm(message, action, undefined, { title })
+  } else {
+    weui.alert(message, { title })
+  }
 }
 const showSnackbar = (message, duration = 2000) => {
-    weui.topTips(message, {duration})
+  weui.topTips(message, { duration })
 }
 
 // 💙 组件
 Vue.component('app-footer', {
-    template: `
+  template: `
         <!--<div class="weui-footer weui-footer_fixed-bottom">-->
         <div class="weui-footer">
             <br>
@@ -48,7 +48,7 @@ Vue.component('app-footer', {
 
 // TabBar 底部导航
 Vue.component('tabbar', {
-    template: `
+  template: `
         <div class="weui-tab">
             <div class="weui-tab__panel">
                 <slot></slot>
@@ -60,26 +60,26 @@ Vue.component('tabbar', {
 })
 
 Vue.component('tabbar-item', {
-    props: {
-        icon: {type: String, required: true},
-        title: {type: String, required: true},
-        link: {type: String, required: true},
-        selected: {type: Boolean, default: false}
-    },
-    template: `<a :href="link" :class="'weui-tabbar__item' + selected_class">
+  props: {
+    icon: { type: String, required: true },
+    title: { type: String, required: true },
+    link: { type: String, required: true },
+    selected: { type: Boolean, default: false }
+  },
+  template: `<a :href="link" :class="'weui-tabbar__item' + selected_class">
                    <img :src="icon" class="weui-tabbar__icon" alt="">
                    <p class="weui-tabbar__label">{{ title }}</p>
                </a>`,
-    computed: {
-        selected_class() {
-            return this.selected ? ' weui-bar__item_on' : ''
-        }
+  computed: {
+    selected_class () {
+      return this.selected ? ' weui-bar__item_on' : ''
     }
+  }
 })
 
 // Pager
 Vue.component('pager', {
-    template: `
+  template: `
         <div class="weui-tab">
             <div class="weui-navbar">
                 <slot name="tab"></slot>
@@ -91,72 +91,72 @@ Vue.component('pager', {
 })
 
 Vue.component('pager-item', {
-    props: {
-        title: {type: String, required: true},
-        selected: {type: Boolean, default: false},
-        method: {
-            type: Function,
-            required: false,
-            default: () => {
-                showSnackbar('请在 pager-item 组件中传入一个方法, 例如 :method="refresh"')
-            }
-        }
-    },
-    template: `
+  props: {
+    title: { type: String, required: true },
+    selected: { type: Boolean, default: false },
+    method: {
+      type: Function,
+      required: false,
+      default: () => {
+        showSnackbar('请在 pager-item 组件中传入一个方法, 例如 :method="refresh"')
+      }
+    }
+  },
+  template: `
         <div :class="'weui-navbar__item' + selected_class" @click="toggle($event, method)">
             {{ title }}
         </div>`,
-    computed: {
-        selected_class() {
-            return this.selected ? ' weui-bar__item_on' : ''
-        }
-    },
-    methods: {
-        toggle(event, method) { // target 和 currentTarget 区别 https://juejin.im/post/59f16ffaf265da43085d4108
-            const className = 'weui-bar__item_on'
-            const before = document.getElementsByClassName(className)[0]
-            const after = event.target
-            if (before !== after) {
-                before.classList.remove(className)
-                after.classList.add(className)
-                method()
-            }
-        }
+  computed: {
+    selected_class () {
+      return this.selected ? ' weui-bar__item_on' : ''
     }
+  },
+  methods: {
+    toggle (event, method) { // target 和 currentTarget 区别 https://juejin.im/post/59f16ffaf265da43085d4108
+      const className = 'weui-bar__item_on'
+      const before = document.getElementsByClassName(className)[0]
+      const after = event.target
+      if (before !== after) {
+        before.classList.remove(className)
+        after.classList.add(className)
+        method()
+      }
+    }
+  }
 })
 
 Vue.component('pager-content', {
-    template: `
+  template: `
         <div class="weui-tab__content">
             <slot></slot>
         </div>`
 })
 
 Vue.component('msg-page', {
-    props: {
-        icon: {
-            type: String,
-            required: true,
-            validator: value => [
-                'success', 'success-no-circle',
-                'info', 'info-circle',
-                'warn',
-                'waiting', 'circle', 'download', 'cancel', 'search'].includes(value)
-        },
-        title: {
-            type: String,
-            required: true
-        },
-        message: {
-            type: String,
-        },
-        type: {
-            type: String,
-            default: '',
-            validator: value => ['', '-primary'].includes(value)
-        }
+  props: {
+    icon: {
+      type: String,
+      required: true,
+      validator: value => [
+        'success', 'success-no-circle',
+        'info', 'info-circle',
+        'warn',
+        'waiting', 'circle', 'download', 'cancel', 'search'].includes(value)
     },
-    template: `
+    title: {
+      type: String,
+      required: true
+    },
+    message: {
+      type: String,
+    },
+    type: {
+      type: String,
+      default: '',
+      validator: value => ['', '-primary'].includes(value)
+    }
+  },
+  template: `
         <div class="weui-msg">
             <div class="weui-msg__icon-area"><i :class="'weui-icon-' + icon + ' weui-icon_msg' + type"></i></div>
             <div class="weui-msg__text-area">
@@ -211,7 +211,7 @@ const list_item_value1 = `
 // 列表视图 ListView
 // - 网格列表
 Vue.component('grid-view', {
-    template: `
+  template: `
         <div class="weui-grids">
             <slot></slot>
         </div>`
@@ -219,7 +219,7 @@ Vue.component('grid-view', {
 
 // - 普通列表
 Vue.component('list-view', {
-    template: `
+  template: `
         <div style="background: #f8f8f8; width: 100vh; height: 100vh">
             <slot>
                 <div class="weui-loadmore weui-loadmore_line">
@@ -231,7 +231,7 @@ Vue.component('list-view', {
 
 // - 普通列表区块
 Vue.component('list-section', {
-    template: `
+  template: `
         <div class="weui-cells">
             <slot></slot>
         </div>`
@@ -239,24 +239,24 @@ Vue.component('list-section', {
 
 // 列表::区域头
 Vue.component('list-section-header', {
-    props: {
-        title: {type: String, required: true}
-    },
-    template: `
+  props: {
+    title: { type: String, required: true }
+  },
+  template: `
         <div class="weui-cells__title">{{ title }}</div>`
 })
 
 // Grid Item
 Vue.component('grid-item', {
-    props: {
-        icon: {type: String,},
-        title: {type: String, required: true, default: ''},
-        subtitle: {type: [String, Number], required: true, default: ''},
-        badges: {type: Array},
-        link: {type: String},
-        iconColor: {type: String}
-    },
-    template: `
+  props: {
+    icon: { type: String, },
+    title: { type: String, required: true, default: '' },
+    subtitle: { type: [String, Number], required: true, default: '' },
+    badges: { type: Array },
+    link: { type: String },
+    iconColor: { type: String }
+  },
+  template: `
         <a :href="link" class="weui-grid">
             <div v-if="icon" class="weui-grid__icon">
                 <img :src="icon" :style="style" alt="">
@@ -264,25 +264,25 @@ Vue.component('grid-item', {
             <p class="weui-grid__label">{{ subtitle }}</p>
             <p class="weui-grid__label">{{ title }}</p>
         </a>`,
-    computed: {
-        style() {
-            return `color: ${this.iconColor}`
-        }
+  computed: {
+    style () {
+      return `color: ${this.iconColor}`
     }
+  }
 })
 
 // 列表::项 List Item
 // - 默认
 Vue.component('list-item-default', {
-    props: {
-        icon: {type: String},
-        title: {type: String, required: true, default: ''},
-        accessory: {type: String},
-        badges: {type: Array},
-        link: {type: String},
-        iconColor: {type: String}
-    },
-    template: `
+  props: {
+    icon: { type: String },
+    title: { type: String, required: true, default: '' },
+    accessory: { type: String },
+    badges: { type: Array },
+    link: { type: String },
+    iconColor: { type: String }
+  },
+  template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_default}
             <div class="weui-cell__ft"></div>
@@ -290,24 +290,24 @@ Vue.component('list-item-default', {
         <div v-else class="weui-cell">
             ${list_item_default}
         </div>`,
-    computed: {
-        style() {
-            return `color: ${this.iconColor}`
-        }
+  computed: {
+    style () {
+      return `color: ${this.iconColor}`
     }
+  }
 })
 
 // - 副标题
 Vue.component('list-item-subtitle', {
-    props: {
-        icon: {type: String},
-        title: {type: String, required: true, default: ''},
-        subtitle: {type: [String, Number], required: true, default: ''},
-        accessory: {type: String},
-        badges: {type: Array},
-        link: {type: String}
-    },
-    template: `
+  props: {
+    icon: { type: String },
+    title: { type: String, required: true, default: '' },
+    subtitle: { type: [String, Number], required: true, default: '' },
+    accessory: { type: String },
+    badges: { type: Array },
+    link: { type: String }
+  },
+  template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_subtitle}
             <div class="weui-cell__ft"></div>
@@ -319,15 +319,15 @@ Vue.component('list-item-subtitle', {
 
 // - 左右
 Vue.component('list-item-value1', {
-    props: {
-        icon: {type: String},
-        title: {type: String, required: true, default: ''},
-        subtitle: {type: [String, Number], required: true, default: ''},
-        accessory: {type: String},
-        badges: {type: Array},
-        link: {type: String}
-    },
-    template: `
+  props: {
+    icon: { type: String },
+    title: { type: String, required: true, default: '' },
+    subtitle: { type: [String, Number], required: true, default: '' },
+    accessory: { type: String },
+    badges: { type: Array },
+    link: { type: String }
+  },
+  template: `
         <a v-if="link" :href="link" class="weui-cell weui-cell_access">
             ${list_item_value1}
         </a>
@@ -338,22 +338,22 @@ Vue.component('list-item-value1', {
 
 // - 卡片
 Vue.component('card', {
-    props: {
-        icon: {type: String},
-        title: {type: String, required: true, default: ''},
-        subtitle: {type: [String, Number], required: true, default: ''},
-        accessory: {type: String},
-        badges: {type: Array},
-        //
-        meta: {type: [String, Number]},
-        time: {type: String},
-        extra: {type: [String, Number]},
-        link: {type: String},
-        //
-        button: {type: String},
-        buttonLink: {type: String}
-    },
-    template: `
+  props: {
+    icon: { type: String },
+    title: { type: String, required: true, default: '' },
+    subtitle: { type: [String, Number], required: true, default: '' },
+    accessory: { type: String },
+    badges: { type: Array },
+    //
+    meta: { type: [String, Number] },
+    time: { type: String },
+    extra: { type: [String, Number] },
+    link: { type: String },
+    //
+    button: { type: String },
+    buttonLink: { type: String }
+  },
+  template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div v-if="icon" class="weui-media-box__hd">
                 <img :src="icon" class="weui-media-box__thumb" alt="">
@@ -373,17 +373,17 @@ Vue.component('card', {
 
 // 面板
 Vue.component('panel', {
-    props: {
-        icon: {type: String, required: true},
-        title: {type: String, required: true, default: ''},
-        subtitle: {type: [String, Number], required: true, default: ''},
-        badges: {type: Array},
-        link: {type: String},
-        //
-        button: {type: String},
-        buttonLink: {type: String}
-    },
-    template: `
+  props: {
+    icon: { type: String, required: true },
+    title: { type: String, required: true, default: '' },
+    subtitle: { type: [String, Number], required: true, default: '' },
+    badges: { type: Array },
+    link: { type: String },
+    //
+    button: { type: String },
+    buttonLink: { type: String }
+  },
+  template: `
         <a :href="link" class="weui-media-box weui-media-box_appmsg">
             <div class="weui-media-box__hd">
                 <img class="weui-media-box__thumb" :src="icon" style="border-radius: 50%">
@@ -398,36 +398,36 @@ Vue.component('panel', {
 
 // 文章
 Vue.component('article-html', {
-    props: ['text'],
-    template: `<article class="weui-article" v-html="text"></article>`
+  props: ['text'],
+  template: `<article class="weui-article" v-html="text"></article>`
 })
 
 // - 按钮
 Vue.component('button-area', {
-    template: `
+  template: `
         <div class="weui-btn-area">
             <slot></slot>
         </div>`
 })
 
 Vue.component('button-primary', {
-    props: {
-        title: {type: String, required: true}
-    },
-    template: `<button class="weui-btn weui-btn_primary">{{ title }}</button>`
+  props: {
+    title: { type: String, required: true }
+  },
+  template: `<button class="weui-btn weui-btn_primary">{{ title }}</button>`
 })
 
 Vue.component('button-default', {
-    props: {
-        title: {type: String, required: true}
-    },
-    template: `<button class="weui-btn weui-btn_default">{{ title }}</button>`
+  props: {
+    title: { type: String, required: true }
+  },
+  template: `<button class="weui-btn weui-btn_default">{{ title }}</button>`
 })
 
 // - 表单
 // 单选
 Vue.component('form-area', {
-    template: `
+  template: `
         <div class="weui-cells weui-cells_form">
             <slot></slot>
         </div>`
@@ -435,20 +435,20 @@ Vue.component('form-area', {
 
 // 单选
 Vue.component('option-set', {
-    template: `
+  template: `
         <div class="weui-cells weui-cells_radio">
             <slot></slot>
         </div>`
 })
 
 Vue.component('option-radio', {
-    props: {
-        title: {type: String, required: true, default: ''},
-        name: {type: String, required: true},
-        value: {type: [String, Number]},
-        id: {type: [String, Number], required: true}
-    },
-    template: `
+  props: {
+    title: { type: String, required: true, default: '' },
+    name: { type: String, required: true },
+    value: { type: [String, Number] },
+    id: { type: [String, Number], required: true }
+  },
+  template: `
         <label class="weui-cell weui-check__label" :for="id">
             <div class="weui-cell__bd">{{ title }}</div>
             <div class="weui-cell__ft">
@@ -460,18 +460,18 @@ Vue.component('option-radio', {
 
 // required 待优化 required pattern=".{1,}"
 Vue.component('text-field', {
-    props: {
-        name: {type: String},
-        placeholder: {type: String},
-        value: {type: [String, Number]},
-        type: {
-            type: String,
-            default: 'text',
-            validator: value => ['text', 'number', 'tel', 'date', 'datetime-local', 'password'].includes(value)
-        },
-        required: {type: String}
+  props: {
+    name: { type: String },
+    placeholder: { type: String },
+    value: { type: [String, Number] },
+    type: {
+      type: String,
+      default: 'text',
+      validator: value => ['text', 'number', 'tel', 'date', 'datetime-local', 'password'].includes(value)
     },
-    template: `
+    required: { type: String }
+  },
+  template: `
         <div class="weui-cell">
             <div v-if="name" class="weui-cell__hd">
                 <label class="weui-label">{{ name }}</label>
@@ -486,13 +486,13 @@ Vue.component('text-field', {
 
 // Swiper
 Vue.component('swiper', {
-    props: {
-        height: {type: Number, default: 9 / 16},
-        delay: {type: Number, default: 3000},
-        loop: {type: Boolean, default: true},
-        pagination: {type: Boolean, default: false}
-    },
-    template: `
+  props: {
+    height: { type: Number, default: 9 / 16 },
+    delay: { type: Number, default: 3000 },
+    loop: { type: Boolean, default: true },
+    pagination: { type: Boolean, default: false }
+  },
+  template: `
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <slot></slot>
@@ -500,42 +500,42 @@ Vue.component('swiper', {
              <!-- 如果需要分页器 -->
              <div v-if="pagination" class="swiper-pagination"></div>
         </div>`,
-    mounted() {
-        const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-        const height = screenWidth * this.height
-        this.$el.style.height = `${height}px`
-    },
-    updated() {
-        const mySwiper = new Swiper('.swiper-container', {
-            autoplay: {
-                delay: this.delay
-            },
-            loop: this.loop,
-            pagination: {
-                el: '.swiper-pagination'
-            }
-        })
-    }
+  mounted () {
+    const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+    const height = screenWidth * this.height
+    this.$el.style.height = `${height}px`
+  },
+  updated () {
+    const mySwiper = new Swiper('.swiper-container', {
+      autoplay: {
+        delay: this.delay
+      },
+      loop: this.loop,
+      pagination: {
+        el: '.swiper-pagination'
+      }
+    })
+  }
 })
 
 Vue.component('swiper-item', {
-    props: {
-        image: {type: String},
-        title: {type: String},
-        link: {type: String}
-    },
-    template: `
+  props: {
+    image: { type: String },
+    title: { type: String },
+    link: { type: String }
+  },
+  template: `
         <a v-if="link" :href="link" class="swiper-slide">{{ title }}</a>
         <div v-else class="swiper-slide">{{ title }}</div>`,
-    mounted() {
-        if (this.image) {
-            this.$el.style.backgroundImage = `url(${this.image})`
-            this.$el.style.backgroundPosition = 'center'
-            this.$el.style.backgroundSize = 'cover'
-        } else {
-            this.$el.style.backgroundColor = '#00e871'
-        }
+  mounted () {
+    if (this.image) {
+      this.$el.style.backgroundImage = `url(${this.image})`
+      this.$el.style.backgroundPosition = 'center'
+      this.$el.style.backgroundSize = 'cover'
+    } else {
+      this.$el.style.backgroundColor = '#00e871'
     }
+  }
 })
 
 // 💙 过滤器
