@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.32',
+    version='0.33',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',
@@ -38,7 +38,7 @@ setup(
         'dev': [],
         'prod': []
     },
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     zip_safe=False,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -50,8 +50,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Internet :: WWW/HTTP'

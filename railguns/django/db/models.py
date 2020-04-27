@@ -69,8 +69,7 @@ class ShardModel(OwnerModel):
 
     def save(self, using='default', *args, **kwargs):
         self.full_clean()
-        if not self.pk:
-            self.pk = generate_shard_id(self.user_id)
+        self.pk = self.pk or generate_shard_id(self.user_id)
         super().save(using=db_master(self.user_id), *args, **kwargs)
 
 
@@ -83,8 +82,7 @@ class ShardLCModel(OwnerModel):
 
     def save(self, using='default', *args, **kwargs):
         self.full_clean()
-        if not self.pk:  # Create
-            self.pk = generate_shard_id(self.user_id)
+        self.pk = self.pk or generate_shard_id(self.user_id)
         super().save(using=db_master(self.user_id), *args, **kwargs)  # 保存第一份
         card_user_id = get_user_id(self.card_id)
         if db_master(card_user_id) != db_master(self.user_id):  # 保存第二份
