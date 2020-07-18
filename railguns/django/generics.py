@@ -16,7 +16,7 @@ def generate_link(urlstring: str, request: Optional[HttpRequest]) -> str:
             app_scheme = request.headers.get('App-Scheme')
             if app_scheme:
                 return f'{app_scheme}://{urlstring}'
-        return f'/{urlstring}/' if urlstring != "/" else "/"
+        return f'/{urlstring}/' if urlstring != '/' else '/'
 
 
 class WebView(TemplateView):
@@ -32,9 +32,9 @@ class WebView(TemplateView):
         title = self.title if self.title is not None else verbose_name  # 用 is not None 才能传入空标题
         if self.endpoint is not None:
             version = settings.REST_FRAMEWORK.get('DEFAULT_VERSION', '')
-            endpoint = self.endpoint if self.endpoint else f'/api/{version}{request.get_full_path()}'
+            endpoint = self.endpoint or f'/api/{version}{request.get_full_path()}'
             dataset_endpoint = f' data-endpoint="{endpoint}"' if endpoint else ''
-        template_name = self.template_name if self.template_name else f'web/{self.name}.html'
+        template_name = self.template_name or f'web/{self.name}.html'
         extras = kwargs
         is_weixin = 'MicroMessenger' in request.headers['User-Agent']
         return render(request, template_name, locals())
