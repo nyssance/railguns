@@ -1,5 +1,5 @@
 import shutil
-from os.path import basename, dirname, exists
+from pathlib import Path
 
 from colorama import Fore, init
 from fabric import task
@@ -8,7 +8,7 @@ from fabric.util import get_local_user
 ###########
 # GLOBALS #
 ###########
-PROJECT_NAME = basename(dirname(__file__))
+PROJECT_NAME = Path(__file__).resolve(strict=True).parent.name
 PROXY = '127.0.0.1:1087'
 
 
@@ -28,19 +28,32 @@ def hello(c, path='参数值'):
 
 
 @task
+def local_cleanup(c):
+    """清理"""
+    for p in Path().glob('**/*'):
+        if p.is_dir():
+            if p.name == '__pycache__' or not any(p.iterdir()):
+                print(p)
+                p.rmdir()
+        elif p.name == '.DS_Store' or p.suffix == '.pyc':
+            print(p)
+            p.unlink()
+
+
+@task
 def format(c):
     """格式化代码"""
-    c.run('isort -rc .')
+    c.run('isort .')
     c.run('yapf -irp .')
 
 
 @task
 def pypi(c):
     """自动打包上传到 PyPI"""
-    if exists('dist'):
-        shutil.rmtree('dist')
+    local_cleanup(c)
     c.run('python setup.py sdist')
     c.run('twine upload dist/*')
+    shutil.rmtree('dist')
 
 
 @task
