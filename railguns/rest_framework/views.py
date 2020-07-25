@@ -14,7 +14,7 @@ from rest_framework.utils import json
 from rest_framework.views import APIView
 
 from ..django.db.utils import timestamp
-from .permissions import IsAuthenticatedOrWhitelist
+from .permissions import IsAuthenticated
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
 
@@ -103,7 +103,7 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     return params
 
 
-@permission_classes([IsAuthenticatedOrWhitelist])
+@permission_classes([IsAuthenticated])
 class DownloadUrlView(APIView):
     """
     获取下载地址
@@ -125,7 +125,7 @@ class DownloadUrlView(APIView):
         return Response(params)
 
 
-@permission_classes([IsAuthenticatedOrWhitelist])
+@permission_classes([IsAuthenticated])
 class UploadParamsView(APIView):
     """
     获取上传参数

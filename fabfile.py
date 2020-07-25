@@ -9,26 +9,14 @@ from fabric.util import get_local_user
 # GLOBALS #
 ###########
 PROJECT_NAME = Path(__file__).resolve(strict=True).parent.name
-PROXY = '127.0.0.1:1087'
+HTTP_PROXY = '127.0.0.1:1081'
 
 
 #########
 # TASKS #
 #########
-@task(default=True, aliases=['别名测试'])
-def hello(c, path='参数值'):
-    init(autoreset=True)
-    print('*' * 50)
-    print(Fore.CYAN + '  Fabric 使用指南\n')
-    print(Fore.GREEN + '  查看所有命令: fab -l')
-    print(Fore.GREEN + '      查看命令: fab -d 命令')
-    print(Fore.YELLOW + '    带参数命令: fab 命令 --参数 值\n')
-    print(Fore.GREEN + '  Hello ~ ' + get_local_user())
-    print('*' * 50)
-
-
 @task
-def local_cleanup(c):
+def cleanup(c):
     """清理"""
     for p in Path().glob('**/*'):
         if p.is_dir():
@@ -42,7 +30,7 @@ def local_cleanup(c):
 
 @task
 def format(c):
-    """格式化代码"""
+    """格式化"""
     c.run('isort .')
     c.run('yapf -irp .')
 
@@ -58,9 +46,10 @@ def pypi(c):
 
 @task
 def update(c):
+    """更新"""
     download(c, 'https://raw.githubusercontent.com/nyssance/Free/master/gitignore/Python.gitignore', '.gitignore')
     download(c, 'https://raw.githubusercontent.com/nyssance/Free/master/setup.cfg')
-    c.run(f'sed -i "" "s|<project_name>|{PROJECT_NAME}|g" setup.cfg')
+    c.run(f'sed -i "" "s|<project-name>|{PROJECT_NAME}|g" setup.cfg')
 
 
 @task
@@ -76,6 +65,6 @@ def update_vendor(c):
 
 
 def download(c, url, name=None):
-    proxy = f' -x {PROXY}' if PROXY else ''
+    proxy = f' -x {HTTP_PROXY}' if HTTP_PROXY else ''
     command = f'{url} > {name}' if name else f'-O {url}'
     c.run(f'curl -fsSL{proxy} {command}')

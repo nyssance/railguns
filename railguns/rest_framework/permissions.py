@@ -1,5 +1,4 @@
 from django.conf import settings
-from ipware.ip import get_ip
 from rest_framework import permissions
 
 
@@ -52,22 +51,3 @@ class BlacklistPermission(permissions.BasePermission):
         ip_addr = request.META['REMOTE_ADDR']
         blacklisted = Blacklist.objects.filter(ip_addr=ip_addr).exists()
         return not blacklisted
-
-
-class WhitelistPermission(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        ip_addr = get_ip(request, right_most_proxy=True)
-        whitelisted = ip_addr in settings.WHITELIST
-        return whitelisted
-
-
-class IsAuthenticatedOrWhitelist(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        if request.user and request.user.is_authenticated:
-            return True
-        else:
-            ip_addr = get_ip(request, right_most_proxy=True)
-            whitelisted = ip_addr in settings.WHITELIST
-            return whitelisted
