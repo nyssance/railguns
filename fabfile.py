@@ -38,7 +38,7 @@ def format(c):
 @task
 def pypi(c):
     """自动打包上传到 PyPI"""
-    local_cleanup(c)
+    cleanup(c)
     c.run('python setup.py sdist')
     c.run('twine upload dist/*')
     shutil.rmtree('dist')
