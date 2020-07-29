@@ -25,7 +25,7 @@ setup(
         'djangorestframework==3.11.0',
         'djangorestframework_simplejwt==4.4.0',
         'gunicorn==20.0.4',
-        'uvicorn==0.11.6',
+        'uvicorn==0.11.7',
         #
         'django-ckeditor==5.9.0',
         'django-filter==2.3.0',
