@@ -35,11 +35,8 @@ urlpatterns = [
 # Vendor :: Django REST framework
 urlpatterns += [
     path('api-auth/', include('rest_framework.urls')),
-    path('docs/',
-         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
-    path('openapi',
-         get_schema_view(title=f'{API_TITLE} {API_VERSION}', description=API_DESCRIPTION),
-         name='openapi-schema')
+    path('docs/', include_docs_urls(API_TITLE, API_DESCRIPTION, permission_classes=[permissions.IsAdminUser])),
+    path('openapi', get_schema_view(f'{API_TITLE} {API_VERSION}', description=API_DESCRIPTION), name='openapi-schema')
 ]
 # Vendor :: Others
 urlpatterns += [
@@ -71,9 +68,6 @@ urlpatterns += [
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-if apps.is_installed('rosetta'):
-    urlpatterns += [path('rosetta/', include('rosetta.urls'))]
 
 admin.site.site_header = _('app_name')
 admin.site.site_title = _('app_name')

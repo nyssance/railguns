@@ -7,15 +7,14 @@ from base64 import b64encode
 from urllib.parse import urlparse
 
 from django.conf import settings
-from rest_framework.decorators import permission_classes
 from rest_framework.exceptions import APIException, ValidationError
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework.views import APIView
 
-from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 from ..django.db.utils import timestamp
+from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
 
 def create_filename(filename):
@@ -103,7 +102,6 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     return params
 
 
-@permission_classes([IsAuthenticated])
 class DownloadUrlView(APIView):
     """
     获取下载地址
@@ -125,7 +123,6 @@ class DownloadUrlView(APIView):
         return Response(params)
 
 
-@permission_classes([IsAuthenticated])
 class UploadParamsView(APIView):
     """
     获取上传参数
