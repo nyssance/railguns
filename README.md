@@ -12,8 +12,8 @@ Only My Railgun
 
 ## Installation
 
-```bash
-sudo pip install railguns
+```sh
+pip install railguns
 ```
 
 ## Vendor
@@ -38,12 +38,6 @@ sudo pip install railguns
 - [hiredis](https://github.com/redis/hiredis)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 
-开发调试库
-
-- [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io)
-- [django-debug-toolbar-force](https://django-debug-toolbar-force.readthedocs.io)
-- [Rosetta](https://django-rosetta.readthedocs.io)
-
 前端库
 
 - [axios](https://github.com/axios/axios)
@@ -53,15 +47,6 @@ sudo pip install railguns
 - [Vue.js](https://vuejs.org)
 - [WeUI](https://github.com/Tencent/weui)
 - [weui.js](https://github.com/Tencent/weui.js)
-
-前端可选库
-
-- [clipboard.js](https://clipboardjs.com)
-- [GeoPattern](https://btmills.github.io/geopattern/)
-- [localForage](https://localforage.github.io/localForage/)
-- [Lodash](https://lodash.com)
-- [Moment](https://momentjs.com)
-- [Numeral.js](https://numeraljs.com/)
 
 ## License
 
