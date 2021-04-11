@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.41',
+    version='0.42',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',
@@ -21,18 +21,18 @@ setup(
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     install_requires=[
-        'django[argon2]==3.1.3',
-        'djangorestframework==3.12.1',
-        'djangorestframework_simplejwt==4.5.0',
-        'gunicorn==20.0.4',
-        'uvicorn==0.12.2',
+        'django[argon2]==3.2.0',
+        'djangorestframework==3.12.4',
+        'djangorestframework_simplejwt==4.6.0',
+        'gunicorn==20.1.0',
+        'uvicorn==0.13.4',
         #
         'django-ckeditor==6.0.0',
         'django-filter==2.4.0',
         'django-htmlmin==0.11.0',
         'django-redis-cache==3.0.0',
-        'hiredis==1.1.0',
-        'mysqlclient==2.0.1'
+        'hiredis==2.0.0',
+        'mysqlclient==2.0.3'
     ],
     extras_require={
         'dev': [],
