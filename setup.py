@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.42',
+    version='0.43',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',
@@ -21,7 +21,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     install_requires=[
-        'django[argon2]==3.2.0',
+        'django[argon2]==3.2.3',
         'djangorestframework==3.12.4',
         'djangorestframework_simplejwt==4.6.0',
         'gunicorn==20.1.0',
@@ -50,7 +50,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Internet :: WWW/HTTP'

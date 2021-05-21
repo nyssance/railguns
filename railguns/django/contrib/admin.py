@@ -13,6 +13,7 @@ class PreviewMixin:
     image_width = 100
     image_height = 100
 
+    @admin.display(description=_('preview'))
     def get_preview(self, obj):
         html = '<br>'.join('''<div style="width: {1}; height: {2}; overflow: hidden;">
                  <a href="{0}" rel="external" target="_blank">
@@ -20,8 +21,6 @@ class PreviewMixin:
                  </a>
                </div>'''.format(item.strip(), self.image_width, self.image_height) for item in obj.images.split('\n'))
         return format_html(html)
-
-    get_preview.short_description = _('preview')
 
 
 class CurrencyMixin:
