@@ -16,6 +16,7 @@ class SchemaMixin:
 
 
 class ModelMixin:
+
     def get_model(self):
         return self.serializer_class.Meta.model
 

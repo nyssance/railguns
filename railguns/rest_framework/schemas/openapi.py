@@ -4,6 +4,7 @@ from rest_framework.schemas.utils import is_list_view
 
 
 class AutoSchema(AutoSchema):
+
     def get_operation_id(self, path, method):
         method_name = getattr(self.view, 'action', method.lower())
         if is_list_view(path, method, self.view):

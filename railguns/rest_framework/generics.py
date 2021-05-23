@@ -4,8 +4,6 @@ from . import mixins
 from .schemas.openapi import AutoSchema
 
 
-
-
 class Base(mixins.ModelMixin):
     schema = AutoSchema()
 
