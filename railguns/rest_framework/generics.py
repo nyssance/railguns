@@ -1,9 +1,16 @@
 from rest_framework import generics
 
 from . import mixins
+from .schemas.openapi import AutoSchema
 
 
-class CreateAPI(mixins.ModelMixin, generics.CreateAPIView):
+
+
+class Base(mixins.ModelMixin):
+    schema = AutoSchema()
+
+
+class CreateAPI(Base, generics.CreateAPIView):
     """创建 API"""
 
     def get_queryset(self):
@@ -15,14 +22,14 @@ class CreateAPI(mixins.ModelMixin, generics.CreateAPIView):
                         user_avatar=self.request.user.avatar)
 
 
-class ListAPI(mixins.ModelMixin, generics.ListAPIView):
+class ListAPI(Base, generics.ListAPIView):
     """列表 API"""
 
     def get_queryset(self):
         return self.get_model().objects.filter(is_active=True)
 
 
-class ListCreateAPI(mixins.ModelMixin, generics.ListCreateAPIView):
+class ListCreateAPI(Base, generics.ListCreateAPIView):
     """列表 & 创建 API"""
 
     def get_queryset(self):
@@ -36,14 +43,14 @@ class ListCreateAPI(mixins.ModelMixin, generics.ListCreateAPIView):
                         user_avatar=self.request.user.avatar)
 
 
-class RetrieveAPI(mixins.ModelMixin, generics.RetrieveAPIView):
+class RetrieveAPI(Base, generics.RetrieveAPIView):
     """详情 API"""
 
     def get_queryset(self):
         return self.get_model().objects.filter(is_active=True)
 
 
-class RetrieveUpdateAPI(mixins.ModelMixin, generics.RetrieveUpdateAPIView):
+class RetrieveUpdateAPI(Base, generics.RetrieveUpdateAPIView):
     """详情 & 更新 API"""
 
     def get_queryset(self):

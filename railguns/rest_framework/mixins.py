@@ -7,16 +7,20 @@ from rest_framework.fields import CharField, SerializerMethodField
 from rest_framework.serializers import Serializer
 from rest_framework_simplejwt.tokens import SlidingToken
 
+from .schemas.openapi import AutoSchema
 from .utils import get_nested_list
 
 
-# Serializer Mixin
-class ModelMixin:
+class SchemaMixin:
+    schema = AutoSchema()
 
+
+class ModelMixin:
     def get_model(self):
         return self.serializer_class.Meta.model
 
 
+# Serializer Mixin
 class PasswordFieldMixin(Serializer):
     password = CharField(style={'input_type': 'password'}, min_length=6, max_length=128, write_only=True)
 
