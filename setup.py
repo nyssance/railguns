@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name='RailgunS',
-    version='0.47',
+    version='0.48',
     url='https://github.com/nyssance/railguns',
     author='NY',
     author_email='nyssance@icloud.com',
@@ -44,7 +44,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 3.0',
+        'Framework :: Django :: 4.0',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
