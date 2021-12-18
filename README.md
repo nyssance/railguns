@@ -34,9 +34,9 @@ pip install railguns
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
-- [django-redis-cache](https://django-redis-cache.readthedocs.io)
 - [hiredis](https://github.com/redis/hiredis)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
+- [redis-py](https://github.com/redis/redis-py)
 
 前端库
 
