@@ -31,14 +31,14 @@ setup(
         'django-filter==21.1',
         'django-htmlmin==0.11.0',
         'hiredis==2.0.0',
-        'mysqlclient==2.1.0'
+        'mysqlclient==2.1.0',
         'redis==4.0.2'
     ],
     extras_require={
         'dev': [],
         'prod': []
     },
-    python_requires='>=3.8',
+    python_requires='>=3.10',
     zip_safe=False,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
