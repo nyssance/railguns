@@ -22,13 +22,6 @@ def cleanup(c):
 
 
 @task
-def format(c):
-    """格式化"""
-    c.run('isort .')
-    c.run('yapf -irp .')
-
-
-@task
 def pypi(c):
     """自动打包上传到 PyPI"""
     cleanup(c)
@@ -38,8 +31,15 @@ def pypi(c):
 
 
 @task
+def reformat(c):
+    """格式化"""
+    c.run('isort .')
+    c.run('yapf -irp .')
+
+
+@task
 def update(c):
     """更新"""
     c.run('curl -fsSL https://raw.githubusercontent.com/nyssance/Free/master/gitignore/Python.gitignore > .gitignore')
-    c.run('curl -fsSL -O https://raw.githubusercontent.com/nyssance/Free/master/setup.cfg')
-    c.run(f'sed -i "" "s|<project-name>|{PROJECT_NAME}|g" setup.cfg')
+    c.run('curl -fsSL -O https://raw.githubusercontent.com/nyssance/Free/master/pyproject.toml')
+    c.run(f'sed -i "" "s|<project-name>|{PROJECT_NAME}|g" pyproject.toml')

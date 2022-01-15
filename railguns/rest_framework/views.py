@@ -82,18 +82,19 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     string_to_sign = b64encode(json.dumps(policy_dict).encode('utf-8'))
     #
     params = {'key': path, 'Content-Type': content_type, 'policy': string_to_sign}
-    if cloud == 'aliyun':  # 阿里云
-        signature = b64encode(
-            hmac.new(settings.CLOUD_STORAGE_SECRET.encode('utf-8'), string_to_sign, hashlib.sha1).digest())
-        params.update({'OSSAccessKeyId': settings.CLOUD_STORAGE_ID, 'signature': signature})
-    elif cloud == 'aws':  # AWS https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
-        for condition in conditions:
-            if isinstance(condition, dict):
-                params.update(condition)
-        params.pop('bucket')
-        signing_key = get_signing_key(settings.CLOUD_STORAGE_SECRET, date_stamp, region, 's3')
-        signature = hmac.new(signing_key, string_to_sign, hashlib.sha256).hexdigest()  # 16进制
-        params.update({'x-amz-meta-tag': '', 'x-amz-signature': signature})
+    match cloud:
+        case 'aliyun':  # 阿里云
+            signature = b64encode(
+                hmac.new(settings.CLOUD_STORAGE_SECRET.encode('utf-8'), string_to_sign, hashlib.sha1).digest())
+            params.update({'OSSAccessKeyId': settings.CLOUD_STORAGE_ID, 'signature': signature})
+        case 'aws':  # AWS https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
+            for condition in conditions:
+                if isinstance(condition, dict):
+                    params.update(condition)
+            params.pop('bucket')
+            signing_key = get_signing_key(settings.CLOUD_STORAGE_SECRET, date_stamp, region, 's3')
+            signature = hmac.new(signing_key, string_to_sign, hashlib.sha256).hexdigest()  # 16进制
+            params.update({'x-amz-meta-tag': '', 'x-amz-signature': signature})
     # 其他 Content-Encoding, Cache-Control
     if content_encoding == 'gzip':
         params['Content-Encoding'] = content_encoding
@@ -138,23 +139,22 @@ class UploadParamsView(APIView):
         filename = request.data.get('filename')
         if not filename:
             raise ValidationError('filename不能为空')
-        rename = False
         bucket = request.data.get('bucket', settings.BUCKET_MEDIA)
-        if bucket == settings.BUCKET_STATIC:  # 传到static下的不修改大小写
-            pass
-            # filename = filename.lower()
-        elif bucket == settings.BUCKET_MEDIA:
-            rename = True
         expiration = int(request.data.get('expiration', 24 * 365 * 50))  # 过期时间
         content_encoding = request.data.get('content_encoding', '')
         cache_control = request.data.get('cache_control')
-        endpoint = ''
-        if bucket == settings.BUCKET_MEDIA:
-            endpoint = settings.MEDIA_URL
-        elif bucket == settings.BUCKET_STATIC:
-            endpoint = settings.STATIC_URL
-        elif bucket == settings.BUCKET_CLOUD:
-            endpoint = settings.CLOUD_URL
+        rename = False
+        match bucket:
+            case settings.BUCKET_MEDIA:
+                endpoint = settings.MEDIA_URL
+                rename = True
+            case settings.BUCKET_STATIC:  # 传到static下的不修改大小写
+                endpoint = settings.STATIC_URL
+                # filename = filename.lower()
+            case settings.BUCKET_CLOUD:
+                endpoint = settings.CLOUD_URL
+            case _:
+                endpoint = ''
         params = get_params(kwargs.get(self.lookup_field), settings.CLOUD_STORAGE_REGION, bucket, filename, rename,
                             expiration, content_encoding, cache_control)
         return Response({'endpoint': endpoint, 'params': params})
