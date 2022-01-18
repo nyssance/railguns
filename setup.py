@@ -1,24 +1,37 @@
-import os
-
 from setuptools import find_packages, setup
 
 
-def read(fname):
-    with open(os.path.join(os.path.dirname(__file__), fname)) as f:
-        return f.read()
+with open('README.md', encoding='utf-8') as f:
+    long_description = f.read()
 
 
 setup(
     name='RailgunS',
-    version='0.52',
-    url='https://github.com/nyssance/railguns',
+    version='0.53',
     author='NY',
     author_email='nyssance@icloud.com',
     description='Only My Railgun',
-    long_description=read('README.md'),
+    long_description=long_description,
     long_description_content_type='text/markdown',
-    license='MIT',
-    packages=find_packages(exclude=['tests']),
+    url='https://github.com/nyssance/railguns',
+    project_urls={
+        'Bug Tracker': 'https://github.com/nyssance/railguns/issues'
+    },
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Framework :: Django :: 4.0',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Topic :: Internet :: WWW/HTTP'
+    ],
+    package_dir={'': 'src'},
+    packages=find_packages(where='src', exclude=['tests']),
+    python_requires='>=3.10',
+    # zip_safe=False,
     include_package_data=True,
     install_requires=[
         'django[argon2]==4.0.1',
@@ -37,21 +50,5 @@ setup(
     extras_require={
         'dev': [],
         'prod': []
-    },
-    python_requires='>=3.10',
-    zip_safe=False,
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Web Environment',
-        'Framework :: Django',
-        'Framework :: Django :: 4.0',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3 :: Only',
-        'Topic :: Internet :: WWW/HTTP'
-    ],
-    project_urls={'Source': 'https://github.com/nyssance/railguns'})
+    }
+)
