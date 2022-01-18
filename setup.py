@@ -28,8 +28,8 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Topic :: Internet :: WWW/HTTP'
     ],
-    package_dir={'': 'src'},
-    packages=find_packages(where='src', exclude=['tests']),
+    # package_dir={'': 'src'},
+    packages=find_packages(exclude=['tests']),
     python_requires='>=3.10',
     # zip_safe=False,
     include_package_data=True,
