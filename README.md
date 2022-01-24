@@ -50,4 +50,4 @@ pip install railguns
 
 ## License
 
-RailgunS is released under the MIT license. [See LICENSE](https://github.com/nyssance/railguns/blob/master/LICENSE) for details.
+RailgunS is released under the MIT license. [See LICENSE](https://github.com/nyssance/railguns/blob/main/LICENSE) for details.
