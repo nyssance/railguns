@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='RailgunS',
-    version='0.53',
+    version='0.55',
     author='NY',
     author_email='nyssance@icloud.com',
     description='Only My Railgun',
@@ -34,18 +34,18 @@ setup(
     # zip_safe=False,
     include_package_data=True,
     install_requires=[
-        'django[argon2]==4.0.1',
+        'django[argon2]==4.0.2',
         'djangorestframework==3.13.1',
         'djangorestframework_simplejwt==5.0.0',
         'gunicorn==20.1.0',
-        'uvicorn==0.17.0',
+        'uvicorn==0.17.4',
         #
         'django-ckeditor==6.2.0',
         'django-filter==21.1',
         'django-htmlmin==0.11.0',
         'hiredis==2.0.0',
         'mysqlclient==2.1.0',
-        'redis==4.1.1'
+        'redis==4.1.2'
     ],
     extras_require={
         'dev': [],
