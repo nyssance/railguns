@@ -53,7 +53,7 @@ test = [
 homepage = "https://github.com/nyssance/railguns"
 documentation = "https://github.com/nyssance/railguns"
 repository = "https://github.com/nyssance/railguns"
-changelog = "github.com/nyssance/railguns/CHANGELOG.md"
+changelog = "https://github.com/nyssance/railguns/blob/main/CHANGELOG.md"
 
 [tool.isort]
 profile = "django"
