@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='RailgunS',
-    version='0.57',
+    version='0.58',
     author='NY',
     author_email='nyssance@icloud.com',
     description='Only My Railgun',
@@ -38,10 +38,10 @@ setup(
         'djangorestframework==3.13.1',
         'djangorestframework_simplejwt==5.2.0',
         'gunicorn==20.1.0',
-        'uvicorn==0.17.6',
+        'uvicorn==0.18.1',
         #
-        'django-ckeditor==6.4.0',
-        'django-filter==21.1',
+        'django-ckeditor==6.4.2',
+        'django-filter==22.1',
         'django-htmlmin==0.11.0',
         'hiredis==2.0.0',
         'mysqlclient==2.1.0',
