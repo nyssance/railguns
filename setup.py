@@ -45,7 +45,7 @@ setup(
         'django-htmlmin==0.11.0',
         'hiredis==2.2.1',
         'mysqlclient==2.1.1',
-        'redis==4.5.1'
+        'redis==4.5.3'
     ],
     extras_require={
         'dev': [],
