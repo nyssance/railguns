@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "railguns"
-version = "0.69"
+version = "0.70"
 description = "Only My Railgun"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -39,7 +39,7 @@ dependencies = [
   "django-filter==23.2",
   "django-htmlmin==0.11.0",
   "hiredis==2.2.3",
-  "mysqlclient==2.2.0",
+  "mysqlclient==2.1.1",
   "redis==4.6.0"
 ]
 

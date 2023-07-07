@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='RailgunS',
-    version='0.69',
+    version='0.70',
     author='NY',
     author_email='nyssance@icloud.com',
     description='Only My Railgun',
@@ -44,7 +44,7 @@ setup(
         'django-filter==23.2',
         'django-htmlmin==0.11.0',
         'hiredis==2.2.3',
-        'mysqlclient==2.2.0',
+        'mysqlclient==2.1.1',
         'redis==4.6.0'
     ],
     extras_require={
