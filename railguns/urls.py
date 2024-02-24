@@ -19,7 +19,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('jsi18n/',
          cache_page(86400,
-                    key_prefix=f'js18n-{datetime.datetime.now().strftime("%Y%m%d")}')(JavaScriptCatalog.as_view()),
+                    key_prefix=f'js18n-{datetime.datetime.now().strftime('%Y%m%d')}')(JavaScriptCatalog.as_view()),
          name='javascript-catalog')
 ]
 # Vendor

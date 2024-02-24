@@ -54,5 +54,5 @@ class SuperAdmin(CurrencyMixin, PreviewMixin, admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     def log_change(self, request, obj, message):
-        new_message = f'json: {serializers.serialize("json", [obj])}'
+        new_message = f'json: {serializers.serialize('json', [obj])}'
         super().log_change(request, obj, new_message)
