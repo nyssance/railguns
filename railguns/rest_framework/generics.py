@@ -31,7 +31,7 @@ class ListCreateAPI(Base, generics.ListCreateAPIView):
     """列表 & 创建 API"""
 
     def get_queryset(self):
-        if self.request.method == 'GET':
+        if self.request.method == "GET":
             return self.get_model().objects.filter(is_active=True)
         return self.get_model().objects.all()
 
@@ -52,6 +52,6 @@ class RetrieveUpdateAPI(Base, generics.RetrieveUpdateAPIView):
     """详情 & 更新 API"""
 
     def get_queryset(self):
-        if self.request.method == 'GET':
+        if self.request.method == "GET":
             return self.get_model().objects.filter(is_active=True)
         return self.get_model().objects.all()

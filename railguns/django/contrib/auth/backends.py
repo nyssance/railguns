@@ -10,7 +10,7 @@ class ModelAndEmailBackend(ModelBackend):
         if username is None:
             username = kwargs.get(UserModel.USERNAME_FIELD)
         try:
-            if '@' in username:
+            if "@" in username:
                 user = UserModel._default_manager.get(email=username)
             else:
                 user = UserModel._default_manager.get_by_natural_key(username)
