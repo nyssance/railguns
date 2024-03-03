@@ -25,7 +25,6 @@ def pypi(c):
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
     c.run('python3 -m build')
-    # c.run('twine upload -r testpypi dist/*')
     c.run('twine upload dist/*')
     shutil.rmtree('dist')
 
