@@ -20,8 +20,8 @@ def cleanup(c):
 
 
 @task
-def pypi(c):
-    """自动打包上传到 PyPI"""
+def distribute(c):
+    """发布到 PyPI"""
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
     c.run("pyproject-build")
