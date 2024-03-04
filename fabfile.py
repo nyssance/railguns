@@ -24,7 +24,7 @@ def pypi(c):
     """自动打包上传到 PyPI"""
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
-    c.run("python3 -m build")
+    c.run("pyproject-build")
     c.run("twine upload dist/*")
     shutil.rmtree("dist")
 
