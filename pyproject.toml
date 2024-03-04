@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "railguns"
-version = "0.85"
+version = "0.86"
 description = "Only My Railgun"
 readme = "README.md"
 authors = [

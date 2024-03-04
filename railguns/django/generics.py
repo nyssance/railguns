@@ -33,7 +33,7 @@ class WebView(TemplateView):
         if self.endpoint is not None:
             version = settings.REST_FRAMEWORK.get("DEFAULT_VERSION", "")
             endpoint = self.endpoint or f"/api/{version}{request.get_full_path()}"
-            dataset_endpoint = f" data-endpoint="{endpoint}"" if endpoint else ""
+            dataset_endpoint = f" data-endpoint=\"{endpoint}\"" if endpoint else ""
         template_name = self.template_name or f"web/{self.name}.html"
         extras = kwargs
         is_weixin = "MicroMessenger" in request.headers["User-Agent"]
