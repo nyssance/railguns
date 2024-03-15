@@ -13,7 +13,7 @@ Only My Railgun
 ## Installation
 
 ```sh
-pip install railguns
+pip3 install railguns
 ```
 
 ## Vendor
@@ -34,19 +34,8 @@ pip install railguns
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
-- [hiredis](https://github.com/redis/hiredis)
 - [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
 - [redis-py](https://github.com/redis/redis-py)
-
-前端库
-
-- [axios](https://github.com/axios/axios)
-- [jQuery](https://jquery.com)
-- [jQuery Lazy](http://jquery.eisbehr.de/lazy/)
-- [Material Components for the Web](https://material.io/components/web/)
-- [Vue.js](https://vuejs.org)
-- [WeUI](https://github.com/Tencent/weui)
-- [weui.js](https://github.com/Tencent/weui.js)
 
 ## License
 
