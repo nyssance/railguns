@@ -30,8 +30,8 @@ def distribute(c):
 
 
 @task
-def reformat(c):
-    """格式化"""
+def format_code(c):
+    """格式化代码"""
     c.run("isort .")
     c.run("yapf -irp .")
 
