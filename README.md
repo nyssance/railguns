@@ -12,7 +12,7 @@ Only My Railgun
 
 ## Installation
 
-```sh
+```shell
 pip3 install railguns
 ```
 
