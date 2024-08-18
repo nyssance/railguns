@@ -31,7 +31,7 @@ pip3 install railguns
 
 常用库
 
-- [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
+- [Django CKEditor 5](https://github.com/hvlads/django-ckeditor-5)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
 - [mysql-connector-python](https://dev.mysql.com/doc/connector-python/en/connector-python-django-backend.html)
