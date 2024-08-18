@@ -24,7 +24,8 @@ def distribute(c):
     """发布到 PyPI"""
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
-    c.run("pyproject-build")
+    # c.run("pyproject-build")
+    c.run("pipx run build")
     c.run("twine upload dist/*")
     shutil.rmtree("dist")
 
