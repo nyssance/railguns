@@ -21,7 +21,7 @@ def cleanup(c):
 
 @task
 def distribute(c):
-    """发布到 PyPI"""
+    """发布到PyPI"""
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
     # c.run("pyproject-build")

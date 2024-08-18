@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "railguns"
-version = "0.91"
+version = "0.92"
 description = "Only My Railgun"
 readme = "README.md"
 authors = [{ name = "NY", email = "nyssance@icloud.com" }]
@@ -31,7 +31,7 @@ dependencies = [
   "django-ckeditor==6.7.1",
   "django-filter==24.3",
   "django-htmlmin==0.11.0",
-  "mysqlclient==2.2.4",
+  "mysql-connector-python==9.0.0",
   "redis==5.0.8",
 ]
 

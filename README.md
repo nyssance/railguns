@@ -34,7 +34,7 @@ pip3 install railguns
 - [Django CKEditor](https://github.com/django-ckeditor/django-ckeditor)
 - [Django Filter](https://django-filter.readthedocs.io)
 - [django-htmlmin](https://github.com/cobrateam/django-htmlmin)
-- [mysqlclient](https://github.com/PyMySQL/mysqlclient-python)
+- [mysql-connector-python](https://dev.mysql.com/doc/connector-python/en/connector-python-django-backend.html)
 - [redis-py](https://github.com/redis/redis-py)
 
 ## License
