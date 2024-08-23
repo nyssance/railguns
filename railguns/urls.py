@@ -27,13 +27,14 @@ urlpatterns += [
     path("api-auth/", include("rest_framework.urls")),
     path("api/token/", token_obtain_pair, name="token_obtain_pair"),
     path("api/token/refresh/", token_refresh, name="token_refresh"),
+    path("ckeditor5/", include("django_ckeditor_5.urls")),
     # path("search/", include("haystack.urls"))
 ]
 # Railgun S
 urlpatterns += [
     re_path(r"^download-url/(?P<cloud>(aliyun|aws))/$", DownloadUrlView.as_view(), name="download-url"),
     re_path(r"^upload-params/(?P<cloud>(aliyun|aws))/$", UploadParamsView.as_view(), name="upload-params"),
-    path("favicon.ico", RedirectView.as_view(url=f"{settings.STATIC_URL}favicon.ico", permanent=True)),
+    path("favicon.ico", RedirectView.as_view(url=f"{settings.STATIC_URL}favicon.ico", permanent=True))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
