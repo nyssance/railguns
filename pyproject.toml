@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "railguns"
 version = "0.95"
 description = "Only My Railgun"
+authors = ["NY <nyssance@icloud.com>"]
 readme = "README.md"
-authors = [{ name = "NY", email = "nyssance@icloud.com" }]
 license = { file = "LICENSE" }
 keywords = ["django", "railguns"]
 requires-python = ">=3.12"
@@ -44,19 +44,11 @@ documentation = "https://github.com/nyssance/railguns"
 repository = "https://github.com/nyssance/railguns"
 changelog = "https://github.com/nyssance/railguns/blob/main/CHANGELOG.md"
 
+[tool.poetry.dependencies]
+python = "^3.12"
+
 [tool.isort]
 profile = "django"
 include_trailing_comma = false
 line_length = 120
 #multi_line_output = 0
-
-[tool.pylint.format]
-good-names-rgxs = "^[_a-z][_a-z0-9]?$"
-max-line-length = 120
-
-[tool.pylint.messages_control]
-disable = ["missing-docstring"]
-
-[tool.yapf]
-based_on_style = "google"
-column_limit = 120
