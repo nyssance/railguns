@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "railguns"
-version = "0.95"
+version = "0.96"
 description = "Only My Railgun"
 authors = ["NY <nyssance@icloud.com>"]
 readme = "README.md"
@@ -22,17 +22,17 @@ classifiers = [
   "Topic :: Internet :: WWW/HTTP",
 ]
 dependencies = [
-  "django[argon2]==5.1",
+  "django[argon2]==5.1.1",
   "djangorestframework==3.15.2",
   "djangorestframework_simplejwt==5.3.1",
   "gunicorn==23.0.0",
-  "uvicorn==0.30.6",
+  "uvicorn==0.31.0",
   #
   "django-ckeditor-5==0.2.13",
   "django-filter==24.3",
   "django-htmlmin==0.11.0",
   "mysql-connector-python==9.0.0",
-  "redis==5.0.8",
+  "redis==5.1.0",
 ]
 
 [project.optional-dependencies]
