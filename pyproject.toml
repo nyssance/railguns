@@ -5,12 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "railguns"
 version = "0.96"
+authors = [{ name = "NY ", email = "nyssance@icloud.com" }]
 description = "Only My Railgun"
-authors = ["NY <nyssance@icloud.com>"]
 readme = "README.md"
 license = { file = "LICENSE" }
 keywords = ["django", "railguns"]
-requires-python = ">=3.12"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
@@ -21,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Internet :: WWW/HTTP",
 ]
+requires-python = ">=3.12"
 dependencies = [
   "django[argon2]==5.1.1",
   "djangorestframework==3.15.2",
@@ -37,15 +37,14 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest > 8.0.0", "pytest-cov[all]"]
+cli = ["fabric", "rich"]
 
 [project.urls]
-homepage = "https://github.com/nyssance/railguns"
-documentation = "https://github.com/nyssance/railguns"
-repository = "https://github.com/nyssance/railguns"
-changelog = "https://github.com/nyssance/railguns/blob/main/CHANGELOG.md"
-
-[tool.poetry.dependencies]
-python = "^3.12"
+Homepage = "https://github.com/nyssance/railguns"
+Documentation = "https://github.com/nyssance/railguns"
+Repository = "https://github.com/nyssance/railguns.git"
+Issues = "https://github.com/nyssance/railguns/issues"
+Changelog = "https://github.com/nyssance/railguns/blob/main/CHANGELOG.md"
 
 [tool.isort]
 profile = "django"

@@ -10,12 +10,6 @@ Only My Railgun
 
 ---
 
-## Installation
-
-```shell
-pip3 install railguns
-```
-
 ## Vendor
 
 框架用到的库
@@ -40,3 +34,5 @@ pip3 install railguns
 ## License
 
 RailgunS is released under the MIT license. [See LICENSE](https://github.com/nyssance/railguns/blob/main/LICENSE) for details.
+
+[pyproject.toml] https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
