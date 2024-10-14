@@ -1,14 +1,11 @@
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "railguns"
-version = "0.97"
-authors = [{ name = "NY ", email = "nyssance@icloud.com" }]
+version = "0.98"
 description = "Only My Railgun"
 readme = "README.md"
+requires-python = ">=3.13"
 license = { file = "LICENSE" }
+authors = [{ name = "NY ", email = "nyssance@icloud.com" }]
 keywords = ["django", "railguns"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -20,7 +17,6 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Topic :: Internet :: WWW/HTTP",
 ]
-requires-python = ">=3.13"
 dependencies = [
   "django[argon2]==5.1.2",
   "djangorestframework==3.15.2",
@@ -51,3 +47,7 @@ profile = "django"
 include_trailing_comma = false
 line_length = 120
 #multi_line_output = 0
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

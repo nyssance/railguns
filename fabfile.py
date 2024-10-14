@@ -24,9 +24,8 @@ def distribute(c):
     """发布到PyPI"""
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
-    # c.run("pyproject-build")
-    c.run("pipx run build")
-    c.run("twine upload dist/*")
+    c.run("uv build")
+    c.run("uv publish --token $UV_PUBLISH_TOKEN")
     shutil.rmtree("dist")
 
 
@@ -34,10 +33,9 @@ def distribute(c):
 def format_code(c):
     """格式化代码"""
     c.run("isort .")
-    c.run("yapf -irp .")
 
 
 @task
-def update(c):
-    """更新"""
+def upgrade(c):
+    """升级"""
     c.run("curl -fsSL https://raw.githubusercontent.com/nyssance/Free/main/gitignore/Django.gitignore > .gitignore")
