@@ -3,8 +3,6 @@ from pathlib import Path
 
 from fabric import task
 
-PROJECT_NAME = Path(__file__).resolve(strict=True).parent.name
-
 
 @task
 def cleanup(c):
