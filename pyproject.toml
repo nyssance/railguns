@@ -1,6 +1,6 @@
 [project]
 name = "railguns"
-version = "0.100"
+version = "0.101"
 description = "Only My Railgun"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -24,7 +24,7 @@ dependencies = [
   "gunicorn==23.0.0",
   "uvicorn==0.32.0",
   #
-  "django-ckeditor-5==0.2.13",
+  "django-ckeditor-5==0.2.15",
   "django-filter==24.3",
   "django-htmlmin==0.11.0",
   "mysql-connector-python==9.1.0",
