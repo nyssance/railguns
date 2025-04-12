@@ -17,10 +17,13 @@ from .rest_framework.views import DownloadUrlView, UploadParamsView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
-    path("jsi18n/",
-         cache_page(86400,
-                    key_prefix=f"js18n-{datetime.datetime.now().strftime("%Y%m%d")}")(JavaScriptCatalog.as_view()),
-         name="javascript-catalog")
+    path(
+        "jsi18n/",
+        cache_page(86400, key_prefix=f"js18n-{datetime.datetime.now().strftime("%Y%m%d")}")(
+            JavaScriptCatalog.as_view()
+        ),
+        name="javascript-catalog"
+    )
 ]
 # Vendor
 urlpatterns += [

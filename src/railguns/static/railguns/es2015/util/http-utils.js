@@ -22,10 +22,10 @@ const httpUtilrequest = (method, url, params, success, failure, complete) => {
     success && success(code, res.data)
   }).catch(error => {
     let message
-    if (error.response) { // 请求已经发出，但是服务器响应返回的状态吗不在2xx的范围内
+    if (error.response) { // 请求已经发出, 但是服务器响应返回的状态吗不在2xx的范围内
       const data = error.response.data
       message = data ? JSON.stringify(data) : error.response.statusText
-    } else if (error.request) { // 请求已经发出，没有响应
+    } else if (error.request) { // 请求已经发出, 没有响应
       message = error.request
     } else { // 一些错误是在设置请求的时候触发
       message = error.message

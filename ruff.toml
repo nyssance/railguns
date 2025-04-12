@@ -1,0 +1,23 @@
+line-length = 120
+target-version = "py313"
+
+[lint]
+select = ["ALL"]
+ignore = [
+    "I001", # isort
+    "D", # "D100", "D103", "D104", "D400", "D415",
+    "COM812", "CPY", "TD", "FIX", # flake8
+    "ERA", # commented-out-code
+    "PLR0913", "PLR2004" # too-many-arguments, magic-value-comparison
+]
+unfixable = [
+    "T20",
+    "F401", # unused-import
+    "F841"
+]
+
+[format]
+line-ending = "lf"
+preview = true
+quote-style = "preserve"
+skip-magic-trailing-comma = true

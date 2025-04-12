@@ -1,4 +1,3 @@
-from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -8,21 +7,20 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 
-def generate_link(urlstring: str, request: Optional[HttpRequest]) -> str:
+def generate_link(urlstring: str, request: HttpRequest | None) -> str:
     if not urlstring or urlparse(urlstring).scheme:  # 如果为空或有scheme
         return urlstring
-    else:
-        if request:
-            app_scheme = request.headers.get("App-Scheme")
-            if app_scheme:
-                return f"{app_scheme}://{urlstring}"
-        return f"/{urlstring}/" if urlstring != "/" else "/"
+    if request:
+        app_scheme = request.headers.get("App-Scheme")
+        if app_scheme:
+            return f"{app_scheme}://{urlstring}"
+    return f"/{urlstring}/" if urlstring != "/" else "/"
 
 
 class WebView(TemplateView):
-    name: Optional[str] = None
-    title: Optional[str] = None
-    endpoint: Optional[str] = ""
+    name: str | None = None
+    title: str | None = None
+    endpoint: str | None = ""
 
     def get(self, request, *args, **kwargs):
         if self.name.endswith("_create"):  # 创建页
@@ -33,7 +31,7 @@ class WebView(TemplateView):
         if self.endpoint is not None:
             version = settings.REST_FRAMEWORK.get("DEFAULT_VERSION", "")
             endpoint = self.endpoint or f"/api/{version}{request.get_full_path()}"
-            dataset_endpoint = f" data-endpoint=\"{endpoint}\"" if endpoint else ""
+            dataset_endpoint = f' data-endpoint="{endpoint}"' if endpoint else ""
         template_name = self.template_name or f"web/{self.name}.html"
         extras = kwargs
         is_weixin = "MicroMessenger" in request.headers["User-Agent"]

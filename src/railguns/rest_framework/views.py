@@ -17,7 +17,7 @@ from ..django.db.utils import timestamp
 from .serializers import DownloadUrlSerializer, UploadParamsSerializer
 
 
-def create_filename(filename):
+def create_filename(filename) -> str:
     ext = filename.split(".")[-1]
     return f"{uuid.uuid4().hex}.{ext}"
 
@@ -30,13 +30,13 @@ def get_signing_key(key, date_stamp, region, service):
     kDate = sign(("AWS4" + key).encode("utf-8"), date_stamp)
     kRegion = sign(kDate, region)
     kService = sign(kRegion, service)
-    kSigning = sign(kService, "aws4_request")
-    return kSigning
+    return sign(kService, "aws4_request")
 
 
 def get_signature(msg, digestmod):
     if not settings.CLOUD_STORAGE_SECRET:
-        raise APIException("CLOUD_STORAGE_SECRET 不存在")
+        msg = "CLOUD_STORAGE_SECRET 不存在"
+        raise APIException(msg)
     key = settings.CLOUD_STORAGE_SECRET.encode()
     return b64encode(hmac.new(key, msg.encode("utf-8"), digestmod).digest()).decode()
 
@@ -45,14 +45,16 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
     path = f"upload/{create_filename(filename)}" if rename else filename  # 是否重命名
     # 计算policy
-    conditions = [{
-        "bucket": bucket
-    }, ["starts-with", "$key", path.split("/")[0]], ["starts-with", "$Content-Type", content_type]]
+    conditions = [
+        {"bucket": bucket},
+        ["starts-with", "$key", path.split("/")[0]],
+        ["starts-with", "$Content-Type", content_type]
+    ]
     policy_dict = {
-        "expiration":
-            (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime("%Y-%m-%dT%H:%M:%S.000Z"),
-        "conditions":
-            conditions
+        "expiration": (datetime.datetime.utcnow() + datetime.timedelta(hours=expiration)).strftime(
+            "%Y-%m-%dT%H:%M:%S.000Z"
+        ),
+        "conditions": conditions
     }
     # 时间相关
     t = datetime.datetime.utcnow()
@@ -60,32 +62,27 @@ def get_params(cloud, region, bucket, filename, rename, expiration, content_enco
     amz_date = t.strftime("%Y%m%dT%H%M%SZ")
     date_stamp = t.strftime("%Y%m%d")
     if cloud == "aws":
-        conditions += [{
-            "acl": "public-read"
-        }, {
-            "success_action_status": "204"
-        }, {
-            "x-amz-meta-uuid": "14365123651274"
-        }, {
-            "x-amz-server-side-encryption": "AES256"
-        }, ["starts-with", "$x-amz-meta-tag", ""], {
-            "x-amz-credential": f"{settings.CLOUD_STORAGE_ID}/{date_stamp}/{region}/s3/aws4_request"
-        }, {
-            "x-amz-algorithm": "AWS4-HMAC-SHA256"
-        }, {
-            "x-amz-date": amz_date
-        }]
+        conditions += [
+            {"acl": "public-read"},
+            {"success_action_status": "204"},
+            {"x-amz-meta-uuid": "14365123651274"},
+            {"x-amz-server-side-encryption": "AES256"},
+            ["starts-with", "$x-amz-meta-tag", ""],
+            {"x-amz-credential": f"{settings.CLOUD_STORAGE_ID}/{date_stamp}/{region}/s3/aws4_request"},
+            {"x-amz-algorithm": "AWS4-HMAC-SHA256"},
+            {"x-amz-date": amz_date}
+        ]
         policy_dict["conditions"] = conditions
         # policy_dict["conditions"].append(["content-length-range", 1, 1024 * 1024 * 4])
     if content_encoding == "gzip":
         policy_dict["conditions"].append(["starts-with", "$Content-Encoding", content_encoding])
     string_to_sign = b64encode(json.dumps(policy_dict).encode("utf-8"))
-    #
     params = {"key": path, "Content-Type": content_type, "policy": string_to_sign}
     match cloud:
         case "aliyun":  # 阿里云
             signature = b64encode(
-                hmac.new(settings.CLOUD_STORAGE_SECRET.encode("utf-8"), string_to_sign, hashlib.sha1).digest())
+                hmac.new(settings.CLOUD_STORAGE_SECRET.encode("utf-8"), string_to_sign, hashlib.sha1).digest()
+            )
             params.update({"OSSAccessKeyId": settings.CLOUD_STORAGE_ID, "signature": signature})
         case "aws":  # AWS https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html
             for condition in conditions:
@@ -107,14 +104,17 @@ class DownloadUrlView(APIView):
     """
     获取下载地址
     """
+
     lookup_field = "cloud"
     serializer_class = DownloadUrlSerializer
 
     def get(self, request, *args, **kwargs):
         url = request.GET.get(
-            "url")  # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
+            "url"
+        )  # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
         if not url:
-            raise ValidationError("url不能为空")
+            msg = "url不能为空"
+            raise ValidationError(msg)
         url_components = urlparse(url)
         bucket = url_components.netloc.replace(f".{settings.CLOUD_STORAGE_DOMAIN_NAME}", "")
         expires = int(timestamp(datetime.datetime.now())) + 600  # 10分钟有效
@@ -132,13 +132,15 @@ class UploadParamsView(APIView):
     content_encoding -- (可选)默认不压缩
     cache_control -- (可选)默认没有
     """
+
     lookup_field = "cloud"
     serializer_class = UploadParamsSerializer  # 加了只是为OpenAPI用, 不影响输出结果
 
     def post(self, request, *args, **kwargs):
         filename = request.data.get("filename")
         if not filename:
-            raise ValidationError("filename不能为空")
+            msg = "filename不能为空"
+            raise ValidationError(msg)
         bucket = request.data.get("bucket", settings.BUCKET_MEDIA)
         expiration = int(request.data.get("expiration", 24 * 365 * 50))  # 过期时间
         content_encoding = request.data.get("content_encoding", "")
@@ -155,6 +157,14 @@ class UploadParamsView(APIView):
                 endpoint = settings.CLOUD_URL
             case _:
                 endpoint = ""
-        params = get_params(kwargs.get(self.lookup_field), settings.CLOUD_STORAGE_REGION, bucket, filename, rename,
-                            expiration, content_encoding, cache_control)
+        params = get_params(
+            kwargs.get(self.lookup_field),
+            settings.CLOUD_STORAGE_REGION,
+            bucket,
+            filename,
+            rename,
+            expiration,
+            content_encoding,
+            cache_control
+        )
         return Response({"endpoint": endpoint, "params": params})

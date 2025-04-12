@@ -16,7 +16,6 @@ class SchemaMixin:
 
 
 class ModelMixin:
-
     def get_model(self):
         return self.serializer_class.Meta.model
 
@@ -48,8 +47,7 @@ class ImagesFieldMixin(Serializer):
     def get_images(self, obj):
         if hasattr(obj, "images"):
             return get_nested_list([{"uri": item.strip()} for item in obj.images.split("\n") if item.strip()])
-        else:
-            return "👈⚠️️字段不存在，请去除。"
+        return "👈⚠️️字段不存在, 请去除。"
 
 
 class TagsFieldMixin(Serializer):
@@ -58,8 +56,7 @@ class TagsFieldMixin(Serializer):
     def get_tags(self, obj):
         if hasattr(obj, "tags"):
             return [item.strip() for item in obj.tags.split("#") if item.strip()]
-        else:
-            return "👈⚠️️字段不存在，请去除。"
+        return "👈⚠️️字段不存在, 请去除。"
 
 
 class StartDateFieldMixin(Serializer):
@@ -75,8 +72,7 @@ class EndDateFieldMixin(Serializer):
     def get_end_date(self, obj):
         if obj.period <= 0:
             return ""
-        else:
-            return self.get_date_after_period(localtime(obj.start_time), obj.period)
+        return self.get_date_after_period(localtime(obj.start_time), obj.period)
 
     def get_date_after_period(self, date, period):
         days = period
@@ -88,6 +84,5 @@ class EndDateFieldMixin(Serializer):
 
 # View Mixin
 class OwnerMixin:
-
-    def pre_save(self, obj):
+    def pre_save(self, obj) -> None:
         obj.user_id = self.request.user.id

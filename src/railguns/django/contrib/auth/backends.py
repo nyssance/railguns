@@ -4,8 +4,7 @@ from django.contrib.auth.backends import ModelBackend
 
 # SO https://stackoverflow.com/questions/37332190/django-login-with-email#42848959
 class ModelAndEmailBackend(ModelBackend):
-
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    def authenticate(self, request, username: str | None = None, password: str | None = None, **kwargs):
         UserModel = get_user_model()
         if username is None:
             username = kwargs.get(UserModel.USERNAME_FIELD)

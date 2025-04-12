@@ -14,10 +14,10 @@ class CreateAPI(Base, generics.CreateAPIView):
     def get_queryset(self):
         return self.get_model().objects.all()
 
-    def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user.id,
-                        username=self.request.user.username,
-                        user_avatar=self.request.user.avatar)
+    def perform_create(self, serializer) -> None:
+        serializer.save(
+            user_id=self.request.user.id, username=self.request.user.username, user_avatar=self.request.user.avatar
+        )
 
 
 class ListAPI(Base, generics.ListAPIView):
@@ -35,10 +35,10 @@ class ListCreateAPI(Base, generics.ListCreateAPIView):
             return self.get_model().objects.filter(is_active=True)
         return self.get_model().objects.all()
 
-    def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user.id,
-                        username=self.request.user.username,
-                        user_avatar=self.request.user.avatar)
+    def perform_create(self, serializer) -> None:
+        serializer.save(
+            user_id=self.request.user.id, username=self.request.user.username, user_avatar=self.request.user.avatar
+        )
 
 
 class RetrieveAPI(Base, generics.RetrieveAPIView):

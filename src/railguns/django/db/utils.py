@@ -1,6 +1,5 @@
 import datetime
 import time
-from typing import Optional
 
 from django.conf import settings
 from django.utils import timezone
@@ -29,32 +28,28 @@ def get_user_id(pk: int) -> int:
     return pk & 0xFFFFFFFF
 
 
-def db_master(user_id: Optional[int] = None) -> str:
+def db_master(user_id: int | None = None) -> str:
     """
     需要保证传入的user_id都是int
     """
     if not user_id:
         return "default"
-    else:
-        if user_id < 100001:
-            return "default"
-        else:
-            return f"db_{user_id % settings.SHARD_COUNT}"
+    if user_id < 100001:
+        return "default"
+    return f"db_{user_id % settings.SHARD_COUNT}"
 
 
-def db_slave(user_id: Optional[int] = None) -> str:
+def db_slave(user_id: int | None = None) -> str:
     suffix = ""
     return f"{db_master(user_id)}{suffix}"  # replica_
 
 
-def redis_master(user_id: Optional[int] = None) -> int:
+def redis_master(user_id: int | None = None) -> int:
     if not user_id:
         return 0
-    else:
-        if user_id < 100001:
-            return 0
-        else:
-            return int(user_id / 1000)
+    if user_id < 100001:
+        return 0
+    return int(user_id / 1000)
 
 
 def datetime_to_unixtime(date_time) -> int:
@@ -65,8 +60,7 @@ def datetime_to_unixtime(date_time) -> int:
 
 def unixtime_to_datetime(local_time):
     date_string = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(local_time))
-    date_time = datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
-    return date_time
+    return datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
 
 
 def unixtime_to_date(local_time):

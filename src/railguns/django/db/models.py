@@ -27,20 +27,17 @@ class AbstractBaseModel(DateTimeModelMixin):
 
 
 class BaseModel(AbstractBaseModel):
-
     class Meta(AbstractBaseModel.Meta):
         abstract = True
 
 
 class OwnerModel(BaseModel):
-    user_id = models.PositiveIntegerField(_f("user", "id"),
-                                          validators=[MinValueValidator(1)],
-                                          default=1,
-                                          editable=False)
-    username = models.CharField(dj_gettext("username"),
-                                max_length=150,
-                                validators=[AbstractUser.username_validator],
-                                editable=False)  # 长度和Django的User保持一致
+    user_id = models.PositiveIntegerField(
+        _f("user", "id"), validators=[MinValueValidator(1)], default=1, editable=False
+    )
+    username = models.CharField(
+        dj_gettext("username"), max_length=150, validators=[AbstractUser.username_validator], editable=False
+    )  # 长度和Django的User保持一致
     user_avatar = models.URLField(_("avatar"), max_length=255, blank=True, editable=False)
 
     class Meta(BaseModel.Meta):
@@ -49,6 +46,7 @@ class OwnerModel(BaseModel):
 
 class PostModel(OwnerModel):
     """内容发布类模型"""
+
     title = models.CharField(_("title"), max_length=255)
     summary = models.CharField(_("summary"), max_length=2000, blank=True)
     images = models.CharField(_("images"), max_length=2000, blank=True)
@@ -57,7 +55,7 @@ class PostModel(OwnerModel):
     class Meta(OwnerModel.Meta):
         abstract = True
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -67,7 +65,7 @@ class ShardModel(OwnerModel):
     class Meta(OwnerModel.Meta):
         abstract = True
 
-    def save(self, using="default", *args, **kwargs):
+    def save(self, using="default", *args, **kwargs) -> None:
         self.full_clean()
         self.pk = self.pk or generate_shard_id(self.user_id)
         super().save(using=db_master(self.user_id), *args, **kwargs)
@@ -80,7 +78,7 @@ class ShardLCModel(OwnerModel):
     class Meta(OwnerModel.Meta):
         abstract = True
 
-    def save(self, using="default", *args, **kwargs):
+    def save(self, using="default", *args, **kwargs) -> None:
         self.full_clean()
         self.pk = self.pk or generate_shard_id(self.user_id)
         super().save(using=db_master(self.user_id), *args, **kwargs)  # 保存第一份

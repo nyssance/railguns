@@ -1,6 +1,6 @@
 $(function () {
   // 通用 TODO: 如何兼容vue
-  $('body').on('click', 'a[rel*=external]', e => { // 打开外部链接，target=_blank不符合W3C标准
+  $('body').on('click', 'a[rel*=external]', e => { // 打开外部链接, target=_blank不符合W3C标准
     window.open(this.href)
     e.preventDefault() // 正确使用return false
   })

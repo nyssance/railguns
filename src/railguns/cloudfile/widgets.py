@@ -9,12 +9,11 @@ from django.utils.safestring import mark_safe
 
 
 class CloudFileWidget(widgets.TextInput):
-
     class Media:
         js = ["s3direct/dist/index.js"]
         css = {"all": ["s3direct/dist/index.css"]}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.dest = kwargs.pop("dest", None)
         super().__init__(*args, **kwargs)
 
