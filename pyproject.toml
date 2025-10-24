@@ -1,9 +1,9 @@
 [project]
 name = "railguns"
-version = "0.105"
+version = "0.106"
 description = "Only My Railgun"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 license = { file = "LICENSE" }
 authors = [{ name = "NY ", email = "nyssance@icloud.com" }]
 keywords = ["django", "railguns"]
@@ -14,21 +14,21 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Internet :: WWW/HTTP",
 ]
 dependencies = [
-  "django[argon2]==5.2",
-  "djangorestframework==3.16.0",
-  "djangorestframework_simplejwt==5.5.0",
+  "django[argon2]==5.2.7",
+  "djangorestframework==3.16.1",
+  "djangorestframework_simplejwt==5.5.1",
   "gunicorn==23.0.0",
-  "uvicorn==0.34.0",
+  "uvicorn==0.38.0",
   #
-  "django-ckeditor-5==0.2.17",
-  "django-filter==25.1",
+  "django-ckeditor-5==0.2.18",
+  "django-filter==25.2",
   "django-htmlmin==0.11.0",
-  "mysql-connector-python==9.2.0",
-  "redis==5.2.1",
+  "mysql-connector-python==9.5.0",
+  "redis==7.0.0",
 ]
 
 [project.optional-dependencies]
