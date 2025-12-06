@@ -32,7 +32,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest > 8.0.0", "pytest-cov[all]"]
+test = ["pytest >= 9.0.0", "pytest-cov[all]"]
 cli = ["fabric", "rich"]
 
 [project.urls]
