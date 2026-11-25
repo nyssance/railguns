@@ -12,7 +12,12 @@
 - 项目的接口入口改用 `railguns.rest_framework.api.API`. 错误格式固定为 `{"code", "detail", "fields"}`, 不接受自定义
 - 资源接口只用 Pydantic 模型: `serializer_class` 是响应, 新增的 `input_class` 是请求体. 原来基于 Bolt `Serializer` 的写法移除.
   主键和所有者字段不允许出现在 `input_class` 里
-- 读 (列表, 详情) 改为由 Django 编译 SQL, 原生异步连接执行, 不经过 ORM 的线程池
+- 处理函数是同步的, 数据访问就是 Django 的 ORM (`filter`, `count`, 切片, `save()`), 连接是 Django 的连接池,
+  事务是 `transaction.atomic`. 默认值, `db_default`, `auto_now`, 信号, 覆盖的 `save()` 都照常生效.
+  处理函数是普通的 `def` 函数, 引擎默认在线程池里执行 (`DJANGO_BOLT_EXECUTOR_THREADS`, 默认 CPU 数 + 4,
+  最多 32), 一个请求一次线程切换. 再多的并发开更多进程. 吞吐的测量还没有做.
+  资源类的钩子 (`get_queryset`, `filter_queryset`, `perform_create`, `perform_update`, `get_user`,
+  `has_permission`) 和业务函数都是同步的; `run` 不再接受异步函数, `Actor.auser()` 移除, 用 `actor.user`.
 - 列表读出的列按 `serializer_class` 里声明的顺序
 - 创建成功返回 201
 - 接口名改为取自视图类名, 原来取自模型名, 同一个模型有多个视图时会重名
@@ -21,7 +26,7 @@
   在列表里 500. 详情不再返回模型实例, 和列表用同一份代码建响应
 - 有 `choices` 的模型字段做路径参数时, 只接受其中的值, 其余是 422 (以前查出一个空列表). 接口定义里是 enum
 - 幂等的业务接口带键时, 整个处理函数在键的事务里执行, 存下它最后返回的响应 (以前存的是业务函数的返回值).
-  `run` 之后可以接着处理; 不再要求业务函数是同步的
+  `run` 之后可以接着处理
 - `RAILGUNS_LOGIN_PROFILE` 指定的函数必须声明返回类型 (Pydantic 模型). 登录的响应类型 `LoginResult` 由它生成,
   不再是 `additionalProperties`. 响应的字段和以前一样, 资料和令牌在同一层. `auth.login` 改为 `auth.login_handler()` 生成
 - `PAGE_SIZE`, `MAX_PAGE_SIZE` 移到 `pagination`, `generics` 里仍可导入
@@ -41,7 +46,6 @@
   `RAILGUNS_FOREIGN_KEY_APPS` (应用标签列表, 默认空) 里的应用整个不检查, 别的应用里指向它们的外键照样报;
   这个配置不是字符串列表或有没安装的应用时报错 (`railguns.E004`)
   别的表的行用 id 列引用, 资源接口只输出列和计算字段
-- `railguns.testing.runner.Runner`: 测试运行器, 删测试库之前先关掉连接池
 - 访问日志默认由引擎在 Rust 里写到标准输出, 每个请求一行 JSON
 - 登出: `POST /auth/logout` (这一次登录), `POST /auth/logout-all` (所有设备)
 - `manage.py openapi`: 导出接口定义, `--check` 检查它和代码一致, `--breaking` 用 oasdiff 检查破坏性变更
@@ -49,13 +53,6 @@
   TypeScript (Orval), Swift, Kotlin, Dart 四个端的客户端
 - 列表接口的 `page` / `page_size` 和筛选参数写进接口定义
 - 登录和刷新声明了返回类型 `LoginResult` / `TokenPair`
-- 读更快: 一页只发一条语句 (总数是标量子查询); 编译好的 SQL 按请求的输入记在每个进程的 LRU 里 (4096 条),
-  同样的请求不再编译; `serializer_class` 只有列时一页直接编码, 不逐行校验. 单进程实测列表 2,800 → 6,600 req/s,
-  详情 4,100 → 12,400 req/s. 覆盖了 `get_queryset` / `filter_queryset` 的类每次都编译
-- 创建更快: INSERT 由 Django 编译, `RETURNING` 响应要的列, 原生连接上一条语句, 不经过线程池; SQL 每个视图类编译一次.
-  所有者字段 (`user_id`, `username`, `user_avatar`) 在同一条语句里从用户表读出 (`INSERT ... SELECT`), 不再经过 ORM 读用户.
-  有 `pre_save` / `post_save` 接收者, 覆盖了 `save()`, 视图覆盖了 `perform_create` / `get_user`, 带 `Idempotency-Key` 时
-  照旧走 ORM. 单进程顺序调用实测 `PostModel` 的创建 660 → 190 us
 - 令牌有效, 但用户已删除或停用时, 创建是 401 (`not_authenticated`), 不写入. 以前是 500
 - 创建和更新违反唯一约束时是 409: `{"code": "conflict", "fields": [{"loc": ["title"], "type": "unique", ...}]}`,
   认不出约束的字段时没有 `fields`. 以前是 500. 其他完整性错误 (非空, 检查约束等) 仍然是 500

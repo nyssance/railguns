@@ -1,7 +1,7 @@
 """Idempotency-Key (draft-ietf-httpapi-idempotency-key-header)."""
 
-import asyncio
 import threading
+import time
 from datetime import timedelta
 from io import StringIO
 from types import SimpleNamespace
@@ -105,8 +105,8 @@ def test_users_have_their_own_keys(client: TestClient, post: Poster) -> None:
 def test_a_failed_create_leaves_nothing_and_can_be_retried(post: Poster) -> None:
     original = ArticleList.perform_create
 
-    async def fail_after_saving(view: ArticleList, obj: Model) -> None:
-        await original(view, obj)
+    def fail_after_saving(view: ArticleList, obj: Model) -> None:
+        original(view, obj)
         msg = "unexpected"
         raise RuntimeError(msg)
 
@@ -135,9 +135,9 @@ def test_an_invalid_key_is_400(client: TestClient, post: Poster, key: str) -> No
 def test_concurrent_duplicates_create_one_row(post: Poster) -> None:
     original = ArticleList.perform_create
 
-    async def slow(view: ArticleList, obj: Model) -> None:
-        await original(view, obj)
-        await asyncio.sleep(0.3)
+    def slow(view: ArticleList, obj: Model) -> None:
+        original(view, obj)
+        time.sleep(0.3)
 
     responses: list[Response] = []
     barrier = threading.Barrier(4)

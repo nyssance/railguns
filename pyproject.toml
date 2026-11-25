@@ -60,7 +60,6 @@ DJANGO_SETTINGS_MODULE = "tests.settings"
 testpaths = ["tests"]
 python_files = "test_*.py"
 pythonpath = ["."]
-usefixtures = ["close_pools"]  # 删测试库之前关掉连接池, 见 tests/conftest.py
 
 [tool.ty.environment]
 python-version = "3.15"

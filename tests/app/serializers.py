@@ -111,7 +111,7 @@ class Done(BaseModel):
 
 
 class NoteSerializer(BaseModel):
-    """只有列: 创建的响应直接由 INSERT ... RETURNING 建出."""
+    """只有列, 没有计算字段."""
 
     id: int
     created_time: datetime

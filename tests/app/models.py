@@ -40,7 +40,7 @@ class Post(BaseModel):
 
 
 class Note(BaseModel):
-    """所有者只有 user_id: 创建时直接用令牌里的 id, 不查用户. rank 由数据库生成."""
+    """所有者只有 user_id. rank 由数据库生成 (db_default)."""
 
     user_id = models.PositiveIntegerField(editable=False)
     title = models.CharField(max_length=100, unique=True)
@@ -48,7 +48,7 @@ class Note(BaseModel):
 
 
 class LoudArticle(Article):
-    """覆盖了 save() 的模型 (代理, 和 Article 同一张表): 创建要走 ORM."""
+    """覆盖了 save() 的模型 (代理, 和 Article 同一张表): 创建时照常调用."""
 
     class Meta(Article.Meta):
         """代理."""

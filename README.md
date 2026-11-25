@@ -66,7 +66,6 @@ DATABASES = {"default": {
     ...,
     "OPTIONS": {"pool": {"min_size": 2, "max_size": 16}}
 }}
-TEST_RUNNER = "railguns.testing.runner.Runner"
 ```
 
 ## 快速开始
@@ -156,29 +155,23 @@ class ArticleDetail(RetrieveUpdateAPI):
 
 - 响应里只有 `serializer_class` 声明的字段. 每个字段必须是模型的列, 或者计算字段 (`computed_field`).
   别的字段 (包括模型上的 `@property`, 类型是 Pydantic 模型或 `list[Model]` 的嵌套字段) 启动就报错:
-  列表只从数据库读列, 读不到它们. 列表, 详情, 写入的响应
-  用同一份代码建, 同一条记录输出完全一样
+  列表只从数据库读这些列 (`values()`), 读不到它们. 列表, 详情, 写入的响应都按 `serializer_class` 输出,
+  同一条记录输出完全一样
 - 请求体里只有 `input_class` 声明的字段能写进模型. 主键和所有者字段不允许出现在 `input_class` 里, 声明了启动就报错
 - 写入必须登录 (`allow_anonymous_write = True` 可放开), 在 Rust 里拦截, 所以先判断登录再校验参数
-- 创建时 `user_id` / `username` / `user_avatar` 取自当前用户, 和 INSERT 在同一条语句里从用户表读出.
+- 创建时 `user_id` / `username` / `user_avatar` 取自当前用户 (`request.user`).
   用户已删除或停用时是 401, 不写入. 创建成功返回 201. 违反唯一约束 (创建, 更新) 是 409, `fields` 里是约束的字段
 - PATCH 只改请求体里出现的字段, PUT 把没出现的字段改回默认值
-- 读 (列表, 详情) 不经过 ORM 的线程池: 查询由 Django 编译成 SQL, 交给原生异步连接执行.
-  创建的 INSERT 也由 Django 编译 (默认值, `db_default`, `auto_now` 照旧), `RETURNING` 响应要的列, 原生连接上一次往返.
-  模型有 `pre_save` / `post_save` 的接收者, 覆盖了 `save()`, 视图覆盖了 `perform_create` / `get_user`, 或者带了
-  `Idempotency-Key` 时, 创建照旧走 ORM. 更新用 ORM, 模型上的默认值, 信号, `save()` 照常生效
+- 处理函数是同步的, 数据访问就是 Django 的 ORM (`filter`, `count`, 切片, `save()`), 连接是 Django 自己的连接池,
+  事务是 `transaction.atomic`. 所以模型上的默认值, `db_default`, `auto_now`, 信号, 覆盖的 `save()` 都照常生效.
+  列表一页两条查询 (这一页的行, 总数), 详情一条, 创建两条 (读当前用户, INSERT)
 - 创建支持 `Idempotency-Key`, 不用声明, 见下面的 [幂等](#幂等)
 
-### 读得快的原因
+### 怎么执行
 
-- 一页只发一条语句: 总数作为标量子查询放在这一页的每一行后面, 一次往返. 不用 `count(*) OVER ()`, 它慢三倍
-- 编译好的 SQL 按请求的输入记下来 (每个进程最多 4096 条, 最久没用的先丢), 同样的请求不再编译.
-  编译比执行还贵, 列表的吞吐因此是原来的 2.4 倍, 详情是 3 倍. 键是视图类, 动作, 路径参数, 用到的筛选参数, 页码,
-  每页条数, 所以不同的用户, 不同的路径参数不会拿到别人的查询. 记下的只是 SQL, 每次都查最新的数据.
-  覆盖了 `get_queryset` 或 `filter_queryset` 的类 (查询可能取决于当前用户或时间), 用了自己写的 `filterset_class`
-  的筛选请求, 默认管理器覆盖了 `get_queryset` 的模型, 每次都编译. 无效的筛选值不会被记下, 每次都是 400
-- `serializer_class` 没有计算字段, 校验器, 自定义序列化, 别名时, 一页 (和详情) 直接按字段编码, 不再逐行校验,
-  输出完全一样. 有计算字段时照常校验, 因为计算字段要从实例上算
+处理函数是普通的 `def` 函数, 不用声明什么: 引擎默认在它的线程池 (`bolt_default_*`) 里执行, 不占事件循环. 一个请求一次线程切换, 查询, 事务和响应的编码都在这个线程里.
+线程数由 `DJANGO_BOLT_EXECUTOR_THREADS` 设置 (默认 CPU 数 + 4, 最多 32), 再多就开更多进程.
+连接池的 `max_size` 按同时查库的线程数设. 吞吐的测量还没有做.
 
 可选的类属性: `filterset_fields` / `filterset_class` (django-filter), `ordering`, `object_permissions`,
 `request_permissions`, `lookup_field`.
@@ -202,9 +195,9 @@ class TitlePage(Page[Title]):
     """标题的一页."""
 
 
-async def titles(request) -> TitlePage:
+def titles(request) -> TitlePage:
     pagination = Pagination.of(request)  # 页码无效时 404
-    count, rows = await run(services.titles, actor(request), pagination.offset, pagination.size)
+    count, rows = run(services.titles, actor(request), pagination.offset, pagination.size)
     return pagination.page(count, rows)  # 超出最后一页时 404
 ```
 
@@ -239,8 +232,8 @@ def image_list(self) -> dict | str:
 from railguns.rest_framework.actions import actor, run
 
 
-async def publish(request, pk: int, data: Publish):
-    return await run(services.publish, actor(request), pk, data)
+def publish(request, pk: int, data: Publish):
+    return run(services.publish, actor(request), pk, data)
 
 
 api.post("/articles/{pk}/publish", auth=[access_auth], guards=[IsAuthenticated()])(publish)
@@ -262,7 +255,7 @@ def publish(actor, pk, data):
 
 `run` 做的事:
 
-- 同步函数在线程里执行, 默认整个包在一个事务里, 出错全部回滚 (`atomic=False` 关闭). 异步函数直接执行
+- 在处理函数的线程里直接调用业务函数, 默认整个包在一个事务里, 出错全部回滚 (`atomic=False` 关闭)
 - 业务异常转成 `{"code": "permission_denied", "detail": "不是你的文章"}`. `code` 给程序判断, `detail` 给人看
 - Django 的 `ValidationError` (`full_clean()` 抛出的) 不用转换, 就是 400, 每个字段的错误在 `fields` 里:
   `{"code": "invalid", "detail": "...", "fields": [{"loc": ["email"], "msg": "...", "type": "invalid"}]}`.
@@ -299,8 +292,8 @@ def publish(actor, pk, data):
 资源接口的创建动作自动支持. 业务接口在注册时打开, 处理函数照常写:
 
 ```python
-async def verify(request, data: VerificationInput) -> Session:
-    return await session(await run(services.verify, actor(request), data))  # run 之后接着签发令牌
+def verify(request, data: VerificationInput) -> Session:
+    return session(run(services.verify, actor(request), data))  # run 之后接着签发令牌
 
 
 api.post("/users/verify", idempotent=True, auth=[access_auth], guards=[IsAuthenticated()])(verify)
@@ -317,8 +310,7 @@ api.post("/users/verify", idempotent=True, auth=[access_auth], guards=[IsAuthent
   表由 railguns 的迁移创建, 部署时 `migrate`
 - 接口定义里, 这些接口有可选的请求头参数 `Idempotency-Key`. 不带这个头的请求和以前完全一样
 
-`actor(request)` 只从令牌里取 `user_id`, 不查库. 需要用户的其他信息时用 `actor.user` (异步函数里用
-`await actor.auser()`), 每次请求只查一次. 不从令牌读"是否员工"这类信息, 因为签发之后用户的状态可能已经变了.
+`actor(request)` 只从令牌里取 `user_id`, 不查库. 需要用户的其他信息时用 `actor.user`, 每次请求只查一次. 不从令牌读"是否员工"这类信息, 因为签发之后用户的状态可能已经变了.
 
 这样写的业务函数可以脱离接口单独测试, 定时任务和管理命令也能直接调用.
 

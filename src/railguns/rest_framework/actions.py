@@ -4,8 +4,8 @@
 除此之外的接口都是业务接口, 固定分成两层:
 
     # api.py: 只做三件事, 认证 / 收参数 / 回结果
-    async def repay(request, data: RepayInput) -> RepayResult:
-        return await run(services.repay, actor(request), data)
+    def repay(request, data: RepayInput) -> RepayResult:
+        return run(services.repay, actor(request), data)
 
     # services.py: 纯业务. 不碰 request, 不拼响应, 出错抛 errors 里的异常
     def repay(actor, data):
@@ -17,11 +17,8 @@
 这样业务函数可以脱离接口单独测试, 定时任务和管理命令也能直接调用.
 """
 
-from inspect import iscoroutinefunction
-from typing import cast, overload
-lazy from collections.abc import Awaitable, Callable
+lazy from collections.abc import Callable
 
-from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
@@ -57,7 +54,7 @@ class Actor:
 
     @property
     def user(self) -> AbstractBaseUser | AnonymousUser:
-        """同步的业务函数里用.
+        """用户, 每次请求只查一次库.
 
         Returns:
             用户, 未登录时是 AnonymousUser.
@@ -65,18 +62,6 @@ class Actor:
         """
         if self._user is None:
             self._user = get_user_model().objects.get(pk=self.user_id) if self.is_authenticated else AnonymousUser()
-        return self._user
-
-    async def auser(self) -> AbstractBaseUser | AnonymousUser:
-        """异步的业务函数里用.
-
-        Returns:
-            用户, 未登录时是 AnonymousUser.
-
-        """
-        if self._user is None:
-            users = get_user_model().objects
-            self._user = await users.aget(pk=self.user_id) if self.is_authenticated else AnonymousUser()
         return self._user
 
 
@@ -102,17 +87,10 @@ def http_error(exc: BusinessError) -> HTTPException:
     return HTTPException(status_code=exc.status_code, detail={"code": exc.code, "detail": exc.detail}, extra=extra)
 
 
-@overload
-async def run[R](service: Callable[..., Awaitable[R]], *args: object, atomic: bool = True, **kwargs: object) -> R: ...
-@overload
-async def run[R](service: Callable[..., R], *args: object, atomic: bool = True, **kwargs: object) -> R: ...
-async def run[R](
-    service: Callable[..., Awaitable[R]] | Callable[..., R], *args: object, atomic: bool = True, **kwargs: object
-) -> R:
+def run[R](service: Callable[..., R], *args: object, atomic: bool = True, **kwargs: object) -> R:
     """执行一个业务函数.
 
-    - 同步函数放到线程里执行, 默认整个包在一个数据库事务里, 出错全部回滚. atomic=False 可以关掉
-    - 异步函数直接执行, 事务由函数自己负责
+    - 直接在处理函数的线程里调用, 默认整个包在一个数据库事务里, 出错全部回滚. atomic=False 可以关掉
     - BusinessError 转成约定格式的响应. Django 的 ValidationError 是 400, 每个字段的错误在 fields 里
     - 其他异常记到 django.request 日志 (管理员告警邮件走的就是这个日志) 再原样抛出
 
@@ -127,11 +105,7 @@ async def run[R](
 
     """
     try:
-        if iscoroutinefunction(service):
-            return await service(*args, **kwargs)
-        call = transaction.atomic(service) if atomic else service
-        # 不是协程函数时 service 返回的就是结果, 类型系统从 iscoroutinefunction 推不出来
-        return cast("R", await sync_to_async(call)(*args, **kwargs))
+        return (transaction.atomic(service) if atomic else service)(*args, **kwargs)
     except ValidationError as exc:
         raise http_error(BusinessError.from_validation(exc)) from exc
     except BusinessError as exc:

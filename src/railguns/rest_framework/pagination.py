@@ -2,9 +2,9 @@
 
 业务接口的处理函数不声明 page / page_size. 返回类型是 Page[T] 的子类时, 接口定义里自动带上这两个参数:
 
-    async def sections(request) -> SectionPage:
+    def sections(request) -> SectionPage:
         pagination = Pagination.of(request)  # 页码无效时 404
-        count, rows = await run(services.sections, actor(request), pagination.offset, pagination.size)
+        count, rows = run(services.sections, actor(request), pagination.offset, pagination.size)
         return pagination.page(count, rows)   # 超出最后一页时 404
 """
 

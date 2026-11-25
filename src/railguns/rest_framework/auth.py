@@ -1,16 +1,16 @@
 import time
 from functools import cache
 from typing import Any, get_type_hints
-lazy from collections.abc import Awaitable, Callable
+lazy from collections.abc import Callable
 
 import jwt
 from django.conf import settings
-from django.contrib.auth import aauthenticate, get_user_model
+from django.contrib.auth import authenticate, get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.module_loading import import_string
 from freeman.auth import IsAuthenticated, JWTAuthentication
 from freeman.auth.revocation import DjangoCacheRevocation
-from freeman.auth.tokens import TokenRotationError, create_token_pair, rotate_refresh_token
+from freeman.auth.tokens import TokenRotationError, create_token_pair, rotate_refresh_token_sync
 from freeman.exceptions import HTTPException
 from pydantic import BaseModel, TypeAdapter, create_model
 lazy from django.contrib.auth.models import AbstractBaseUser
@@ -60,14 +60,14 @@ class Done(BaseModel):
 TOKEN_FIELDS: dict[str, Any] = {"token": (str, ...), "access": (str, ...), "refresh": (str, ...)}
 
 
-async def issue_tokens(user: AbstractBaseUser) -> dict[str, str]:
+def issue_tokens(user: AbstractBaseUser) -> dict[str, str]:
     """给用户签发一对令牌.
 
     Returns:
         token, access, refresh 三个令牌.
 
     """
-    version = await token_store.get_user_version(str(user.pk))
+    version = token_store.get_user_version_sync(str(user.pk))
     pair = create_token_pair(user, access_ttl=ACCESS_TTL, refresh_ttl=REFRESH_TTL, version=version)
     return {"token": pair.access_token, "access": pair.access_token, "refresh": pair.refresh_token}
 
@@ -114,7 +114,7 @@ def login_result() -> type[BaseModel]:
     return create_model("LoginResult", __base__=profile or BaseModel, __module__=__name__, **TOKEN_FIELDS)
 
 
-async def session(user: AbstractBaseUser) -> dict:
+def session(user: AbstractBaseUser) -> dict:
     """用户资料加令牌, 就是登录的响应. 注册这类接口之后直接是登录状态时也用它.
 
     Returns:
@@ -126,10 +126,10 @@ async def session(user: AbstractBaseUser) -> dict:
     if function is not None and profile is not None:
         adapter = TypeAdapter(profile)
         fields = adapter.dump_python(adapter.validate_python(function(user), from_attributes=True))
-    return {**fields, **await issue_tokens(user)}
+    return {**fields, **issue_tokens(user)}
 
 
-def login_handler() -> Callable[[Credentials], Awaitable[dict]]:
+def login_handler() -> Callable[[Credentials], dict]:
     """登录的处理函数. 返回类型在注册时才能确定 (见 login_result), 所以由函数生成.
 
     Returns:
@@ -138,11 +138,11 @@ def login_handler() -> Callable[[Credentials], Awaitable[dict]]:
     """
     result = login_result()
 
-    async def login(data: Credentials) -> result:
-        user = await aauthenticate(username=data.username, password=data.password)
+    def login(data: Credentials) -> result:
+        user = authenticate(username=data.username, password=data.password)
         if user is None or not user.is_active:
             raise HTTPException(status_code=401, detail="Invalid credentials")
-        return await session(user)
+        return session(user)
 
     return login
 
@@ -169,7 +169,7 @@ def refresh_claims(token: str) -> dict:
     return claims
 
 
-async def logout(request: Request, data: Refresh) -> Done:
+def logout(request: Request, data: Refresh) -> Done:
     """登出这一次登录: 作废手上的访问令牌, 和这个刷新令牌所在的整条续期链. 其他设备上的登录不受影响.
 
     Returns:
@@ -186,13 +186,13 @@ async def logout(request: Request, data: Refresh) -> Done:
     if str(claims["sub"]) != str(request.context["user_id"]):
         raise HTTPException(status_code=401, detail="Invalid refresh token")
     access = request.context["auth_claims"]
-    await token_store.revoke(access["jti"], exp=access.get("exp"))
+    token_store.revoke_sync(access["jti"], exp=access.get("exp"))
     # 另一个进程可能刚用这个令牌续期过, 新令牌比它晚过期, 所以这条记录要活到新令牌过期
-    await token_store.revoke_family(claims["fam"], exp=max(int(time.time()) + REFRESH_TTL, claims["exp"]))
+    token_store.revoke_family_sync(claims["fam"], exp=max(int(time.time()) + REFRESH_TTL, claims["exp"]))
     return Done()
 
 
-async def logout_all(request: Request) -> Done:
+def logout_all(request: Request) -> Done:
     """登出所有设备: 这个用户所有的刷新令牌立刻作废, 这台设备的访问令牌也立刻作废.
 
     其他设备手上的访问令牌不逐个查库, 会活到它自己过期, 最长 ACCESS_TTL (5 分钟). 这是无状态令牌的代价.
@@ -202,18 +202,18 @@ async def logout_all(request: Request) -> Done:
 
     """
     access = request.context["auth_claims"]
-    await token_store.revoke(access["jti"], exp=access.get("exp"))
-    await token_store.bump_user_version(str(request.context["user_id"]))
+    token_store.revoke_sync(access["jti"], exp=access.get("exp"))
+    token_store.bump_user_version_sync(str(request.context["user_id"]))
     return Done()
 
 
-async def refresh(data: Refresh) -> TokenPair:
+def refresh(data: Refresh) -> TokenPair:
     try:
         claims = refresh_claims(data.refresh)
         users = default_manager(get_user_model())
-        if not await users.filter(pk=claims["sub"], is_active=True).aexists():
+        if not users.filter(pk=claims["sub"], is_active=True).exists():
             raise HTTPException(status_code=401, detail="Invalid refresh token")
-        pair = await rotate_refresh_token(claims, store=token_store, access_ttl=ACCESS_TTL, refresh_ttl=REFRESH_TTL)
+        pair = rotate_refresh_token_sync(claims, store=token_store, access_ttl=ACCESS_TTL, refresh_ttl=REFRESH_TTL)
     except (jwt.InvalidTokenError, TokenRotationError, ValueError) as exc:
         raise HTTPException(status_code=401, detail="Invalid refresh token") from exc
     return TokenPair(access=pair.access_token, refresh=pair.refresh_token)

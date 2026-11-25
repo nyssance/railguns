@@ -39,8 +39,8 @@ def publish(actor: Actor, pk: int, data: Publish) -> Published:
     return Published(id=article.pk, title=article.title)
 
 
-async def whoami(actor: Actor) -> Me:
-    return Me(user_id=actor.user_id, username=(await actor.auser()).get_username())
+def whoami(actor: Actor) -> Me:
+    return Me(user_id=actor.user_id, username=actor.user.get_username())
 
 
 def titles(actor: Actor, offset: int, size: int) -> tuple[int, list[dict]]:

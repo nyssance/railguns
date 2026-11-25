@@ -38,4 +38,4 @@ assert ("railguns", "0001_initial") in MigrationLoader(None).disk_migrations, "w
 print("装好的包:", railguns.__file__)
 PY
 # 不复制 pyproject.toml (有它 test_packaging 会去构建这个目录), pytest 的配置在命令行上给: 和 [tool.pytest.ini_options] 一样
-"$PY" -m pytest -q -p no:cacheprovider --create-db -o python_files="test_*.py" -o usefixtures=close_pools tests
+"$PY" -m pytest -q -p no:cacheprovider --create-db -o python_files="test_*.py" tests

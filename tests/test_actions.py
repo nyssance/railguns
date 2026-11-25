@@ -101,7 +101,7 @@ def test_business_errors_are_not_logged(client: TestClient, article: Article, lo
     assert [record for record in log.records if record.exc_info] == []
 
 
-def test_async_service_and_anonymous_actor(client: TestClient, article: Article) -> None:
+def test_actor_user_and_anonymous_actor(client: TestClient, article: Article) -> None:
     assert client.get("/whoami").json() == {"user_id": None, "username": ""}
     assert client.get("/whoami", headers=bearer(client, "amy")).json() == {
         "user_id": article.user_id,

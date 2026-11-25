@@ -11,8 +11,8 @@
 
     api.post("/orders", idempotent=True, **PRIVATE)(create_order)
 
-    async def create_order(request, data: OrderInput) -> Order:
-        return await run(services.create_order, actor(request), data)
+    def create_order(request, data: OrderInput) -> Order:
+        return run(services.create_order, actor(request), data)
 
 约定:
 
@@ -28,9 +28,8 @@ from datetime import timedelta
 from functools import wraps
 from inspect import get_annotations, signature
 from typing import Any, get_type_hints
-lazy from collections.abc import Awaitable, Callable
+lazy from collections.abc import Callable
 
-from asgiref.sync import async_to_sync, sync_to_async
 from django.core.exceptions import ImproperlyConfigured
 from django.db import IntegrityError, connections, router, transaction
 from django.utils import timezone
@@ -118,8 +117,7 @@ class Claim:
     def atomic(self, work: Callable[[], Any]) -> Response:
         """同步: 在一个事务里检查键, 执行 work, 存下响应. work 的写入和键在同一个连接, 同一个事务.
 
-        work 是整个处理函数: async_to_sync 把它放回原来的事件循环执行, 其中的 ORM 调用 (sync_to_async)
-        又回到这个线程, 所以都在这个事务里.
+        work 是整个处理函数, 和键在同一个线程里执行, 所以它的查询都在这个事务里.
 
         Returns:
             要发出的响应.
@@ -178,7 +176,7 @@ class Claim:
         return self.status_code, self.adapter.dump_json(self.adapter.validate_python(result, from_attributes=True))
 
 
-def idempotent(handler: Callable[..., Awaitable[object]], status_code: int) -> Callable[..., Awaitable[object]]:
+def idempotent(handler: Callable[..., object], status_code: int) -> Callable[..., object]:
     """带幂等键时, 整个处理函数在键的事务里执行, 存下它最后返回的响应.
 
     由 API.post(idempotent=True) 调用, 资源接口的创建动作由 generics 调用.
@@ -197,12 +195,12 @@ def idempotent(handler: Callable[..., Awaitable[object]], status_code: int) -> C
     adapter = TypeAdapter(get_type_hints(handler).get("return", Any))
 
     @wraps(handler)
-    async def wrapper(*args: object, **kwargs: object) -> object:
+    def wrapper(*args: object, **kwargs: object) -> object:
         request = signature(handler).bind(*args, **kwargs).arguments["request"]
         claim = Claim.of(request, adapter, status_code)
         if claim is None:
-            return await handler(*args, **kwargs)
-        return await sync_to_async(claim.atomic)(lambda: async_to_sync(handler)(*args, **kwargs))
+            return handler(*args, **kwargs)
+        return claim.atomic(lambda: handler(*args, **kwargs))
 
     wrapper.__annotations__ = get_annotations(handler)  # wraps 只复制 __annotate__, 手动设的 __annotations__ 会丢
     wrapper.railguns_idempotent = True

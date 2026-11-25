@@ -13,7 +13,6 @@ ALLOWED_HOSTS = ["*"]
 USE_TZ = True
 ROOT_URLCONF = "tests.urls"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-TEST_RUNNER = "railguns.testing.runner.Runner"
 
 DATABASES = {
     "default": {

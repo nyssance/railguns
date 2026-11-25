@@ -136,7 +136,7 @@ class BrokenArticleList(ListAPI):
     serializer_class = ArticleSerializer
 
     @override
-    async def filter_queryset(self, queryset: QuerySet) -> QuerySet:
+    def filter_queryset(self, queryset: QuerySet) -> QuerySet:
         msg = "resource view failed"
         raise RuntimeError(msg)
 
@@ -159,16 +159,16 @@ class KindPostList(ListAPI):
 
 
 # 业务接口
-async def publish(request: Request, pk: int, data: Publish) -> Published:
-    return await run(services.publish, actor(request), pk, data)
+def publish(request: Request, pk: int, data: Publish) -> Published:
+    return run(services.publish, actor(request), pk, data)
 
 
-async def whoami(request: Request) -> Me:
-    return await run(services.whoami, actor(request))
+def whoami(request: Request) -> Me:
+    return run(services.whoami, actor(request))
 
 
-async def stamp(title: str) -> str:
-    """Run 之后的异步处理, 比如签发令牌. 标题是 explode 时在这里出错, 用来验证业务函数的写入也会回滚.
+def stamp(title: str) -> str:
+    """Run 之后的处理, 比如签发令牌. 标题是 explode 时在这里出错, 用来验证业务函数的写入也会回滚.
 
     Returns:
         随机的戳.
@@ -183,23 +183,23 @@ async def stamp(title: str) -> str:
     return uuid.uuid4().hex
 
 
-async def publish_stamped(request: Request, pk: int, data: Publish) -> Stamped:
-    published = await run(services.publish, actor(request), pk, data)
-    return Stamped(**published.model_dump(), stamp=await stamp(data.title))
+def publish_stamped(request: Request, pk: int, data: Publish) -> Stamped:
+    published = run(services.publish, actor(request), pk, data)
+    return Stamped(**published.model_dump(), stamp=stamp(data.title))
 
 
-async def titles(request: Request) -> TitlePage:
+def titles(request: Request) -> TitlePage:
     pagination = Pagination.of(request)
-    count, rows = await run(services.titles, actor(request), pagination.offset, pagination.size)
+    count, rows = run(services.titles, actor(request), pagination.offset, pagination.size)
     return TitlePage.model_validate(pagination.page(count, rows))
 
 
-async def check_article(request: Request, pk: int) -> Done:
-    return await run(services.check_article, actor(request), pk)
+def check_article(request: Request, pk: int) -> Done:
+    return run(services.check_article, actor(request), pk)
 
 
-async def upstream(request: Request, status: int) -> Done:
-    return await run(services.upstream, actor(request), status)
+def upstream(request: Request, status: int) -> Done:
+    return run(services.upstream, actor(request), status)
 
 
 api.post("/articles/{pk}/publish", idempotent=True, **PRIVATE)(publish)

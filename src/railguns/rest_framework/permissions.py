@@ -52,7 +52,7 @@ class IsMeOrReadOnly(BasePermission):
 class IsOwnerOnList(BasePermission):
     """列表的路径参数 (视图的 lookup_field) 是当前用户."""
 
-    async def has_permission(self, request: Request, view: API) -> bool:
+    def has_permission(self, request: Request, view: API) -> bool:
         return view.lookup_field in request.params and str(request.params[view.lookup_field]) == get_user_id(request)
 
 
@@ -92,8 +92,8 @@ class BlacklistPermission(BasePermission):
         """model: 黑名单模型, 需要有 ip_addr 字段. 也可以在视图上写 blacklist_model."""
         self.model = model
 
-    async def has_permission(self, request: Request, view: API) -> bool:
+    def has_permission(self, request: Request, view: API) -> bool:
         ip_addr = request.META["REMOTE_ADDR"]
         model = self.model or view.blacklist_model
-        blacklisted = await model.objects.filter(ip_addr=ip_addr).aexists()
+        blacklisted = model.objects.filter(ip_addr=ip_addr).exists()
         return not blacklisted

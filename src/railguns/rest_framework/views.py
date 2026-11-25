@@ -124,16 +124,16 @@ class _Access(TypedDict):
 STORAGE: _Access = {"auth": [access_auth, SessionAuthentication()], "guards": [IsAuthenticated()]}
 
 
-async def get_user(request: Request, cloud: str) -> AbstractUser:
+def get_user(request: Request, cloud: str) -> AbstractUser:
     if cloud not in CLOUDS:
         raise HTTPException(status_code=404, detail="Not Found")
-    user = await request.auser()
+    user = request.user
     if not user.is_authenticated or not user.is_active:
         raise HTTPException(status_code=401, detail="Authentication required")
     return user
 
 
-async def download_url(request: Request, cloud: str, url: str = "") -> DownloadUrlSerializer:
+def download_url(request: Request, cloud: str, url: str = "") -> DownloadUrlSerializer:
     """获取下载地址.
 
     Returns:
@@ -143,7 +143,7 @@ async def download_url(request: Request, cloud: str, url: str = "") -> DownloadU
         HTTPException: 云不支持 (404), 未登录 (401), 地址为空或者不是自己的桶 (400).
 
     """
-    await get_user(request, cloud)
+    get_user(request, cloud)
     # https://documents-domain-com.oss-cn-shanghai.aliyuncs.com/contract/001/Linux_Command3.pdf
     if not url:
         msg = "url不能为空"
@@ -164,7 +164,7 @@ async def download_url(request: Request, cloud: str, url: str = "") -> DownloadU
     )
 
 
-async def upload_params(request: Request, cloud: str, data: UploadRequest) -> UploadParamsSerializer:
+def upload_params(request: Request, cloud: str, data: UploadRequest) -> UploadParamsSerializer:
     """获取上传参数.
 
     filename -- 文件名, 可含有路径
@@ -179,7 +179,7 @@ async def upload_params(request: Request, cloud: str, data: UploadRequest) -> Up
         HTTPException: 云不支持 (404), 未登录 (401), 参数不对 (400), 非员工传到媒体以外的桶 (403).
 
     """
-    user = await get_user(request, cloud)
+    user = get_user(request, cloud)
     filename = data.filename
     if not filename:
         msg = "filename不能为空"
