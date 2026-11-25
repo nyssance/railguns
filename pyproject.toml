@@ -1,38 +1,37 @@
 [project]
 name = "railguns"
-version = "0.200"
+version = "0.300"
 description = "Only My Railgun"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.15"
 license = { file = "LICENSE" }
 authors = [{ name = "NY ", email = "nyssance@icloud.com" }]
 keywords = ["django", "railguns"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
-  "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Internet :: WWW/HTTP"
 ]
 dependencies = [
-  "django[argon2]==6.0",
-  "djangorestframework==3.16.1",
-  "djangorestframework_simplejwt==5.5.1",
-  "gunicorn==23.0.0",
-  "uvicorn==0.38.0",
+  "django[argon2]>=6.1,<6.2",
+  "freeman>=0.1.1,<0.2",
+  "pydantic>=2.11",
+  "inflection>=0.5.1",
   #
-  "django-ckeditor-5==0.2.18",
-  "django-filter==25.2",
-  "django-htmlmin==0.11.0",
-  "mysql-connector-python==9.5.0",
-  "redis==7.1.0"
+  "django-ckeditor-5>=0.2.20",
+  "django-filter>=26.2",
+  "django-htmlmin>=0.11",
+  "psycopg[binary,pool]>=3.3",  # binary: C 实现. 纯 Python 实现慢好几倍
+  "redis>=8.1"
 ]
 
 [project.optional-dependencies]
-test = ["pytest >= 9.0.0", "pytest-cov[all]"]
+test = ["pytest>=9.2", "pytest-django>=4.14", "pytest-cov[all]", "django-stubs>=6.1.2"]  # django-stubs: ty 用的 Django 类型
 cli = ["fabric", "rich"]
 
 [project.urls]
@@ -41,6 +40,10 @@ Documentation = "https://github.com/nyssance/railguns"
 Repository = "https://github.com/nyssance/railguns.git"
 Issues = "https://github.com/nyssance/railguns/issues"
 Changelog = "https://github.com/nyssance/railguns/blob/main/CHANGELOG.md"
+
+# freeman 0.1.1 还没有发布到 PyPI, 发布后删掉这一段
+[tool.uv.sources]
+freeman = { path = "../freeman" }
 
 [tool.isort]
 profile = "django"
@@ -51,3 +54,13 @@ line_length = 120
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+testpaths = ["tests"]
+python_files = "test_*.py"
+pythonpath = ["."]
+usefixtures = ["close_pools"]  # 删测试库之前关掉连接池, 见 tests/conftest.py
+
+[tool.ty.environment]
+python-version = "3.15"

@@ -3,12 +3,12 @@ import shutil
 from pathlib import Path
 
 from fabric import task
-from invoke import Context
+lazy from invoke import Context
 
 
 @task
 def cleanup(c: Context) -> None:
-    """清理"""
+    """清理."""
     for p in Path().glob("**/*"):
         if p.is_dir():
             if p.name == "__pycache__" or not any(p.iterdir()):
@@ -21,7 +21,7 @@ def cleanup(c: Context) -> None:
 
 @task
 def distribute(c: Context) -> None:
-    """发布到PyPI"""
+    """发布到PyPI."""
     cleanup(c)
     # https://packaging.python.org/en/latest/tutorials/packaging-projects/
     c.run("uv build")
@@ -31,13 +31,13 @@ def distribute(c: Context) -> None:
 
 @task
 def fix(c: Context) -> None:
-    """修复代码"""
+    """修复代码."""
     c.run("ruff check --fix")
 
 
 @task(name="format")
 def format_code(c: Context) -> None:
-    """格式化代码"""
+    """格式化代码."""
     c.run("ruff format")
     c.run("uvx isort .")
     for file in [f for d in ["src"] for f in (Path().cwd() / d).rglob("*.py")] + [Path(__file__)]:
@@ -49,7 +49,7 @@ def format_code(c: Context) -> None:
 
 @task
 def upgrade(c: Context) -> None:
-    """升级"""
+    """升级."""
     remote, local = "https://raw.githubusercontent.com/nyssance/Free/main/", Path(__file__).parent
     c.run(f"curl -fsSL {remote}gitignore/Python.gitignore > {local / ".gitignore"}")
     c.run(f"curl -fsSL {remote}ruff.toml > {local / "ruff.toml"}")

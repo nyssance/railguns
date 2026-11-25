@@ -1,20 +1,26 @@
 line-length = 120
-target-version = "py314"
+target-version = "py315"
 
 [lint]
+allowed-confusables = ["，", "′"]
+dummy-variable-rgx = "^_$"
+future-annotations = true
+preview = true
 select = ["ALL"]
-ignore = [
-    "I001", # isort
-    "D", # "D100", "D103", "D104", "D400", "D415",
-    "COM812", "CPY", "TD", "FIX", # flake8
-    "ERA", # commented-out-code
-    "PLR0913", "PLR2004" # too-many-arguments, magic-value-comparison
+ignore = [ # https://docs.astral.sh/ruff/rules/
+    "commented-out-code", # ERA
+    "missing-trailing-comma", # COM
+    "CPY", "FIX", "TD",
+    "undocumented-public-method", "undocumented-public-function", "undocumented-public-module", "undocumented-public-package", "incorrect-blank-line-before-class", "multi-line-summary-second-line", # D
+    "too-many-arguments", "magic-value-comparison" # PLR
 ]
 unfixable = [
-    "T20",
-    "F401", # unused-import
-    "F841"
+    "T20", # flake8-print
+    "unused-variable" # F
 ]
+
+[lint.isort]
+split-on-trailing-comma = false
 
 [format]
 line-ending = "lf"

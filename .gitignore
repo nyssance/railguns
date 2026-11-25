@@ -191,8 +191,6 @@ Temporary Items
 .apdisk
 
 # [Django](https://www.djangoproject.com)
-**/migrations/**
-!**/migrations/__init__.py
 /static/
 /tmp/
 dump.rdb

@@ -1,21 +1,37 @@
-from rest_framework.fields import CharField
-from rest_framework.serializers import Serializer
+from pydantic import BaseModel
 
 
-class DownloadUrlSerializer(Serializer):
-    url = CharField(read_only=True)
+class DownloadUrlSerializer(BaseModel):
+    """下载地址."""
+
+    url: str
 
 
-class UploadParamsSerializer(Serializer):
-    bucket = CharField(write_only=True)
-    filename = CharField(write_only=True, required=True)
-    key = CharField(read_only=True)
-    AWSAccessKeyId = CharField(read_only=True)
-    OSSAccessKeyId = CharField(read_only=True)
-    acl = CharField(read_only=True)
-    success_action_status = CharField(read_only=True)
-    ContentType = CharField(read_only=True)
-    policy = CharField(read_only=True)
-    signature = CharField(read_only=True)
-    ContentEncoding = CharField(read_only=True)
-    domain = CharField(read_only=True)
+class UploadParamsSerializer(BaseModel):
+    """上传参数: 上传的地址和表单字段."""
+
+    endpoint: str
+    params: dict[str, str]
+
+
+class UploadRequest(BaseModel):
+    """获取上传参数的请求."""
+
+    filename: str
+    bucket: str = ""
+    expiration: int = 24 * 365 * 50
+    content_encoding: str = ""
+    cache_control: str = ""
+
+
+class Image(BaseModel):
+    """一张图片."""
+
+    uri: str
+
+
+class ImageList(BaseModel):
+    """ImagesFieldMixin.get_images 的返回类型."""
+
+    count: int
+    data: list[Image]
